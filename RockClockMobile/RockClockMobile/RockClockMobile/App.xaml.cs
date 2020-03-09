@@ -19,7 +19,6 @@ namespace RockClockMobile
         public App()
         {
             InitializeComponent();
-
             if (UseMockDataStore)
                 DependencyService.Register<MockDataStore>();
             else
