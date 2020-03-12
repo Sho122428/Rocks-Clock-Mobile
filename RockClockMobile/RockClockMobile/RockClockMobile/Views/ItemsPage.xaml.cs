@@ -24,6 +24,14 @@ namespace RockClockMobile.Views
         {
             InitializeComponent();
 
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
+                );
+                return true;
+            });
+
             BindingContext = viewModel = new ItemsViewModel();
         }
 
@@ -33,8 +41,11 @@ namespace RockClockMobile.Views
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
+
+            //go to verification page
+            await Navigation.PushAsync(new TimeClockPage());
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }

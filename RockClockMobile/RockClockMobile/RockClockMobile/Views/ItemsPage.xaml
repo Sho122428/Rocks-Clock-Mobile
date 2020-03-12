@@ -13,6 +13,7 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout>
+        <Label x:Name="lblTimer" FontSize="50" TextColor="ForestGreen" VerticalOptions="Center" HorizontalOptions="Center"/>
         <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"

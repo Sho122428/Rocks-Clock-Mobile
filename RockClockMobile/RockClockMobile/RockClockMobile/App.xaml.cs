@@ -37,5 +37,7 @@ namespace RockClockMobile
         protected override void OnResume()
         {
         }
+
+        
     }
 }

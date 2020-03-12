@@ -31,15 +31,20 @@
 
     <!-- Your Pages -->
     <TabBar>
-        <Tab Title="Browse" Icon="tab_feed.png">
+        <!--<Tab Title="Browse" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
         </Tab>
         <Tab Title="About" Icon="tab_about.png">
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
+        </Tab>-->
+        <Tab Title="Browse" Icon="tab_feed.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
         </Tab>
-        <Tab Title="Time Clock" Icon="tab_about.png">
+        <!--<Tab Title="Time Clock" Icon="tab_about.png">
             <ShellContent ContentTemplate="{DataTemplate local:TimeClockPage}" />
-        </Tab>
+        </Tab>-->
+        
+        
     </TabBar>
 
     <!-- Optional Templates 
