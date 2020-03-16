@@ -12,6 +12,7 @@ namespace RockClockMobile.Models
         DateTime dateOfBirth;
         bool isActive;
         bool isDeleted;
+        string fullName;
         public int Id
         {
             get { return id; }
@@ -41,6 +42,11 @@ namespace RockClockMobile.Models
         {
             get { return isDeleted; }
             set { isDeleted = value; }
+        }
+
+        public string FullName {
+            get { return fullName; }
+            set { fullName = value; }
         }
     }
 }

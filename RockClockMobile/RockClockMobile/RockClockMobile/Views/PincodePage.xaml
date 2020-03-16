@@ -5,12 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
-             xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              mc:Ignorable="d"
-             x:Class="RockClockMobile.LoginPage">
-    
+             x:Class="RockClockMobile.Views.PincodePage">
     <ContentPage.Content>
-
         <StackLayout Orientation="Vertical" BackgroundColor="FloralWhite" HorizontalOptions="Center">
             <Grid Padding="20,0,20,0">
                 <Grid.RowDefinitions>
@@ -18,27 +15,19 @@
                     <RowDefinition Height="80"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                
+
                 <Label x:Name="lblTimer" FontSize="60" TextColor="ForestGreen" Grid.Row="0"
                        VerticalOptions="Center" HorizontalOptions="Center"/>
 
-                <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Search Name" Grid.Row="1" Padding="0,0,0,0">
-                    <combobox:SfComboBox IsEditableMode="true" x:Name="userCombo" SelectionChanged="SelectUserEvent">
-                    </combobox:SfComboBox>
+                <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Enter Pin" 
+                                               Grid.Row="1" Padding="0,0,0,0" EnablePasswordVisibilityToggle="True"
+                                               >
+                    <Entry IsPassword="True" x:Name="EntryPin"/>
                 </inputLayout:SfTextInputLayout>
 
-                <listView:SfListView x:Name="lvUsers" Grid.Row="2" ItemTapped="TappedUser" AutoFitMode="Height">
-                    <listView:SfListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Padding="10,5,10,0" BackgroundColor="LightGray" >
-                                    <Label Text="{Binding FullName}"/>
-                                </Grid>
-                            </ViewCell>
-
-                        </DataTemplate>
-                    </listView:SfListView.ItemTemplate>
-                </listView:SfListView>
+                <Button Text="Sign In" CornerRadius="3" Grid.Row="2"
+                        x:Name="BtnSignIn"
+                        Clicked="BtnSignInEvent"/>
 
             </Grid>
         </StackLayout>
