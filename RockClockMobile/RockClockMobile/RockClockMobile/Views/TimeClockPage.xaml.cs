@@ -13,6 +13,10 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeClockPage : ContentPage
     {
+        private Timer timer1;
+        private int counter = 20;
+        private static Timer _delayTimer;
+
         bool isTimedIn = false;
         bool isOnBreak = false;
         
@@ -30,28 +34,33 @@ namespace RockClockMobile.Views
             });
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
             if(!isTimedIn)
             { 
                 var cur_time = DateTime.Now.ToString("h:mm tt");
                 lblClockedIn.Text = cur_time;
-                DisplayAlert("Alert", "You have clocked in " +cur_time, "OK");
+                await DisplayAlert("Alert", "You have clocked in " +cur_time, "OK");
                 btnTimeClockBreak.IsVisible = true;
                 btnTimeClock.Text = "Clock Out";
                 isTimedIn = true;
                 lblclockin.IsVisible = true;
                 lblClockedIn.IsVisible = true;
-                lblbreak.IsVisible = true;
+                lblbreakSt.IsVisible = true;
+                lblbreakEnd.IsVisible = true;
             }
             else
             {
                 var cur_time = DateTime.Now.ToString("h:mm tt");
-                DisplayAlert("Alert", "You have clocked out " + cur_time, "OK");
+                await DisplayAlert("Alert", "You have clocked out " + cur_time, "OK");
                 lblClockedOut.Text = cur_time;
                 lblclockout.IsVisible = true;
                 lblClockedOut.IsVisible = true;
             }
+
+            //delay(3000);
+            logOut();
+            
         }
 
         private void timer()
@@ -86,13 +95,45 @@ namespace RockClockMobile.Views
                 DisplayAlert("Alert", "You have ended your break " + cur_time, "OK");
                 
                 lblBreakTimeEnd.Text = cur_time;
-                lblTotal.IsVisible = true;
-                lblTotalBrkHrs.IsVisible = true;
+                //lblTotal.IsVisible = true;
+                //lblTotalBrkHrs.IsVisible = true;
                 btnTimeClockBreak.Text = "Start Break";
 
             }
         }
 
-        
+        async void logOut()
+        {
+            await Navigation.PushAsync(new ItemsPage());
+        }
+        //private void timeToLogout()
+        //{
+        //    int counter = 60;
+        //    timer1 = new Timer();
+        //    timer1.Tick += new EventHandler(timer1_Tick);
+        //    timer1.Interval = 1000; // 1 second
+        //    timer1.Start();
+        //    label1.Text = counter.ToString();
+        //}
+
+        //private void timer1_Tick(object sender, EventArgs e)
+        //{
+        //    counter--;
+        //    if (counter == 0)
+        //        timer1.Stop();
+        //    lblCountDown.Text = counter.ToString();
+        //}
+
+        async static void delay(int Time_delay)
+        {
+            int i = 0;
+            //  ameTir = new System.Timers.Timer();
+            _delayTimer = new System.Timers.Timer();
+            _delayTimer.Interval = Time_delay;
+            _delayTimer.AutoReset = false; //so that it only calls the method once
+            _delayTimer.Elapsed += (s, args) => i = 1;
+            _delayTimer.Start();
+            while (i == 0) { };
+        }
     }
 }

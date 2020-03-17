@@ -40,9 +40,9 @@
         <Tab Title="Browse" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
         </Tab>
-        <!--<Tab Title="Time Clock" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:TimeClockPage}" />
-        </Tab>-->
+        <Tab Title="Time Clock" Icon="tab_about.png">
+            <ShellContent ContentTemplate="{DataTemplate local:Page1}" />
+        </Tab>
         
         
     </TabBar>

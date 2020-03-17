@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/RockClockMobile/RockClockMobile/RockClockMobile/Views/Page1.xaml
+/RockClockMobile/RockClockMobile/RockClockMobile/Views/Page1.xaml.cs
