@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             mc:Ignorable="d"
+             x:Class="RockClockMobile.Views.PincodePage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" BackgroundColor="FloralWhite" HorizontalOptions="Center">
+            <Grid Padding="20,0,20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="130"></RowDefinition>
+                    <RowDefinition Height="80"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="lblTimer" FontSize="60" TextColor="ForestGreen" Grid.Row="0"
+                       VerticalOptions="Center" HorizontalOptions="Center"/>
+
+                <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Enter Pin" 
+                                               Grid.Row="1" Padding="0,0,0,0" EnablePasswordVisibilityToggle="True"
+                                               >
+                    <Entry IsPassword="True" x:Name="EntryPin"/>
+                </inputLayout:SfTextInputLayout>
+
+                <Button Text="Sign In" CornerRadius="3" Grid.Row="2"
+                        x:Name="BtnSignIn"
+                        Clicked="BtnSignInEvent"/>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
