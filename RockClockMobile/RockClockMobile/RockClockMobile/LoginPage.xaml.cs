@@ -17,8 +17,8 @@ namespace RockClockMobile
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        UserViewModel userViewModel = new UserViewModel();
-        List<User> UserList = new List<User>();
+        LoginViewModel loginViewModel = new LoginViewModel();
+        List<User> UserList = new List<User>();        
         public LoginPage()
         {
             InitializeComponent();
@@ -31,22 +31,22 @@ namespace RockClockMobile
                 return true;
             });
 
-            BindingContext = userViewModel;
-            UserList = userViewModel.Employees.OrderBy(a => a.FirstName).ToList();            
+            BindingContext = loginViewModel.Users();  
 
-            List<string> Users = new List<string>();
-
-            foreach (var dtl in UserList)
+            foreach (var dtl in loginViewModel.Users().OrderBy(a => a.FirstName))
             {
                 dtl.FullName = $"{dtl.FirstName} {dtl.LastName}";
-                Users.Add(dtl.FullName);                
+                UserList.Add(new User
+                {
+                    FullName = dtl.FullName
+                });           
             }
 
-            userCombo.DataSource = Users;
-            lvUsers.ItemsSource = UserList ;
+            userCombo.DataSource = UserList.Select(a => a.FullName);
+            lvUsers.ItemsSource = loginViewModel.Users().OrderBy(a => a.FullName);
         }
 
-        async void btnLogin(object sender, EventArgs e)
+        public async void btnLogin(object sender, EventArgs e)
         {      
 
             var httpClient = new HttpClient();
@@ -63,16 +63,16 @@ namespace RockClockMobile
 
         }
 
-        private void SelectUserEvent(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
+        public void SelectUserEvent(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
         {
             var user = e.Value;
 
             if (user.ToString() == "")
             {
-                lvUsers.ItemsSource = UserList;
+                lvUsers.ItemsSource = loginViewModel.Users().OrderBy(a => a.FullName);
             }
             else {
-                lvUsers.ItemsSource = UserList.Where(a => a.FullName == user.ToString());
+                lvUsers.ItemsSource = loginViewModel.Users().Where(a => a.FullName == user.ToString());
             }           
         }
 

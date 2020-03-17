@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockClockMobile.Android", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockClockMobile.iOS", "RockClockMobile\RockClockMobile.iOS\RockClockMobile.iOS.csproj", "{FA0A1B4A-95B5-41A9-8E79-DFBA23CA6046}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockClockMobile", "RockClockMobile\RockClockMobile\RockClockMobile.csproj", "{C8840184-153B-431D-A23F-8882C2E72C11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockClockMobile", "RockClockMobile\RockClockMobile\RockClockMobile.csproj", "{C8840184-153B-431D-A23F-8882C2E72C11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
