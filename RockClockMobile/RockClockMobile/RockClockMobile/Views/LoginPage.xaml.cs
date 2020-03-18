@@ -18,7 +18,7 @@ namespace RockClockMobile
     public partial class LoginPage : ContentPage
     {
         LoginViewModel loginViewModel = new LoginViewModel();
-        List<User> UserList = new List<User>();        
+        List<Employee> EmployeeList = new List<Employee>();        
         public LoginPage()
         {
             InitializeComponent();
@@ -31,19 +31,19 @@ namespace RockClockMobile
                 return true;
             });
 
-            BindingContext = loginViewModel.Users();  
+            BindingContext = loginViewModel.Employees();  
 
-            foreach (var dtl in loginViewModel.Users().OrderBy(a => a.FirstName))
+            foreach (var dtl in loginViewModel.Employees().OrderBy(a => a.FirstName))
             {
                 dtl.FullName = $"{dtl.FirstName} {dtl.LastName}";
-                UserList.Add(new User
+                EmployeeList.Add(new Employee
                 {
                     FullName = dtl.FullName
                 });           
             }
 
-            userCombo.DataSource = UserList.Select(a => a.FullName);
-            lvUsers.ItemsSource = loginViewModel.Users().OrderBy(a => a.FullName);
+            userCombo.DataSource = EmployeeList.Select(a => a.FullName);
+            lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
         }
 
         public async void btnLogin(object sender, EventArgs e)
@@ -69,10 +69,10 @@ namespace RockClockMobile
 
             if (user.ToString() == "")
             {
-                lvUsers.ItemsSource = loginViewModel.Users().OrderBy(a => a.FullName);
+                lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
             }
             else {
-                lvUsers.ItemsSource = loginViewModel.Users().Where(a => a.FullName == user.ToString());
+                lvUsers.ItemsSource = loginViewModel.Employees().Where(a => a.FullName == user.ToString());
             }           
         }
 

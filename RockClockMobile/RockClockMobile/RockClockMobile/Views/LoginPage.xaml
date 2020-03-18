@@ -26,16 +26,17 @@
                     <combobox:SfComboBox IsEditableMode="true" x:Name="userCombo" SelectionChanged="SelectUserEvent">
                     </combobox:SfComboBox>
                 </inputLayout:SfTextInputLayout>
-
-                <listView:SfListView x:Name="lvUsers" Grid.Row="2" ItemTapped="TappedUser" AutoFitMode="Height">
+                
+                <listView:SfListView x:Name="lvUsers" Grid.Row="2" ItemTapped="TappedUser" 
+                                     AutoFitMode="Height">
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Padding="10,5,10,0" BackgroundColor="LightGray" >
-                                    <Label Text="{Binding FullName}"/>
-                                </Grid>
+                                <StackLayout HeightRequest="35" BackgroundColor="White"
+                                                VerticalOptions="CenterAndExpand" Padding="15,5,0,0">
+                                    <Label Text="{Binding FullName}" Grid.Row="0"/>
+                                </StackLayout>                               
                             </ViewCell>
-
                         </DataTemplate>
                     </listView:SfListView.ItemTemplate>
                 </listView:SfListView>

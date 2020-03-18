@@ -6,47 +6,21 @@ namespace RockClockMobile.Models
 {
     public class User
     {
-        int id;
-        string firstName;
-        string lastName;
-        DateTime dateOfBirth;
-        bool isActive;
-        bool isDeleted;
-        string fullName;
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-        public string FirstName
-        {
-            get { return firstName; }
-            set { firstName = value; }
-        }
-        public string LastName
-        {
-            get { return lastName; }
-            set { lastName = value; }
-        }
-        public DateTime DateOfBirth
-        {
-            get { return dateOfBirth; }
-            set { dateOfBirth = value; }
-        }
-        public bool IsActive
-        {
-            get { return isActive; }
-            set { isActive = value; }
-        }
-        public bool IsDeleted
-        {
-            get { return isDeleted; }
-            set { isDeleted = value; }
-        }
-
-        public string FullName {
-            get { return fullName; }
-            set { fullName = value; }
-        }
-    }
+		int ID { get; set; }
+		DateTime ModifiedDt { get; set; }
+		int ModifiedBy { get; set; }
+		DateTime CreatedDt { get; set; }
+		int CreatedBy { get; set; }
+		string ModifiedNotes { get; set; }
+		int Status { get; set; }
+		bool isDeleted { get; set; }
+		string UrlHash { get; set; }
+		string Password { get; set; }
+		string PasswordSalt { get; set; }
+		int Attempts { get; set; }
+		int Locked { get; set; }
+		DateTime ConfirmExpire { get; set; }
+		int Confirm { get; set; }
+		int RocksUserId { get; set; }	
+	}
 }
