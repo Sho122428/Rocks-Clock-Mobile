@@ -10,6 +10,7 @@ namespace RockClockMobile.ViewModels
         List<Employee> EmployeeList = new List<Employee>();
         public LoginViewModel() {
             EmployeeList.Add(new Employee
+
             {
                 FirstName = "Florencio",
                 LastName = "Baroman",
