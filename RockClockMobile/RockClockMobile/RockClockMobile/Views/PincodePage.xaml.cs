@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace RockClockMobile.Views
     public partial class PincodePage : ContentPage
     {
         PincodeViewModel pincodeViewModel = new PincodeViewModel();
+        //public Employee EmpDetail;
         public PincodePage()
         {
             InitializeComponent();
@@ -32,10 +34,10 @@ namespace RockClockMobile.Views
 
         private async void BtnSignInEvent(object sender, EventArgs e)
         {
-            string pin = EntryPin.Text;
-            Employee emp = new Employee();
-            emp.EmpID = 1;
-            if (pin == "")
+            int pin = EntryPin.Text == ""? 0 : Convert.ToInt32(EntryPin.Text);
+            var empDtl = GlobalServices.employee;
+
+            if (pin == 0)
             {
                 await DisplayAlert("Error", "Pincode is required.", "OK");
             }
@@ -46,7 +48,7 @@ namespace RockClockMobile.Views
                 }
                 else
                 {
-                    await Navigation.PushModalAsync(new NavigationPage(new TimeClockPage(emp)));
+                    await Navigation.PushModalAsync(new NavigationPage(new TimeClockPage()));
                 }
             }                      
         }
