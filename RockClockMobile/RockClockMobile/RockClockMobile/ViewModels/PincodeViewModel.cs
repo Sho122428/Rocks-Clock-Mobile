@@ -4,9 +4,9 @@ namespace RockClockMobile.ViewModels
 {
     public class PincodeViewModel
     {
-        public bool ValidatePin(string pin)
+        public bool ValidatePin(int pin)
         {
-            if (pin != "123")
+            if (pin != 123)
             {
                 return false;
             }

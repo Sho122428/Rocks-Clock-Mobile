@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RockClockMobile.Models;
+using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using RockClockMobile.Views;
 using System;
@@ -18,7 +19,7 @@ namespace RockClockMobile
     public partial class LoginPage : ContentPage
     {
         LoginViewModel loginViewModel = new LoginViewModel();
-        List<Employee> EmployeeList = new List<Employee>();        
+        List<Employee> EmployeeList = new List<Employee>();
         public LoginPage()
         {
             InitializeComponent();
@@ -79,6 +80,16 @@ namespace RockClockMobile
         private async void TappedUser(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
             //call pincode page
+            var empSignIn = (Employee)e.ItemData;
+
+            var empDtl = new Employee{
+                EmpID = empSignIn.EmpID,
+                FirstName = empSignIn.FirstName,
+                LastName = empSignIn.LastName
+            };
+            
+           GlobalServices.employee = empDtl;
+
             await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
         }
     }
