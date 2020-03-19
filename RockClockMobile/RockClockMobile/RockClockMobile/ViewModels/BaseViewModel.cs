@@ -13,6 +13,7 @@ namespace RockClockMobile.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStoreTimeLog<TimeLog> DataStoreTimeLog => DependencyService.Get<IDataStoreTimeLog<TimeLog>>();
 
         bool isBusy = false;
         public bool IsBusy

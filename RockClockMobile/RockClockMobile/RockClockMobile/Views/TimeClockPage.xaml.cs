@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RockClockMobile.Models;
+using RockClockMobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,22 +18,25 @@ namespace RockClockMobile.Views
         private Timer timer1;
         private int counter = 20;
         private static Timer _delayTimer;
+        private int empID;
 
         bool isTimedIn = false;
         bool isOnBreak = false;
+
+        TimeLogViewModel viewModel;
+        public TimeLog TimeLog { get; set; }
         
-        public TimeClockPage()
+
+        public TimeClockPage(Employee employee)
         {
             InitializeComponent();
 
-            btnTimeClock.Text = "Clock In";
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
-                );
-                return true;
-            });
+            BindingContext = viewModel = new TimeLogViewModel();
+
+            //btnTimeClock.Text = "Clock In";
+            empID = employee.EmpID;
+            
+            LoadClock();
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -40,14 +45,20 @@ namespace RockClockMobile.Views
             { 
                 var cur_time = DateTime.Now.ToString("h:mm tt");
                 lblClockedIn.Text = cur_time;
-                await DisplayAlert("Alert", "You have clocked in " +cur_time, "OK");
-                btnTimeClockBreak.IsVisible = true;
+                await DisplayAlert("Rocks Clock", "You have clocked in " +cur_time, "OK");
+                //btnTimeClockBreak.IsVisible = true;
                 btnTimeClock.Text = "Clock Out";
                 isTimedIn = true;
-                lblclockin.IsVisible = true;
-                lblClockedIn.IsVisible = true;
-                lblbreakSt.IsVisible = true;
-                lblbreakEnd.IsVisible = true;
+                btnTimeClockBreak.IsEnabled = true;
+                btnTimeClockBreak.Opacity = 1;
+                //lblclockin.IsVisible = true;
+                //lblClockedIn.IsVisible = true;
+                //lblbreakSt.IsVisible = true;
+                //lblBreakTimeStart.IsVisible = true;
+                //lblbreakEnd.IsVisible = true;
+                //lblBreakTimeEnd.IsVisible = true;
+                //lblclockout.IsVisible = true;
+                //lblClockedOut.IsVisible = true;
             }
             else
             {
@@ -58,6 +69,14 @@ namespace RockClockMobile.Views
                 lblClockedOut.IsVisible = true;
             }
 
+            TimeLog = new TimeLog
+            {
+                TimeId = 2,
+                TimeIn = DateTime.Now,
+                rocksUserID = empID
+
+            };
+            MessagingCenter.Send(this, "AddTimeLog", TimeLog);
             //delay(3000);
             logOut();
             
@@ -74,7 +93,7 @@ namespace RockClockMobile.Views
             timer.Start();
         }
 
-        private void ButtonBreak_Clicked(object sender, EventArgs e)
+        private async void ButtonBreak_Clicked(object sender, EventArgs e)
         {
             var cur_time = DateTime.Now.ToString("h:mm tt");
 
@@ -83,28 +102,31 @@ namespace RockClockMobile.Views
             if(!isOnBreak)
             {
                 isOnBreak = true;
-                DisplayAlert("Alert", "You have started your break " + cur_time, "OK");
+                await DisplayAlert("Alert", "You have started your break " + cur_time, "OK");
                 
                 lblBreakTimeStart.Text = cur_time;
-                
+                lblBreakTimeStart.IsVisible = true;
                 btnTimeClockBreak.Text = "End Break";
             }
             else
             {
                 isOnBreak = false;
-                DisplayAlert("Alert", "You have ended your break " + cur_time, "OK");
+                await DisplayAlert("Alert", "You have ended your break " + cur_time, "OK");
                 
                 lblBreakTimeEnd.Text = cur_time;
                 //lblTotal.IsVisible = true;
                 //lblTotalBrkHrs.IsVisible = true;
+                lblBreakTimeEnd.IsVisible = true;
                 btnTimeClockBreak.Text = "Start Break";
 
             }
+            logOut();
         }
 
         async void logOut()
         {
-            await Navigation.PushAsync(new ItemsPage());
+            //await Navigation.PushAsync(new LoginPage());
+            Application.Current.MainPage = new LoginPage();
         }
         //private void timeToLogout()
         //{
@@ -134,6 +156,22 @@ namespace RockClockMobile.Views
             _delayTimer.Elapsed += (s, args) => i = 1;
             _delayTimer.Start();
             while (i == 0) { };
+        }
+
+        async void LoadClock()
+        {
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
+                );
+                return true;
+            });
+        }
+
+        private async void btnSignOut_Clicked(object sender, EventArgs e)
+        {
+             logOut();
         }
     }
 }

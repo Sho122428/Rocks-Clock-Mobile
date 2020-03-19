@@ -1,4 +1,5 @@
-﻿using RockClockMobile.ViewModels;
+﻿using RockClockMobile.Models;
+using RockClockMobile.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,8 @@ namespace RockClockMobile.Views
         private async void BtnSignInEvent(object sender, EventArgs e)
         {
             string pin = EntryPin.Text;
-
+            Employee emp = new Employee();
+            emp.EmpID = 1;
             if (pin == "")
             {
                 await DisplayAlert("Error", "Pincode is required.", "OK");
@@ -44,7 +46,7 @@ namespace RockClockMobile.Views
                 }
                 else
                 {
-                    await Navigation.PushModalAsync(new NavigationPage(new TimeClockPage()));
+                    await Navigation.PushModalAsync(new NavigationPage(new TimeClockPage(emp)));
                 }
             }                      
         }

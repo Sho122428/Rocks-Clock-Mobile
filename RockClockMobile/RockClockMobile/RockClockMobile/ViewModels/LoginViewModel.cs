@@ -12,12 +12,13 @@ namespace RockClockMobile.ViewModels
             EmployeeList.Add(new Employee
             {
                 FirstName = "Florencio",
-                LastName = "Baroman",
+                LastName = "Baroman"
             });
             EmployeeList.Add(new Employee
             {
                 FirstName = "Janno Timothy",
-                LastName = "Pono"
+                LastName = "Pono",
+                EmpID = 1
             });
             EmployeeList.Add(new Employee
             {
