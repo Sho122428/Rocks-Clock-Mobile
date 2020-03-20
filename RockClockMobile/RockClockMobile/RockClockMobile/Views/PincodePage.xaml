@@ -22,11 +22,12 @@
                 <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Enter Pin" 
                                                Grid.Row="1" Padding="0,0,0,0" EnablePasswordVisibilityToggle="True"
                                                >
-                    <Entry IsPassword="True" x:Name="EntryPin"/>
+                    <Entry IsPassword="True" x:Name="EntryPin"
+                           AutomationId="EntryUserPin"/>
                 </inputLayout:SfTextInputLayout>
 
                 <Button Text="Sign In" CornerRadius="3" Grid.Row="2"
-                        x:Name="BtnSignIn"
+                        x:Name="BtnSignIn" AutomationId="BtnSignInUser"
                         Clicked="BtnSignInEvent"/>
 
             </Grid>
