@@ -42,19 +42,22 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
                 <Label x:Name="lblTimer"
                        Grid.Column="0"
-                       Grid.ColumnSpan="3"
+                       Grid.ColumnSpan="4"
                        Grid.Row="0"
                        FontSize="50"
                        FontAttributes="Bold"
+                       TextColor="ForestGreen"
                        HorizontalOptions="Center" />
 
 
@@ -62,76 +65,99 @@
                        Text="In:"
                        FontSize="Large"
                        Grid.Column="0"
-                       Grid.Row="1"
-                       IsVisible="False"/>
+                       Grid.Row="2"
+                       BackgroundColor="AntiqueWhite"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
 
                 <Label x:Name="lblClockedIn" 
                        Grid.Column="1"
-                       Grid.Row="1"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="3"
                        FontSize="Large"  
-                       IsVisible="False"
+                       BackgroundColor="AntiqueWhite"
+                       VerticalTextAlignment="Center"
                        HorizontalTextAlignment="Center"/>
                 
                 <Label x:Name="lblclockout"  
-                        Grid.Column="0"
-                       Grid.Row="2"
+                       Grid.Column="0"
+                       Grid.Row="3"
                        FontSize="Large" 
                        Text="Out:"  
-                       IsVisible="False"/>
+                       BackgroundColor="AntiqueWhite"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
                 
                 <Label x:Name="lblClockedOut" 
                        Grid.Column="1"
-                       Grid.Row="2"
+                       Grid.Row="3"
                        FontSize="Large"  
-                       IsVisible="False"
+                       Grid.ColumnSpan="3"
+                       BackgroundColor="AntiqueWhite"
+                       VerticalTextAlignment="Center"
                        HorizontalTextAlignment="Center"/>
 
                 <Label x:Name="lblbreakSt" 
                        Grid.Column="0"
-                       Grid.Row="3"
+                       Grid.Row="4"
                        FontSize="Large"
                        Text="Start:" 
-                       IsVisible="False" />
+                       BackgroundColor="AntiqueWhite"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
 
                 <Label x:Name="lblBreakTimeStart"  
                        Grid.Column="1"
                        FontSize="Large"
-                       Grid.Row="3"
-                       HorizontalTextAlignment="Center"/>
+                       Grid.Row="4"
+                       Grid.ColumnSpan="3"
+                       BackgroundColor="AntiqueWhite"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
                 <Label x:Name="lblbreakEnd" 
                        Grid.Column="0"
-                       Grid.Row="4"
+                       Grid.Row="5"
                        FontSize="Large"
                        Text="End" 
-                       IsVisible="False" />
+                       BackgroundColor="AntiqueWhite"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
 
                 <Label x:Name="lblBreakTimeEnd"
                        FontSize="Large"
                        Grid.Column="1"
-                       Grid.Row="4"
-                       HorizontalTextAlignment="Center"/>
-                
-                <!--<Label x:Name="lblTotal" Text="Total Hours: " IsVisible="False"/>
-                <Label x:Name="lblTotalBrkHrs"  IsVisible="False"/>-->
-
-                
+                       Grid.Row="5"
+                       Grid.ColumnSpan="3"
+                       BackgroundColor="AntiqueWhite"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"/>
                 
                 <Button x:Name="btnTimeClock"
                        Text="Clock In"
-                        Grid.RowSpan="2"
-                       Grid.Column="2"
+                       Grid.ColumnSpan="2"
+                       Grid.Column="0"
                        Grid.Row="1"
                        TextColor="GhostWhite"
                        BackgroundColor="ForestGreen"
                        Clicked="Button_Clicked"/>
                 <Button x:Name="btnTimeClockBreak"
-                       Text="Take a Break"
-                       Grid.Column="2"
-                       Grid.Row="3"
-                        Grid.RowSpan="2"
-                       TextColor="GhostWhite"
-                       BackgroundColor="OrangeRed"
-                       Clicked="ButtonBreak_Clicked"/>
+                        IsEnabled="False"
+                        Opacity=".5"
+                        Text="Take a Break"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        TextColor="GhostWhite"
+                        BackgroundColor="OrangeRed"
+                        Clicked="ButtonBreak_Clicked"/>
+                <Button x:Name="btnSignOut"
+                        Text="Sign Out"
+                        Grid.Column="0"
+                        Grid.Row="6"
+                        Grid.ColumnSpan="4"
+                        TextColor="GhostWhite"
+                        BackgroundColor="OrangeRed"
+                        Clicked="btnSignOut_Clicked"/>
 
             </Grid>
         </StackLayout>

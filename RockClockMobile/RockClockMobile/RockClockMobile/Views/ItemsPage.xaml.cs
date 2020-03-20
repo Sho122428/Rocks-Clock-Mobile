@@ -19,6 +19,7 @@ namespace RockClockMobile.Views
     public partial class ItemsPage : ContentPage
     {
         ItemsViewModel viewModel;
+        
 
         public ItemsPage()
         {
@@ -45,7 +46,7 @@ namespace RockClockMobile.Views
 
 
             //go to verification page
-            await Navigation.PushAsync(new TimeClockPage());
+            //await Navigation.PushAsync(new TimeClockPage());
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }
