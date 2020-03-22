@@ -33,12 +33,6 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RockClockMobile\RockClockMobile\RockClockMobile.csproj">
-      <Project>{c8840184-153b-431d-a23f-8882c2e72c11}</Project>
-      <Name>RockClockMobile</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Tests.cs" />
     <Compile Include="AppInitializer.cs" />
   </ItemGroup>

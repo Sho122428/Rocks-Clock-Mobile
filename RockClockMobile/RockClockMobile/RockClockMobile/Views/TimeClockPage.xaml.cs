@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeClockPage : ContentPage
     {
+        Employee empDtl = GlobalServices.employee;
+        List<TimeLog> empUserLog = GlobalServices.EmployeeTime;
+        //TimeLog LogedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+
         private Timer timer1;
         private int counter = 20;
         private static Timer _delayTimer;
@@ -27,21 +32,21 @@ namespace RockClockMobile.Views
         public TimeLog TimeLog { get; set; }
         
 
-        public TimeClockPage(Employee employee)
+        public TimeClockPage()
         {
             InitializeComponent();
 
             BindingContext = viewModel = new TimeLogViewModel();
 
             //btnTimeClock.Text = "Clock In";
-            empID = employee.EmpID;
+            //empID = employee.EmpID;
             
             LoadClock();
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
-        {
-            if(!isTimedIn)
+        {        
+            if (!isTimedIn)
             { 
                 var cur_time = DateTime.Now.ToString("h:mm tt");
                 lblClockedIn.Text = cur_time;
@@ -56,12 +61,37 @@ namespace RockClockMobile.Views
                 //lblbreakSt.IsVisible = true;
                 //lblBreakTimeStart.IsVisible = true;
                 //lblbreakEnd.IsVisible = true;
-                //lblBreakTimeEnd.IsVisible = true;
+                //lblBreakTimeEnd.IsVisible = true;I
                 //lblclockout.IsVisible = true;
                 //lblClockedOut.IsVisible = true;
+
+                var userTimeLog = new TimeLog{
+                    rocksUserID = empDtl.EmpID,
+                    TimeIn = Convert.ToDateTime(cur_time),
+                    TimeOut = Convert.ToDateTime(cur_time)
+                };
+
+                List<TimeLog> EmployeeTimeLog = new List<TimeLog>();
+
+                if (empUserLog != null)
+                {
+                    EmployeeTimeLog = empUserLog;
+                }
+
+                EmployeeTimeLog.Add(userTimeLog);
+
+                GlobalServices.EmployeeTime = EmployeeTimeLog;
             }
             else
             {
+                TimeLog LogedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+
+                if (LogedInUser != null)
+                {
+                    LogedInUser.TimeOut = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
+                    LogedInUser.IsClokedOut = true;
+                }
+
                 var cur_time = DateTime.Now.ToString("h:mm tt");
                 await DisplayAlert("Alert", "You have clocked out " + cur_time, "OK");
                 lblClockedOut.Text = cur_time;
@@ -166,7 +196,20 @@ namespace RockClockMobile.Views
                 lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
                 );
                 return true;
-            });
+            });            
+
+            if (empUserLog != null)
+            {
+                TimeLog LogedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+
+                if (LogedInUser != null && LogedInUser.IsClokedOut != true)
+                {
+                    isTimedIn = true;
+                    lblClockedIn.Text = LogedInUser.TimeIn.ToString();
+                    btnTimeClock.Text = "Clock Out";
+                    btnTimeClock.BackgroundColor = Color.Red;
+                }
+            }            
         }
 
         private async void btnSignOut_Clicked(object sender, EventArgs e)

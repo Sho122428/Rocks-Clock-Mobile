@@ -20,7 +20,6 @@ namespace RockClockMobile.ViewModels
                 EmpID = 2,
                 FirstName = "Janno Timothy",
                 LastName = "Pono",
-                EmpID = 1
             });
             EmployeeList.Add(new Employee
             {

@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using RockClockMobile;
-using RockClockMobile.Views;
+//using RockClockMobile;
+//using RockClockMobile.Views;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 
@@ -33,8 +33,8 @@ namespace RocksClock.UI.Test
             AppResult[] results = app.WaitForElement(c => c.Marked("Welcome to Xamarin.Forms!"));
             app.Screenshot("Welcome screen.");
 
-            PincodePage pincodePage = new PincodePage();
-            LoginPage loginPage = new LoginPage();
+            //PincodePage pincodePage = new PincodePage();
+            //LoginPage loginPage = new LoginPage();
             
             //app.Tap(c => c.a);
 
