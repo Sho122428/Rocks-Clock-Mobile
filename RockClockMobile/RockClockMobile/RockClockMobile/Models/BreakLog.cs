@@ -10,5 +10,6 @@ namespace RockClockMobile.Models
         public int TimeId { get; set; }
         public DateTime BreakIn { get; set; }
         public DateTime BreakOut { get; set; }
+        public bool IsTakingABreak { get; set; }
     }
 }

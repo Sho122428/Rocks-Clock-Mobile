@@ -10,5 +10,7 @@ namespace RockClockMobile.Services
         public static Employee employee { get; set; }
 
         public static List<TimeLog> EmployeeTime { get; set; }
+
+        public static List<BreakLog> EmployeeBreak { get; set; }
     }
 }
