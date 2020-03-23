@@ -20,12 +20,14 @@ namespace RockClockMobile
         {
             InitializeComponent();
             if (UseMockDataStore)
-                //DependencyService.Register<MockDataStore>();
+            {
+                DependencyService.Register<MockDataStore>();
                 DependencyService.Register<MockDataStoreTimeLog>();
+            }
             else
                 DependencyService.Register<AzureDataStore>();
-            MainPage = new LoginPage();
-            //MainPage = new AppShell();
+            //MainPage = new LoginPage();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()

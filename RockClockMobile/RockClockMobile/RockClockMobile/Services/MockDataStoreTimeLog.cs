@@ -14,7 +14,8 @@ namespace RockClockMobile.Services
         {
             timelogs = new List<TimeLog>()
             {
-                new TimeLog { TimeId = 1, rocksUserID = 1, projectID = 111, TimeIn = DateTime.Parse("14:00"), TimeOut = DateTime.Parse("23:00")}
+                new TimeLog { TimeId = 1, rocksUserID = 1001, projectID = 111, TimeIn = DateTime.Parse("14:00"), TimeOut = DateTime.Parse("23:00")},
+                new TimeLog { TimeId = 2, rocksUserID = 1002, projectID = 112, TimeIn = DateTime.Parse("08:00"), TimeOut = DateTime.Parse("17:00")}
             };
         }
 

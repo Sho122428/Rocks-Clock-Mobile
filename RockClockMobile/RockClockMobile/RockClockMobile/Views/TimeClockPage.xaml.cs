@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,9 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeClockPage : ContentPage
     {
-        private Timer timer1;
-        private int counter = 20;
         private static Timer _delayTimer;
         private int empID;
-
+        
         bool isTimedIn = false;
         bool isOnBreak = false;
 
@@ -27,16 +26,21 @@ namespace RockClockMobile.Views
         public TimeLog TimeLog { get; set; }
         
 
-        public TimeClockPage(Employee employee)
+        public TimeClockPage()
         {
             InitializeComponent();
 
+            //isClocked_In = GlobalServices.IsClockedIn;
+            //if(isClocked_In)
             BindingContext = viewModel = new TimeLogViewModel();
 
             //btnTimeClock.Text = "Clock In";
-            empID = employee.EmpID;
+            
             
             LoadClock();
+            TimeLog timeLog = new TimeLog();
+            timeLog.rocksUserID = GlobalServices.employee.EmpID;
+            viewModel.LoadEmployeeTimeLog.Execute(timeLog);
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -46,19 +50,12 @@ namespace RockClockMobile.Views
                 var cur_time = DateTime.Now.ToString("h:mm tt");
                 lblClockedIn.Text = cur_time;
                 await DisplayAlert("Rocks Clock", "You have clocked in " +cur_time, "OK");
-                //btnTimeClockBreak.IsVisible = true;
+                
                 btnTimeClock.Text = "Clock Out";
                 isTimedIn = true;
                 btnTimeClockBreak.IsEnabled = true;
                 btnTimeClockBreak.Opacity = 1;
-                //lblclockin.IsVisible = true;
-                //lblClockedIn.IsVisible = true;
-                //lblbreakSt.IsVisible = true;
-                //lblBreakTimeStart.IsVisible = true;
-                //lblbreakEnd.IsVisible = true;
-                //lblBreakTimeEnd.IsVisible = true;
-                //lblclockout.IsVisible = true;
-                //lblClockedOut.IsVisible = true;
+               
             }
             else
             {
@@ -68,15 +65,17 @@ namespace RockClockMobile.Views
                 lblclockout.IsVisible = true;
                 lblClockedOut.IsVisible = true;
             }
-
+            int cntId = viewModel.TimeLogs.Count;
             TimeLog = new TimeLog
             {
-                TimeId = 2,
+                TimeId = cntId + 1,
                 TimeIn = DateTime.Now,
-                rocksUserID = empID
+                rocksUserID = int.Parse(Application.Current.Properties["user_id "].ToString())
 
             };
+            
             MessagingCenter.Send(this, "AddTimeLog", TimeLog);
+            GlobalServices.IsClockedIn = true;
             //delay(3000);
             logOut();
             
@@ -126,25 +125,10 @@ namespace RockClockMobile.Views
         async void logOut()
         {
             //await Navigation.PushAsync(new LoginPage());
+            await Task.Delay(1000);
             Application.Current.MainPage = new LoginPage();
         }
-        //private void timeToLogout()
-        //{
-        //    int counter = 60;
-        //    timer1 = new Timer();
-        //    timer1.Tick += new EventHandler(timer1_Tick);
-        //    timer1.Interval = 1000; // 1 second
-        //    timer1.Start();
-        //    label1.Text = counter.ToString();
-        //}
-
-        //private void timer1_Tick(object sender, EventArgs e)
-        //{
-        //    counter--;
-        //    if (counter == 0)
-        //        timer1.Stop();
-        //    lblCountDown.Text = counter.ToString();
-        //}
+        
 
         async static void delay(int Time_delay)
         {
@@ -172,6 +156,15 @@ namespace RockClockMobile.Views
         private async void btnSignOut_Clicked(object sender, EventArgs e)
         {
              logOut();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (viewModel.TimeLogs.Count == 0)
+                viewModel.LoadTimeLogsCommand.Execute(null);
+
         }
     }
 }

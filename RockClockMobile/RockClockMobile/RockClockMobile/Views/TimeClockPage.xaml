@@ -7,34 +7,7 @@
              x:Class="RockClockMobile.Views.TimeClockPage">
     <ContentPage.Content>
         <StackLayout>
-        <!--<Grid Padding="15" RowSpacing="1" ColumnSpacing="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label FontSize="Large" TextColor="ForestGreen" Text="Current Time:" Grid.Row="0" Grid.Column="0"/>
-            
-            <Label x:Name="lblTimer" FontSize="Large" TextColor="ForestGreen" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center"/>
-            <Label x:Name="lblclockin" FontSize="Large" Text="Clocked In:" Grid.Row="1" Grid.Column="0" IsVisible="False"/>
-            <Label x:Name="lblClockedIn" FontSize="Large" Grid.Row="1" Grid.Column="1" IsVisible="False"/>
-            <Label x:Name="lblclockout"  FontSize="Large" Text="Clocked Out:" Grid.Row="2" Grid.Column="0" IsVisible="False"/>
-            <Label x:Name="lblClockedOut" FontSize="Large" Grid.Row="2" Grid.Column="1" IsVisible="False"/>
-            
-            <Label x:Name="lblbreak" Text="Breaktime" Grid.Row="0" Grid.Column="0"/>
-            <Label x:Name="lblBreakTimeStart" Grid.Row="0" Grid.Column="1" />
-            <Label x:Name="lblBreakTimeEnd" Grid.Row="0" Grid.Column="2" />
-            <Label x:Name="lblTotal" Text="Total Hours: " Grid.Row="4" Grid.Column="0" IsVisible="False"/>
-            <Label x:Name="lblTotalBrkHrs" Grid.Row="4" Grid.Column="1" IsVisible="False"/>
-
-            <Button x:Name="btnTimeClock" Clicked="Button_Clicked" Grid.Row="5"/>
-            <Button x:Name="btnTimeClockBreak" Grid.Row="6" IsVisible="False" Text="Take a Break" Clicked="ButtonBreak_Clicked"/>
-
-        </Grid>-->
+        
             <Grid Padding="20" RowSpacing="1" ColumnSpacing="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -158,8 +131,50 @@
                         TextColor="GhostWhite"
                         BackgroundColor="OrangeRed"
                         Clicked="btnSignOut_Clicked"/>
-
             </Grid>
+
+            <!--<ListView x:Name="ItemsListView"
+                ItemsSource="{Binding TimeLogs}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadTimeLogsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>First Item</x:String>
+                        <x:String>Second Item</x:String>
+                        <x:String>Third Item</x:String>
+                        <x:String>Fourth Item</x:String>
+                        <x:String>Fifth Item</x:String>
+                        <x:String>Sixth Item</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding TimeId}" 
+                                d:Text="{Binding .}"
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="Small" />
+                                <Label Text="{Binding rocksUserID}" 
+                                d:Text="Employee ID"
+                                LineBreakMode="NoWrap" 
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                FontSize="Small" />
+                                <Label Text="{Binding TimeIn}" 
+                                d:Text="Time In:"
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="Small" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

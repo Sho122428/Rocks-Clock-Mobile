@@ -20,6 +20,7 @@ namespace RockClockMobile
     {
         LoginViewModel loginViewModel = new LoginViewModel();
         List<Employee> EmployeeList = new List<Employee>();
+        
         public LoginPage()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace RockClockMobile
                     FullName = dtl.FullName
                 });           
             }
-
+            
             userCombo.DataSource = EmployeeList.Select(a => a.FullName);
             lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
         }
@@ -80,6 +81,8 @@ namespace RockClockMobile
         private async void TappedUser(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
             //call pincode page
+            
+
             var empSignIn = (Employee)e.ItemData;
 
             var empDtl = new Employee{
@@ -87,8 +90,10 @@ namespace RockClockMobile
                 FirstName = empSignIn.FirstName,
                 LastName = empSignIn.LastName
             };
-            
+
            GlobalServices.employee = empDtl;
+           Application.Current.Properties["user_id "] = empDtl.EmpID;
+            
 
             await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
         }

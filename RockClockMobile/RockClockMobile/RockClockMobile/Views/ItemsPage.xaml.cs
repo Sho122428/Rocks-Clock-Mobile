@@ -42,7 +42,7 @@ namespace RockClockMobile.Views
             if (item == null)
                 return;
 
-            //await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
 
             //go to verification page
