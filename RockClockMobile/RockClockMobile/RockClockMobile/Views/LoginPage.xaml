@@ -34,7 +34,7 @@
                             <ViewCell>
                                 <StackLayout HeightRequest="35" BackgroundColor="WhiteSmoke"
                                                 VerticalOptions="CenterAndExpand" Padding="15,5,0,0">
-                                    <Label Text="{Binding FullName}" Grid.Row="0"/>
+                                    <Label Text="{Binding FullName}" Grid.Row="0" AutomationId="SelectedUser"/>
                                 </StackLayout>                               
                             </ViewCell>
                         </DataTemplate>

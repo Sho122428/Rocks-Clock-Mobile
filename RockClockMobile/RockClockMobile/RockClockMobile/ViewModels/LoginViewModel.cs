@@ -11,49 +11,49 @@ namespace RockClockMobile.ViewModels
         public LoginViewModel() {
             EmployeeList.Add(new Employee
             {
-                EmpID = 1001,
+                EmpID = 1,
                 FirstName = "Florencio",
                 LastName = "Baroman"
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1002,
+                EmpID = 2,
                 FirstName = "Janno Timothy",
-                LastName = "Pono"
+                LastName = "Pono",
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1003,
+                EmpID = 3,
                 FirstName = "Dean Rey",
                 LastName = "Cortes"
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1004,
+                EmpID = 4,
                 FirstName = "Kiarah Louise",
                 LastName = "Ancajas"
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1005,
+                EmpID = 5,
                 FirstName = "Alexis",
                 LastName = "Denolan"
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1006,
+                EmpID = 6,
                 FirstName = "Eliaquim",
                 LastName = "Baylon"
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1007,
+                EmpID = 7,
                 FirstName = "Jeremias",
                 LastName = "Recamadas"
             });
             EmployeeList.Add(new Employee
             {
-                EmpID = 1008,
+                EmpID = 8,
                 FirstName = "Ronie",
                 LastName = "Magpantay"
             });
