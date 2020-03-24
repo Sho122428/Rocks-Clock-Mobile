@@ -11,6 +11,18 @@
     <!-- 
         Styles and Resources 
     -->
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="Black"
+              HeightRequest="200">
+                <Label Text="Animals"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
     <Shell.Resources>
         <ResourceDictionary>
             <Color x:Key="NavigationPrimary">#2196F3</Color>
@@ -28,26 +40,48 @@
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
         </ResourceDictionary>
     </Shell.Resources>
+    <FlyoutItem Title="Time Clock"
+                Icon="tab_feed.png">
+        <Tab>
+            <ShellContent>
+                <local:TimeClockPage />
+            </ShellContent>
+        </Tab>
+        
+    </FlyoutItem>
+    <FlyoutItem Title="About"
+                Icon="tab_about.png">
+        <Tab>
+            <ShellContent>
+                <local:AboutPage />
+            </ShellContent>
+        </Tab>
+
+    </FlyoutItem>
+    
 
     <!-- Your Pages -->
-    <TabBar>
-        <!--<Tab Title="Browse" Icon="tab_feed.png">
-            <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
+    <!--<TabBar>
+        <Tab Title="Browse" Icon="tab_feed.png">
+            <ShellContent ContentTemplate="{DataTemplate local:TimeClockPage}" />
         </Tab>
         <Tab Title="About" Icon="tab_about.png">
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
-        </Tab>-->
+        </Tab>
         <Tab Title="Browse" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
         </Tab>
-        <!--<Tab Title="Time Clock" Icon="tab_about.png">
+        <Tab Title="Time Clock" Icon="tab_about.png">
             <ShellContent ContentTemplate="{DataTemplate local:Page1}" />
-        </Tab>-->
+        </Tab>
         
         
-    </TabBar>
+    </TabBar>-->
+    
+    
+    
 
-    <!-- Optional Templates 
+    <!--Optional Templates 
     // These may be provided inline as below or as separate classes.
 
     // This header appears at the top of the Flyout.
@@ -73,8 +107,8 @@
                 Bindable Properties: Text, Icon
             </ContentView>
         </DataTemplate>
-    </Shell.MenuItemTemplate>
+    </Shell.MenuItemTemplate>-->
 
-    -->
+    
 
 </Shell>
