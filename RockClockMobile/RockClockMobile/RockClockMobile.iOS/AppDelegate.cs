@@ -1,4 +1,10 @@
-﻿using System;
+using Syncfusion.ListView.XForms.iOS;
+using Syncfusion.XForms.iOS.Border;
+using Syncfusion.SfRotator.XForms.iOS;
+using Syncfusion.XForms.iOS.Core;
+using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.iOS.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,6 +30,11 @@ namespace RockClockMobile.iOS
         {
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
+            SfListViewRenderer.Init();
+            SfBorderRenderer.Init();
+            SfRotatorRenderer.Init();
+            SfButtonRenderer.Init();
+            SfGradientViewRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

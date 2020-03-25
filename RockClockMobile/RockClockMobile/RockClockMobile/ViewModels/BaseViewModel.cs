@@ -7,9 +7,11 @@ using Xamarin.Forms;
 
 using RockClockMobile.Models;
 using RockClockMobile.Services;
+using System.Runtime.Serialization;
 
 namespace RockClockMobile.ViewModels
 {
+    [DataContract]
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();

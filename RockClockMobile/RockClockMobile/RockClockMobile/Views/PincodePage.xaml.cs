@@ -49,7 +49,8 @@ namespace RockClockMobile.Views
                 else
                 {
                     //await Navigation.PushModalAsync(new NavigationPage(new TimeClockPage()));
-                    Application.Current.MainPage = new AppShell();
+                    //Application.Current.MainPage = new AppShell();
+                    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
                 }
             }                      
         }
