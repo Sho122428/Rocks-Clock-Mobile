@@ -153,6 +153,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>17.4.0.55</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfRotator">
+      <Version>17.4.0.55</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
@@ -163,6 +166,15 @@
       <Project>{290BA01C-3214-446A-B19F-FA54AFBD6482}</Project>
       <Name>RockClockMobile</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\TimeZone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReSchedule.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ViewMode.png" />
   </ItemGroup>
   <ItemGroup />
 </Project>

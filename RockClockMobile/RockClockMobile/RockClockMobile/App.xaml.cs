@@ -5,7 +5,6 @@ using Xamarin.Forms.Xaml;
 using RockClockMobile.Services;
 using RockClockMobile.Views;
 using System.Diagnostics;
-using RockClockMobile.Views.EmployeeListVM;
 
 namespace RockClockMobile
 {
@@ -32,8 +31,9 @@ namespace RockClockMobile
             }
             else
                 DependencyService.Register<AzureDataStore>();
-            MainPage = new NamesListPage();
+            //MainPage = new LoginPage();
             //MainPage = new AppShell();
+            MainPage = new RockClockMobile.Views.Navigation.NamesListPage();
         }
 
         protected override void OnStart()

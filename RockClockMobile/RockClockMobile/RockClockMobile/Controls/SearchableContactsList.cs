@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms.Internals;
-using RockClockMobile.Models.EmployeeListVM;
+using RockClockMobile.Models.Navigation;
 
 namespace RockClockMobile.Controls
 {

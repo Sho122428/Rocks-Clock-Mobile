@@ -41,6 +41,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>17.4.0.55</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfRotator">
+      <Version>17.4.0.55</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.UITest" Version="3.0.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>

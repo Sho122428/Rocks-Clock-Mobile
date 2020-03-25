@@ -1,10 +1,7 @@
-﻿using RockClockMobile.Models.EmployeeListVM;
-using RockClockMobile.ViewModels.EmployeeListVM;
-using System.IO;
+﻿using RockClockMobile.ViewModels.Navigation;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
-using System.Text;
 using Xamarin.Forms.Internals;
 
 namespace RockClockMobile.DataService
@@ -53,7 +50,6 @@ namespace RockClockMobile.DataService
             var file = "RockClockMobile.Data." + fileName;
 
             var assembly = typeof(App).GetTypeInfo().Assembly;
-            //var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
 
             T obj;
 
@@ -62,8 +58,6 @@ namespace RockClockMobile.DataService
                 var serializer = new DataContractJsonSerializer(typeof(T));
                 obj = (T)serializer.ReadObject(stream);
             }
-
-           
 
             return obj;
         }

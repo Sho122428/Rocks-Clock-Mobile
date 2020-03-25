@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using RockClockMobile.Models.EmployeeListVM;
+using RockClockMobile.Models.Navigation;
 using Syncfusion.ListView.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
