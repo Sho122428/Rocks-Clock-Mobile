@@ -10,7 +10,7 @@
              x:Class="RockClockMobile.LoginPage">
     
     <ContentPage.Content>
-
+        
         <StackLayout Orientation="Vertical" BackgroundColor="FloralWhite" HorizontalOptions="Center">
             <Grid Padding="20,0,20,0">
                 <Grid.RowDefinitions>
@@ -23,18 +23,28 @@
                        VerticalOptions="Center" HorizontalOptions="Center"/>
 
                 <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Search Name" Grid.Row="1" Padding="0,0,0,0">
-                    <combobox:SfComboBox IsEditableMode="true" x:Name="userCombo" SelectionChanged="SelectUserEvent">
+                    <combobox:SfComboBox IsEditableMode="true" x:Name="userCombo" 
+                                         SelectionChanged="SelectUserEvent">
                     </combobox:SfComboBox>
                 </inputLayout:SfTextInputLayout>
                 
                 <listView:SfListView x:Name="lvUsers" Grid.Row="2" ItemTapped="TappedUser" 
-                                     AutoFitMode="Height">
+                                     AutoFitMode="Height" ItemsSource="{Binding EmployeeList}">
                     <listView:SfListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout HeightRequest="35" BackgroundColor="WhiteSmoke"
                                                 VerticalOptions="CenterAndExpand" Padding="15,5,0,0">
-                                    <Label Text="{Binding FullName}" Grid.Row="0" AutomationId="SelectedUser"/>
+                                    <Label Grid.Row="0" AutomationId="SelectedUser">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding FirstName}"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding LastName}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <!--<Label Text="{Binding FirstName}" Grid.Row="0" AutomationId="SelectedUser"/>-->
                                 </StackLayout>                               
                             </ViewCell>
                         </DataTemplate>

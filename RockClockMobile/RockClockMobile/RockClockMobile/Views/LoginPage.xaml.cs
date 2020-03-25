@@ -18,7 +18,7 @@ namespace RockClockMobile
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        LoginViewModel loginViewModel = new LoginViewModel();
+        //LoginViewModel loginViewModel = new LoginViewModel();
         List<Employee> EmployeeList = new List<Employee>();
         
         public LoginPage()
@@ -33,19 +33,19 @@ namespace RockClockMobile
                 return true;
             });
 
-            BindingContext = loginViewModel.Employees();  
+            BindingContext = new LoginViewModel();  
 
-            foreach (var dtl in loginViewModel.Employees().OrderBy(a => a.FirstName))
-            {
-                dtl.FullName = $"{dtl.FirstName} {dtl.LastName}";
-                EmployeeList.Add(new Employee
-                {
-                    FullName = dtl.FullName
-                });           
-            }
+            //foreach (var dtl in loginViewModel.Employees().OrderBy(a => a.FirstName))
+            //{
+            //    dtl.FullName = $"{dtl.FirstName} {dtl.LastName}";
+            //    EmployeeList.Add(new Employee
+            //    {
+            //        FullName = dtl.FullName
+            //    });           
+            //}
             
-            userCombo.DataSource = EmployeeList.Select(a => a.FullName);
-            lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
+            //userCombo.DataSource = EmployeeList.Select(a => a.FullName);
+            //lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
         }
 
         public async void btnLogin(object sender, EventArgs e)
@@ -69,13 +69,13 @@ namespace RockClockMobile
         {
             var user = e.Value;
 
-            if (user.ToString() == "")
-            {
-                lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
-            }
-            else {
-                lvUsers.ItemsSource = loginViewModel.Employees().Where(a => a.FullName == user.ToString());
-            }           
+            //if (user.ToString() == "")
+            //{
+            //    lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
+            //}
+            //else {
+            //    lvUsers.ItemsSource = loginViewModel.Employees().Where(a => a.FullName == user.ToString());
+            //}           
         }
 
         private async void TappedUser(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
@@ -88,7 +88,9 @@ namespace RockClockMobile
             var empDtl = new Employee{
                 EmpID = empSignIn.EmpID,
                 FirstName = empSignIn.FirstName,
-                LastName = empSignIn.LastName
+                LastName = empSignIn.LastName,
+                ProjectId = empSignIn.ProjectId,
+                ProjectName = empSignIn.ProjectName
             };
 
            GlobalServices.employee = empDtl;

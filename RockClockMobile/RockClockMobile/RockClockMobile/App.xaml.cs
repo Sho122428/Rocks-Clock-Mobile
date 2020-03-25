@@ -1,15 +1,17 @@
-﻿using System;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using RockClockMobile.Services;
 using RockClockMobile.Views;
 using System.Diagnostics;
+using RockClockMobile.Views.EmployeeListVM;
 
 namespace RockClockMobile
 {
     public partial class App : Application
     {
+        public static string BaseImageUrl { get; } = "https://cdn.syncfusion.com/essential-ui-kit-for-xamarin.forms/common/uikitimages/";
         //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
         //To debug on Android emulators run the web backend against .NET Core not IIS
         //If using other emulators besides stock Google images you may need to adjust the IP address
@@ -30,7 +32,7 @@ namespace RockClockMobile
             }
             else
                 DependencyService.Register<AzureDataStore>();
-            MainPage = new LoginPage();
+            MainPage = new NamesListPage();
             //MainPage = new AppShell();
         }
 
