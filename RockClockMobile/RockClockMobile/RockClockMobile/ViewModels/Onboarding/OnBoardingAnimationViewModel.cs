@@ -120,11 +120,12 @@ namespace RockClockMobile.ViewModels.Onboarding
                     if (takeBreak != null && takeBreak.IsTakingABreak != false)
                     {
                         this.BreakButtonText = "END BREAK";
+                        this.IsOnBreak = true;
                     }
                     else if (takeBreak != null && takeBreak.IsTakingABreak == false)
                     {
                         this.BreakButtonText = "START BREAK";
-                        this.IsOnBreak = true;
+                        
                     }
                 }
             }
@@ -474,6 +475,20 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 GlobalServices.EmployeeBreak = EmployeeBreakLog;
             }
+            else
+            {
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+
+                if (takeBreak != null)
+                {
+                    takeBreak.BreakOut = DateTime.Now;
+                    takeBreak.IsTakingABreak = false;
+                }
+                this.IsOnBreak = false;
+                
+
+            }
             this.SignOut();
         }
 
@@ -484,7 +499,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private void SignOut()
         {
-            Application.Current.MainPage = new LoginPage();
+            Application.Current.MainPage = new Views.Navigation.NamesListPage();
         }
 
         #endregion

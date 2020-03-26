@@ -74,7 +74,8 @@ namespace RockClockMobile.Views.Onboarding
                     }
                     else if (takeBreak != null && takeBreak.IsTakingABreak == false)
                     {
-                        lblBreakEnd.Text = takeBreak.BreakIn.ToString("h:mm tt");
+                        lblBreakStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
+                        lblBreakEnd.Text = takeBreak.BreakOut.ToString("h:mm tt");
                     }
                 }
             }

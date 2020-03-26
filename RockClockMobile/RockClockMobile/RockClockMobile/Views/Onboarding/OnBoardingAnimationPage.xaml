@@ -84,7 +84,7 @@
                     <behavior:SfRotatorBehavior />
                 </rotator:SfRotator.Behaviors>
             </rotator:SfRotator>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="3" Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
