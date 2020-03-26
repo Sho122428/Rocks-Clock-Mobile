@@ -6,6 +6,18 @@ using RockClockMobile.Services;
 using RockClockMobile.Views;
 using System.Diagnostics;
 using RockClockMobile.Views.Navigation;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using RockClockMobile.Models;
+using System.IO;
+
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace RockClockMobile
 {
@@ -20,7 +32,7 @@ namespace RockClockMobile
         public static bool UseMockDataStore = true;
 
         private static Stopwatch stopWatch = new Stopwatch();
-        private const int defaultTimespan = 20; //In Seconds
+        private const int defaultTimespan = 20; //In Seconds        
 
         public App()
         {
@@ -33,9 +45,9 @@ namespace RockClockMobile
             else
                 DependencyService.Register<AzureDataStore>();
             //MainPage = new LoginPage();
-            //MainPage = new AppShell();
+            //MainPage = new AppShell(); 
             App.Current.MainPage = new NamesListPage();
-        }
+        }       
 
         protected override void OnStart()
         {
@@ -67,8 +79,6 @@ namespace RockClockMobile
                 // Always return true as to keep our device timer running.
                 return true;
             });
-
-
         }
 
         protected override void OnSleep()
@@ -82,7 +92,5 @@ namespace RockClockMobile
             // App enters the foreground so start our stopwatch again.
             stopWatch.Start();
         }
-
-
     }
 }

@@ -5,6 +5,10 @@ using Xamarin.Forms.Xaml;
 using RockClockMobile.DataService;
 using RockClockMobile.Models;
 using RockClockMobile.Services;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace RockClockMobile.Views.Navigation
 {
@@ -15,6 +19,7 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
+        HttpClient client = new HttpClient();
         public NamesListPage()
         {
             InitializeComponent();
@@ -27,6 +32,8 @@ namespace RockClockMobile.Views.Navigation
                 );
                 return true;
             });
+
+            GetItemAsync(1);
         }
 
         /// <summary>
@@ -129,6 +136,27 @@ namespace RockClockMobile.Views.Navigation
 
             //await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
             App.Current.MainPage = new PincodePage();
+        }
+
+        public async Task<BreakLog> GetItemAsync(int id)
+        {
+
+            if (id != 0)
+            {
+                try {
+                    var httpClient = new HttpClient();
+                    var response = await httpClient.GetStringAsync("https://127.0.0.1:44329/BreakLog/1 ");
+                    var employee = JsonConvert.DeserializeObject<List<BreakLog>>(response);
+                    var brd = employee;
+                }
+                catch (Exception ex) { 
+                
+                }
+               
+
+            }
+
+            return null;
         }
     }
 }
