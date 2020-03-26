@@ -2,7 +2,7 @@
 
 namespace RockClockMobile.ViewModels
 {
-    public class PincodeViewModel
+    public class PincodeViewModel : BaseViewModel
     {
         public bool ValidatePin(int pin)
         {

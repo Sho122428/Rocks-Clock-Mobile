@@ -31,8 +31,9 @@ namespace RockClockMobile.Behaviors.Navigation
                 PropertyName = "Name",
                 KeySelector = (object obj1) =>
                 {
-                    var item = (obj1 as Models.Navigation.Contact);
-                    return item.Name[0].ToString(CultureInfo.CurrentCulture);
+                    //var item = (obj1 as Models.Navigation.Contact);
+                    var item = (obj1 as Models.Employee);
+                    return item.FirstName[0].ToString(CultureInfo.CurrentCulture);
                 },
             });
             base.OnAttachedTo(bindable);

@@ -16,7 +16,6 @@ namespace RockClockMobile.Views
     public partial class PincodePage : ContentPage
     {
         PincodeViewModel pincodeViewModel = new PincodeViewModel();
-        //public Employee EmpDetail;
         public PincodePage()
         {
             InitializeComponent();
@@ -35,7 +34,6 @@ namespace RockClockMobile.Views
         private async void BtnSignInEvent(object sender, EventArgs e)
         {
             int pin = EntryPin.Text == ""? 0 : Convert.ToInt32(EntryPin.Text);
-            var empDtl = GlobalServices.employee;
 
             if (pin == 0)
             {

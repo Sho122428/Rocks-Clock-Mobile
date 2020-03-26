@@ -3,6 +3,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 using RockClockMobile.DataService;
+using RockClockMobile.Models;
+using RockClockMobile.Services;
 
 namespace RockClockMobile.Views.Navigation
 {
@@ -17,6 +19,14 @@ namespace RockClockMobile.Views.Navigation
         {
             InitializeComponent();
             this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
+
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
+                );
+                return true;
+            });
         }
 
         /// <summary>
@@ -99,6 +109,26 @@ namespace RockClockMobile.Views.Navigation
         {
             this.Search.IsVisible = false;
             this.Title.IsVisible = true;
+        }
+
+        private async void TapUserEvent(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
+        {
+            var empSignIn = (Employee)e.ItemData == null? null : (Employee)e.ItemData;
+
+            var empDtl = new Employee
+            {
+                EmpID = empSignIn.EmpID,
+                FirstName = empSignIn.FirstName,
+                LastName = empSignIn.LastName,
+                ProjectId = empSignIn.ProjectId,
+                ProjectName = empSignIn.ProjectName
+            };
+
+            GlobalServices.employee = empDtl;
+            Application.Current.Properties["user_id "] = empDtl.EmpID;
+
+            //await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
+            App.Current.MainPage = new PincodePage();
         }
     }
 }

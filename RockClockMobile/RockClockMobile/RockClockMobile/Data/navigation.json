@@ -363,47 +363,75 @@
 
   "namesListPage": [
     {
-      "name": "Alora Elliot"
+      "EmpID": 1,
+      "FirstName": "Florencio",
+      "LastName": "Baroman",
+      "ProjectId": 1,
+      "ProjectName": "Project1"
     },
     {
-      "name": "Arden Noelle"
+      "EmpID": 2,
+      "FirstName": "Janno Timothy",
+      "LastName": "Pono",
+      "ProjectId": 2,
+      "ProjectName": "Project2"
     },
     {
-      "name": "Austin Bradley"
+      "EmpID": 3,
+      "FirstName": "Eliaquim",
+      "LastName": "Baylon",
+      "ProjectId": 3,
+      "ProjectName": "Project3"
     },
     {
-      "name": "Aurelia Lilan "
+      "EmpID": 4,
+      "FirstName": "Alexis",
+      "LastName": "Denolan",
+      "ProjectId": 4,
+      "ProjectName": "Project4"
     },
     {
-      "name": "Arthur Kim"
+      "EmpID": 5,
+      "FirstName": "Christian",
+      "LastName": "Cabang",
+      "ProjectId": 5,
+      "ProjectName": "Project5"
     },
     {
-      "name": "Bernard Daniels"
+      "EmpID": 6,
+      "FirstName": "Kiarah Louise",
+      "LastName": "Ancajas",
+      "ProjectId": 6,
+      "ProjectName": "Project6"
     },
     {
-      "name": "Bernard Rodriquez"
+      "EmpID": 7,
+      "FirstName": "Randy",
+      "LastName": "Pacatang",
+      "ProjectId": 7,
+      "ProjectName": "Project7"
     },
     {
-      "name": "Barden Daniel"
+      "EmpID": 8,
+      "FirstName": "Ronie",
+      "LastName": "Magpantay",
+      "ProjectId": 8,
+      "ProjectName": "Project8"
     },
     {
-      "name": "Brandan Todd"
+      "EmpID": 9,
+      "FirstName": "Dean Rey",
+      "LastName": "Cortes",
+      "ProjectId": 9,
+      "ProjectName": "Project9"
     },
     {
-      "name": "Charlotte Nash"
-    },
-    {
-      "name": "Carlos Esteban"
-    },
-    {
-      "name": "Christina Hanson"
-    },
-    {
-      "name": "Camila Sage"
-    },
-    {
-      "name": "Dustin Blake"
-    }
+      "EmpID": 10,
+      "FirstName": "Jeremias",
+      "LastName": "Recamadas",
+      "ProjectId": 10,
+      "ProjectName": "Project10"
+    }   
   ],
   "contactsPageList": [
     {
