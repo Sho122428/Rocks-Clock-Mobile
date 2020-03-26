@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:RockClockMobile.Controls"
              xmlns:data="clr-namespace:Syncfusion.DataSource;assembly=Syncfusion.DataSource.Portable"
              xmlns:behavior="clr-namespace:RockClockMobile.Behaviors.Navigation"
+             xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
              mc:Ignorable="d"
              x:Class="RockClockMobile.Views.Navigation.NamesListPage"
              BackgroundColor="{DynamicResource Gray-White}"
@@ -32,8 +33,18 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="lblTimer" FontSize="60" TextColor="ForestGreen" Grid.Row="0"
-                       VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Label x:Name="lblTimer"
+                 BackgroundColor="Transparent"
+                Margin="0,20,0,8"
+                FontFamily="{StaticResource Montserrat-SemiBold}"
+                FontSize="40"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                   HeightRequest="100"
+                   WidthRequest="300"
+                Style="{StaticResource LabelStyle}"
+                VerticalTextAlignment="Start" 
+                   VerticalOptions="Center"/>
 
             <StackLayout x:Name="TitleView"  Padding="8,8" Grid.Row="1"
                          BackgroundColor="{DynamicResource Gray-White}" Spacing="0"
