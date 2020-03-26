@@ -3,6 +3,7 @@ using RockClockMobile.Models.Navigation;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using Xamarin.Forms.Internals;
+using RockClockMobile.Models;
 
 namespace RockClockMobile.ViewModels.Navigation
 {
@@ -47,7 +48,7 @@ namespace RockClockMobile.ViewModels.Navigation
         /// Gets or sets a collction of value to be displayed in contacts list page.
         /// </summary>
         [DataMember(Name = "namesListPage")]
-        public ObservableCollection<Contact> NamesList { get; set; }
+        public ObservableCollection<Employee> NamesList { get; set; }
 
         #endregion
 

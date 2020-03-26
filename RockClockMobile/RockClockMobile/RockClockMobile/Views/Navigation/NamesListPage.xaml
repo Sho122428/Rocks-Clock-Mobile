@@ -23,14 +23,19 @@
 
     <ContentPage.Content>
 
-        <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid RowSpacing="0" ColumnSpacing="0"
+              Padding="20,0,0,20">
             <Grid.RowDefinitions>
+                <RowDefinition Height="130"/>
                 <RowDefinition Height="64"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout x:Name="TitleView"  Padding="8,8" Grid.Row="0"
+            <Label x:Name="lblTimer" FontSize="60" TextColor="ForestGreen" Grid.Row="0"
+                       VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <StackLayout x:Name="TitleView"  Padding="8,8" Grid.Row="1"
                          BackgroundColor="{DynamicResource Gray-White}" Spacing="0"
                          HorizontalOptions="FillAndExpand" Orientation="Horizontal">
 
@@ -45,7 +50,8 @@
                     <!--  Names List page Title  -->
                     <Label  Margin="16,0" FontFamily="{StaticResource Montserrat-Medium}" FontSize="16"
                             HorizontalOptions="CenterAndExpand" TextColor="{DynamicResource Gray-900}"
-                            LineHeight="1.25"  Text="Names List"  VerticalOptions="Center" VerticalTextAlignment="Center" />
+                            LineHeight="1.25"  Text="Search"  VerticalOptions="Center" VerticalTextAlignment="Center"
+                            IsEnabled="False"/>
                         
                 </StackLayout>
 
@@ -69,35 +75,36 @@
                                    Text="{StaticResource Search}" /> 
 
             </StackLayout>
-            <BoxView Grid.Row="1" Style="{StaticResource SeparatorStyle}"/>
-            <StackLayout Grid.Row="2" Spacing="0">
+            <BoxView Grid.Row="2" Style="{StaticResource SeparatorStyle}"/>
+            <StackLayout Grid.Row="3" Spacing="0">
                 <controls:SearchableContactsList x:Name="NamesList"  IsScrollBarVisible="False"
                                                        AllowSwiping="True" AutoFitMode="Height" ItemSpacing="0"
                                                        AllowGroupExpandCollapse="False" SelectionGesture="Tap"
                                                        SelectionMode="Single" VerticalOptions="FillAndExpand"
                                                        SearchText="{Binding SearchText}" TapCommand="{Binding ItemTappedCommand}"
-                                                       ItemsSource="{Binding NamesList}" SelectionBackgroundColor="Transparent">
+                                                       ItemsSource="{Binding NamesList}" SelectionBackgroundColor="Transparent"
+                                                 ItemTapped="TapUserEvent">
 
                     <controls:SearchableContactsList.DataSource>
                         <data:DataSource>
                             <data:DataSource.SortDescriptors>
-                                <data:SortDescriptor PropertyName="name" Direction="Ascending"/>
+                                <data:SortDescriptor PropertyName="FirstName" Direction="Ascending"/>
                             </data:DataSource.SortDescriptors>
                         </data:DataSource>
                     </controls:SearchableContactsList.DataSource>
 
                     <!-- Group Header -->
-                    <controls:SearchableContactsList.GroupHeaderTemplate>
+                    <controls:SearchableContactsList.GroupHeaderTemplate>                        
                         <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <StackLayout Spacing="0" Orientation="Horizontal" HeightRequest="40" 
-                                                 BackgroundColor="{DynamicResource Gray-100}">
+                            <ViewCell IsEnabled="False">
+                                <ViewCell.View>                                    
+                                    <StackLayout Spacing="0" Orientation="Horizontal" HeightRequest="40"
+                                                 BackgroundColor="{DynamicResource Gray-100}" InputTransparent="False">
                                         <Label Text="{Binding Key}"  FontSize="16" Margin="16,8"
                                                FontFamily="{StaticResource Montserrat-Medium}"
-                                               TextColor="{DynamicResource Gray-900}"
-                                               VerticalOptions="Center" HorizontalOptions="Start"/>
-
+                                               TextColor="ForestGreen"
+                                               VerticalOptions="Center" HorizontalOptions="Start"
+                                               IsEnabled="False" InputTransparent="True"/>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
@@ -118,11 +125,19 @@
                                             <RowDefinition Height="1"/>
                                         </Grid.RowDefinitions>
 
-                                            <Label Text="{Binding Name}" FontSize="16" Grid.Row="0" Margin="16,12"
+                                        <Label FontSize="16" Grid.Row="0" Margin="16,12"
                                                    VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center"
                                                    FontFamily="{StaticResource Montserrat-Medium}" 
                                                    LineHeight="{OnPlatform Android=1.5,
-                                                   Default=-1}"  TextColor="{DynamicResource Gray-900}"/>
+                                                   Default=-1}"  TextColor="{DynamicResource Gray-900}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding FirstName}"/>
+                                                    <Span Text=" "/>
+                                                    <Span Text="{Binding LastName}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                         <BoxView Grid.Row="1" Style="{StaticResource SeparatorStyle}"/>
                                     </Grid>
                                 </ViewCell.View>

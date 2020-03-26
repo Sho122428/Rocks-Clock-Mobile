@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms.Internals;
 using RockClockMobile.Models.Navigation;
+using RockClockMobile.Models;
 
 namespace RockClockMobile.Controls
 {
@@ -20,13 +21,13 @@ namespace RockClockMobile.Controls
         {
             if (base.FilterContacts(obj))
             {
-                var taskInfo = obj as Contact;
-                if (taskInfo == null || string.IsNullOrEmpty(taskInfo.Name))
+                var taskInfo = obj as Employee;
+                if (taskInfo == null || string.IsNullOrEmpty(taskInfo.FirstName))
                 {
                     return false;
                 }
 
-                return taskInfo.Name.ToUpperInvariant().Contains(this.SearchText.ToUpperInvariant());
+                return taskInfo.FirstName.ToUpperInvariant().Contains(this.SearchText.ToUpperInvariant());
             }
 
             return false;
