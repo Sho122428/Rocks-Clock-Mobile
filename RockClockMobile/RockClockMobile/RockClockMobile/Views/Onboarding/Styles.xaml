@@ -14,6 +14,18 @@
     </Style>
 
     <!--Common button style-->
+    <!--<Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+        <Setter Property="Margin" Value="0,10,0,24"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="WidthRequest" Value="245"/>
+        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}"/>
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}"/>
+    </Style>-->
     <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
         <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
         <Setter Property="VerticalOptions" Value="EndAndExpand"/>

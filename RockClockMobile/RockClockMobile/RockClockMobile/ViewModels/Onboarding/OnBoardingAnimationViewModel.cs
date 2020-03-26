@@ -35,7 +35,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private string breakButtonText = "START BREAK";
 
-        private bool isBreakButtonEnabled = false;
+        private bool isBreakButtonVisible = false;
 
         private bool isSignOutButtonVisible = true;
 
@@ -43,7 +43,9 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private bool isClockedIn = false;
 
-        private string timeIn = "";
+        private bool isOnBreak = false;
+
+
 
         #endregion
 
@@ -67,7 +69,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             
 
             fNameUser = "Hello, " + empDtl.FirstName;
-            timeIn = "--:--";
+            
 
             this.Boardings = new ObservableCollection<Boarding>
             {
@@ -78,30 +80,54 @@ namespace RockClockMobile.ViewModels.Onboarding
                     //Content = "Drag and drop meetings in order to reschedule them easily.",
                     RotatorItem = new WalkthroughItemPage()
                 }
-                //,
-                //new Boarding()
-                //{
-                //    //ImagePath = "ViewMode.png",
-                //    Header = "You have clocked in.",
-                //    //Content = "You have clocked in.",
-                //    RotatorItem = new WalkthroughItemPage()
-                //}
-                //new Boarding()
-                //{
-                //    ImagePath = "TimeZone.png",
-                //    Header = "TIME ZONE",
-                //    Content = "Display meetings created for different time zones.",
-                //    RotatorItem = new WalkthroughItemPage()
-                //}
+                
             };
 
-            // Calls LoadDataClock function to load data from each user login.
             LoadDataClock();
             
             // Set bindingcontext to content view.
             foreach (var boarding in this.Boardings)
             {
                 boarding.RotatorItem.BindingContext = boarding;
+            }
+        }
+
+        async void LoadDataClock()
+        {
+            if (empUserLog != null)
+            {
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+
+                if (LoggedInUser != null && LoggedInUser.IsClockedOut != true)
+                {
+                    this.IsBreakButtonVisible = true;
+                    this.ClockInButtonText = "CLOCK OUT";
+                }
+                //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
+                //{
+                //    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
+                //    lblClockedOut.Text = LoggedInUser.TimeOut.ToString("h:mm tt");
+                //    btnTimeClock.IsEnabled = false;
+                //    btnTimeClock.Opacity = .5;
+                //    btnTimeClockBreak.IsEnabled = false;
+                //    btnTimeClockBreak.Opacity = .5;
+                //}
+
+                if (empUserBreakLog != null)
+                {
+                    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+
+                    if (takeBreak != null && takeBreak.IsTakingABreak != false)
+                    {
+                        this.BreakButtonText = "END BREAK";
+                        this.IsOnBreak = true;
+                    }
+                    else if (takeBreak != null && takeBreak.IsTakingABreak == false)
+                    {
+                        this.BreakButtonText = "START BREAK";
+                        
+                    }
+                }
             }
         }
 
@@ -223,21 +249,21 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
-        public bool IsBreakButtonEnabled
+        public bool IsBreakButtonVisible
         {
             get
             {
-                return this.isBreakButtonEnabled;
+                return this.isBreakButtonVisible;
             }
 
             set
             {
-                if (this.isBreakButtonEnabled == value)
+                if (this.isBreakButtonVisible == value)
                 {
                     return;
                 }
 
-                this.isBreakButtonEnabled = value;
+                this.isBreakButtonVisible = value;
                 this.OnPropertyChanged();
             }
         }
@@ -261,24 +287,6 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
-        public string TimeIn
-        {
-            get
-            {
-                return this.timeIn;
-            }
-
-            set
-            {
-                if (this.timeIn == value)
-                {
-                    return;
-                }
-
-                this.timeIn = value;
-                this.OnPropertyChanged();
-            }
-        }
         public bool IsClockedIn
         {
             get
@@ -297,7 +305,26 @@ namespace RockClockMobile.ViewModels.Onboarding
                 this.OnPropertyChanged();
             }
         }
-        
+
+        public bool IsOnBreak
+        {
+            get
+            {
+                return this.isOnBreak;
+            }
+
+            set
+            {
+                if (this.isOnBreak == value)
+                {
+                    return;
+                }
+
+                this.isOnBreak = value;
+                this.OnPropertyChanged();
+            }
+        }
+
 
         public int SelectedIndex
         {
@@ -387,16 +414,6 @@ namespace RockClockMobile.ViewModels.Onboarding
         }
         private void ClockIn(object obj)
         {
-            //var itemCount = (obj as SfRotator).ItemsSource.Count();
-            //if (this.ValidateAndUpdateSelectedIndex(itemCount))
-            //{
-            //    this.SignOut();
-            //}
-            
-
-            this.IsBreakButtonEnabled = true;
-
-            
             if(!IsClockedIn)
             {
                 var countTimeID = 0;
@@ -428,8 +445,51 @@ namespace RockClockMobile.ViewModels.Onboarding
         }
         private void Break(object obj)
         {
-           
-            //this.SignOut();
+
+            if (!IsOnBreak)
+            {
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                var countTimeID = 0;
+                var ndx = 0;
+
+                if (empUserLog != null)
+                    countTimeID = empUserLog.Count;
+
+                var userBreakLog = new BreakLog
+                {
+                    TimeId = LoggedInUser.TimeId,
+                    BreakId = ndx + 1,
+                    BreakIn = DateTime.Now,
+                    IsTakingABreak = true
+
+                };
+
+                List<BreakLog> EmployeeBreakLog = new List<BreakLog>();
+
+                if (empUserBreakLog != null)
+                {
+                    EmployeeBreakLog = empUserBreakLog;
+                }
+
+                EmployeeBreakLog.Add(userBreakLog);
+
+                GlobalServices.EmployeeBreak = EmployeeBreakLog;
+            }
+            else
+            {
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+
+                if (takeBreak != null)
+                {
+                    takeBreak.BreakOut = DateTime.Now;
+                    takeBreak.IsTakingABreak = false;
+                }
+                this.IsOnBreak = false;
+                
+
+            }
+            this.SignOut();
         }
 
         private void MoveToNextPage()
@@ -439,56 +499,11 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private void SignOut()
         {
-            Application.Current.MainPage = new LoginPage();
+            Application.Current.MainPage = new Views.Navigation.NamesListPage();
         }
 
         #endregion
 
-        async void LoadDataClock()
-        {
-            if (empUserLog != null)
-            {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
-
-                if (LoggedInUser != null && LoggedInUser.IsClockedOut != true)
-                {
-                    //isTimedIn = true;
-                    //lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
-                    //btnTimeClock.Text = "Clock Out";
-                    //btnTimeClock.BackgroundColor = Color.Red;
-                    //btnTimeClockBreak.IsEnabled = true;
-                    //btnTimeClockBreak.Opacity = 1;
-                    this.timeIn = LoggedInUser.TimeIn.ToString("h:mm tt");
-                }
-                //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
-                //{
-                //    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
-                //    lblClockedOut.Text = LoggedInUser.TimeOut.ToString("h:mm tt");
-                //    btnTimeClock.IsEnabled = false;
-                //    btnTimeClock.Opacity = .5;
-                //    btnTimeClockBreak.IsEnabled = false;
-                //    btnTimeClockBreak.Opacity = .5;
-                //}
-
-                //if (empUserBreakLog != null)
-                //{
-                //    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
-
-                //    if (takeBreak != null && takeBreak.IsTakingABreak != false)
-                //    {
-                //        isOnBreak = true;
-                //        lblBreakTimeStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
-
-                //        lblBreakTimeStart.IsVisible = true;
-                //        btnTimeClockBreak.Text = "End Break";
-                //    }
-                //    else if (takeBreak != null && takeBreak.IsTakingABreak == false)
-                //    {
-                //        lblBreakTimeStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
-                //        lblBreakTimeEnd.Text = takeBreak.BreakOut.ToString("h:mm tt");
-                //    }
-                //}
-            }
-        }
+        
     }
 }
