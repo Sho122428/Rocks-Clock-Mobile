@@ -88,14 +88,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
+                
                 <Label
                     FontFamily="{StaticResource Montserrat-Medium}"
                     FontSize="16"
@@ -132,13 +131,13 @@
                        Grid.Row="0"
                        Grid.Column="1"/>
 
-                <Label
+                <Label x:Name="lblBreakStart"
                     FontFamily="{StaticResource Montserrat-Medium}"
                     FontSize="16"
                     HorizontalOptions="Center"
                     
                     Style="{StaticResource LabelStyle}"
-                    Text="03:00 PM"
+                    Text="--:--"
                     TranslationY="{OnPlatform Default=60,
                                               UWP=0}"
                        Grid.Row="1"
@@ -155,13 +154,13 @@
                        Grid.Row="0"
                        Grid.Column="2"/>
 
-                <Label
+                <Label x:Name="lblBreakEnd"
                     FontFamily="{StaticResource Montserrat-Medium}"
                     FontSize="16"
                     HorizontalOptions="Center"
                     
                     Style="{StaticResource LabelStyle}"
-                    Text="03:15 PM"
+                    Text="--:--"
                     TranslationY="{OnPlatform Default=60,
                                               UWP=0}"
                        Grid.Row="1"

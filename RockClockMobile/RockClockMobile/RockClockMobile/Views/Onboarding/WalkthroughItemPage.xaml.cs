@@ -64,24 +64,19 @@ namespace RockClockMobile.Views.Onboarding
                 //    btnTimeClockBreak.Opacity = .5;
                 //}
 
-                //if (empUserBreakLog != null)
-                //{
-                //    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+                if (empUserBreakLog != null)
+                {
+                    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
 
-                //    if (takeBreak != null && takeBreak.IsTakingABreak != false)
-                //    {
-                //        isOnBreak = true;
-                //        lblBreakTimeStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
-
-                //        lblBreakTimeStart.IsVisible = true;
-                //        btnTimeClockBreak.Text = "End Break";
-                //    }
-                //    else if (takeBreak != null && takeBreak.IsTakingABreak == false)
-                //    {
-                //        lblBreakTimeStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
-                //        lblBreakTimeEnd.Text = takeBreak.BreakOut.ToString("h:mm tt");
-                //    }
-                //}
+                    if (takeBreak != null && takeBreak.IsTakingABreak != false)
+                    {
+                        lblBreakStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
+                    }
+                    else if (takeBreak != null && takeBreak.IsTakingABreak == false)
+                    {
+                        lblBreakEnd.Text = takeBreak.BreakIn.ToString("h:mm tt");
+                    }
+                }
             }
         }
     }

@@ -20,9 +20,6 @@ namespace RockClockMobile.Views.Onboarding
             InitializeComponent();
         }
 
-        private void BreakButtonText_Clicked(object sender, System.EventArgs e)
-        {
-            DisplayAlert("Test","Testing only","OK");
-        }
+        
     }
 }
