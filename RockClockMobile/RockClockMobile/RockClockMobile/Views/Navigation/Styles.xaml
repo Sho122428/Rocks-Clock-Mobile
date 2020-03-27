@@ -255,7 +255,8 @@
     <!--  Common style for labels  -->
     <Style x:Key="LabelStyle" TargetType="Label">
         <Setter Property="LineHeight" Value="{OnPlatform Android=1.25, Default=-1}" />
-        <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+        <!--<Setter Property="TextColor" Value="{DynamicResource Gray-700}" />-->
+        <Setter Property="TextColor" Value="#007840"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalTextAlignment" Value="Start" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
