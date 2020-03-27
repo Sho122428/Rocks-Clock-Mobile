@@ -1,23 +1,10 @@
-using System;
-using Xamarin.Essentials;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using RockClockMobile.Services;
 using RockClockMobile.Views;
-using System.Diagnostics;
 using RockClockMobile.Views.Navigation;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using RockClockMobile.Models;
-using System.IO;
-
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace RockClockMobile
 {
@@ -47,6 +34,7 @@ namespace RockClockMobile
             //MainPage = new LoginPage();
             //MainPage = new AppShell(); 
             App.Current.MainPage = new NamesListPage();
+            //App.Current.MainPage = new BreakLogPage();
         }       
 
         protected override void OnStart()

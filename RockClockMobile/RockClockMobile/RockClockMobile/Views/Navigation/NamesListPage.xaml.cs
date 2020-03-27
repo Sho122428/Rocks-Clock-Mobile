@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace RockClockMobile.Views.Navigation
 {
@@ -33,7 +34,7 @@ namespace RockClockMobile.Views.Navigation
                 return true;
             });
 
-            GetItemAsync(1);
+            //GetItemAsync(1);
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace RockClockMobile.Views.Navigation
 
         private async void TapUserEvent(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
-            var empSignIn = (Employee)e.ItemData == null? null : (Employee)e.ItemData;
+            var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
 
             var empDtl = new Employee
             {
@@ -145,9 +146,26 @@ namespace RockClockMobile.Views.Navigation
             {
                 try {
                     var httpClient = new HttpClient();
-                    var response = await httpClient.GetStringAsync("https://127.0.0.1:44329/BreakLog/1 ");
+                    var response = await httpClient.GetStringAsync("https://localhost:44329/BreakLog/1 ");
                     var employee = JsonConvert.DeserializeObject<List<BreakLog>>(response);
                     var brd = employee;
+
+
+                    //var client = new HttpClient();
+
+                    //client.BaseAddress = new Uri("http://10.0.0.17:55365/");
+
+                    //client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    //HttpResponseMessage response = await client.GetAsync("api/Customers");
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    return await response.Content.ReadAsStringAsync();
+                    //}
+                    //else return response.ReasonPhrase;
+
+
                 }
                 catch (Exception ex) { 
                 
@@ -157,6 +175,10 @@ namespace RockClockMobile.Views.Navigation
             }
 
             return null;
+        }
+
+        private void HeaderTappedEvent(object sender, EventArgs e)
+        {
         }
     }
 }

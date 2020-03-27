@@ -78,11 +78,11 @@
             <BoxView Grid.Row="2" Style="{StaticResource SeparatorStyle}"/>
             <StackLayout Grid.Row="3" Spacing="0">
                 <controls:SearchableContactsList x:Name="NamesList"  IsScrollBarVisible="False"
-                                                       AllowSwiping="True" AutoFitMode="Height" ItemSpacing="0"
-                                                       AllowGroupExpandCollapse="False" SelectionGesture="Tap"
-                                                       SelectionMode="Single" VerticalOptions="FillAndExpand"
-                                                       SearchText="{Binding SearchText}" TapCommand="{Binding ItemTappedCommand}"
-                                                       ItemsSource="{Binding NamesList}" SelectionBackgroundColor="Transparent"
+                                                AllowSwiping="True" AutoFitMode="Height" ItemSpacing="0"
+                                                AllowGroupExpandCollapse="False" SelectionGesture="Tap"
+                                                SelectionMode="Single" VerticalOptions="FillAndExpand"
+                                                SearchText="{Binding SearchText}" TapCommand="{Binding ItemTappedCommand}"
+                                                ItemsSource="{Binding NamesList}" SelectionBackgroundColor="Transparent"
                                                  ItemTapped="TapUserEvent">
 
                     <controls:SearchableContactsList.DataSource>
@@ -96,15 +96,17 @@
                     <!-- Group Header -->
                     <controls:SearchableContactsList.GroupHeaderTemplate>                        
                         <DataTemplate>
-                            <ViewCell IsEnabled="False">
+                            <ViewCell>
                                 <ViewCell.View>                                    
                                     <StackLayout Spacing="0" Orientation="Horizontal" HeightRequest="40"
                                                  BackgroundColor="{DynamicResource Gray-100}" InputTransparent="False">
                                         <Label Text="{Binding Key}"  FontSize="16" Margin="16,8"
                                                FontFamily="{StaticResource Montserrat-Medium}"
                                                TextColor="ForestGreen"
-                                               VerticalOptions="Center" HorizontalOptions="Start"
-                                               IsEnabled="False" InputTransparent="True"/>
+                                               VerticalOptions="Center" HorizontalOptions="Start"/>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="HeaderTappedEvent"/>
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
@@ -124,12 +126,13 @@
                                             <RowDefinition Height="48"/>
                                             <RowDefinition Height="1"/>
                                         </Grid.RowDefinitions>
-
+                                      
                                         <Label FontSize="16" Grid.Row="0" Margin="16,12"
                                                    VerticalOptions="Center" HorizontalOptions="Start" VerticalTextAlignment="Center"
                                                    FontFamily="{StaticResource Montserrat-Medium}" 
                                                    LineHeight="{OnPlatform Android=1.5,
-                                                   Default=-1}"  TextColor="{DynamicResource Gray-900}">
+                                                   Default=-1}"  TextColor="{DynamicResource Gray-900}">                                            
+                                            
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding FirstName}"/>
