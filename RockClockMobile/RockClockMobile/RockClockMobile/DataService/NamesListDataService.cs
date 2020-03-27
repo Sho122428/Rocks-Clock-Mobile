@@ -51,6 +51,7 @@ namespace RockClockMobile.DataService
 
             var assembly = typeof(App).GetTypeInfo().Assembly;
 
+
             T obj;
 
             using (var stream = assembly.GetManifestResourceStream(file))

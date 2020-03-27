@@ -1,11 +1,10 @@
-using System;
-using Xamarin.Essentials;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using RockClockMobile.Services;
 using RockClockMobile.Views;
-using System.Diagnostics;
 using RockClockMobile.Views.Navigation;
+using System;
+using System.Diagnostics;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace RockClockMobile
 {
@@ -20,7 +19,7 @@ namespace RockClockMobile
         public static bool UseMockDataStore = true;
 
         private static Stopwatch stopWatch = new Stopwatch();
-        private const int defaultTimespan = 20; //In Seconds
+        private const int defaultTimespan = 20; //In Seconds        
 
         public App()
         {
@@ -33,13 +32,10 @@ namespace RockClockMobile
             else
                 DependencyService.Register<AzureDataStore>();
             //MainPage = new LoginPage();
-            //MainPage = new AppShell();
-            
+            //MainPage = new AppShell(); 
             App.Current.MainPage = new NamesListPage();
-            
-        }
-
-
+            //App.Current.MainPage = new BreakLogPage();
+        }       
 
         protected override void OnStart()
         {
@@ -71,8 +67,6 @@ namespace RockClockMobile
                 // Always return true as to keep our device timer running.
                 return true;
             });
-
-
         }
 
         protected override void OnSleep()
@@ -86,7 +80,5 @@ namespace RockClockMobile
             // App enters the foreground so start our stopwatch again.
             stopWatch.Start();
         }
-
-
     }
 }
