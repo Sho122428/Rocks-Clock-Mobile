@@ -34,8 +34,12 @@ namespace RockClockMobile
                 DependencyService.Register<AzureDataStore>();
             //MainPage = new LoginPage();
             //MainPage = new AppShell();
+            
             App.Current.MainPage = new NamesListPage();
+            
         }
+
+
 
         protected override void OnStart()
         {

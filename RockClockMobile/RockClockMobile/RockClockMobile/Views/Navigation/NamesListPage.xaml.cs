@@ -130,5 +130,10 @@ namespace RockClockMobile.Views.Navigation
             //await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
             App.Current.MainPage = new PincodePage();
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+
+        }
     }
 }

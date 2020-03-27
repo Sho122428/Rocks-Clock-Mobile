@@ -102,6 +102,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 {
                     this.IsBreakButtonVisible = true;
                     this.ClockInButtonText = "CLOCK OUT";
+                    this.IsClockedIn = true;
                 }
                 //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
                 //{
@@ -440,6 +441,18 @@ namespace RockClockMobile.ViewModels.Onboarding
                 EmployeeTimeLog.Add(userTimeLog);
 
                 GlobalServices.EmployeeTime = EmployeeTimeLog;
+            }
+            else
+            {
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+
+                if (LoggedInUser != null)
+                {
+                    LoggedInUser.TimeOut = DateTime.Now;
+                    LoggedInUser.IsClockedOut = true;
+                }
+
+                
             }
             this.SignOut();
         }

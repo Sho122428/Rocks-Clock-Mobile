@@ -107,15 +107,19 @@
                     <!-- Group Header -->
                     <controls:SearchableContactsList.GroupHeaderTemplate>                        
                         <DataTemplate>
-                            <ViewCell IsEnabled="False">
-                                <ViewCell.View>                                    
-                                    <StackLayout Spacing="0" Orientation="Horizontal" HeightRequest="40"
+                           <ViewCell IsEnabled="False">
+                                <ViewCell.View>
+                                <StackLayout Spacing="0" Orientation="Horizontal" HeightRequest="40"
                                                  BackgroundColor="{DynamicResource Gray-100}" InputTransparent="False">
                                         <Label Text="{Binding Key}"  FontSize="16" Margin="16,8"
                                                FontFamily="{StaticResource Montserrat-Medium}"
                                                TextColor="ForestGreen"
                                                VerticalOptions="Center" HorizontalOptions="Start"
-                                               IsEnabled="False" InputTransparent="True"/>
+                                               IsEnabled="False" InputTransparent="True">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" NumberOfTapsRequired="1"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
