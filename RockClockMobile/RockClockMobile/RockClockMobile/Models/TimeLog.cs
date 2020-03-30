@@ -11,6 +11,7 @@ namespace RockClockMobile.Models
         public DateTime TimeIn { get; set; }
         public DateTime TimeOut { get; set; }
         public int projectID { get; set; }
+        public string projectName { get; set; }
         public bool IsClockedOut { get; set; }
     }
 }

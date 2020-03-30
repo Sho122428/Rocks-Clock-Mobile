@@ -25,6 +25,10 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private ObservableCollection<Boarding> boardings;
 
+        private ObservableCollection<string> projects;
+
+        private string selectedProject;
+
         private string nextButtonText = "NEXT";
 
         private bool isSkipButtonVisible = true;
@@ -52,6 +56,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         Employee empDtl = GlobalServices.employee;
         List<TimeLog> empUserLog = GlobalServices.EmployeeTime;
         List<BreakLog> empUserBreakLog = GlobalServices.EmployeeBreak;
+        
 
         #region Constructor
 
@@ -66,25 +71,36 @@ namespace RockClockMobile.ViewModels.Onboarding
             this.BreakCommand = new Command(this.Break);
             this.SignOutCommand = new Command(this.SignOut);
 
-            
 
-            fNameUser = "Hello, " + empDtl.FirstName;
+
+            //fNameUser = "Hello, " + empDtl.FirstName + ", " + empDtl.ProjectName;
+
             
+            this.Projects = new ObservableCollection<string>();
+            this.Projects.Add(empDtl.ProjectName);
+            this.Projects.Add("Rocks Clock Mobile");
+            this.Projects.Add("Urban Necessities");
+            this.Projects.Add("Blockchain Water");
+            this.Projects.Add("Companion Protect");
+
+            LoadDataClock();
 
             this.Boardings = new ObservableCollection<Boarding>
             {
                 new Boarding()
                 {
                     //ImagePath = "ReSchedule.png",
-                    Header = fNameUser,
+                    Header = this.FNameUser,
                     //Content = "Drag and drop meetings in order to reschedule them easily.",
                     RotatorItem = new WalkthroughItemPage()
                 }
-                
+
             };
 
-            LoadDataClock();
             
+
+            
+
             // Set bindingcontext to content view.
             foreach (var boarding in this.Boardings)
             {
@@ -103,6 +119,14 @@ namespace RockClockMobile.ViewModels.Onboarding
                     this.IsBreakButtonVisible = true;
                     this.ClockInButtonText = "CLOCK OUT";
                     this.IsClockedIn = true;
+                    this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.TimeIn.ToString("h:mm tt") + System.Environment.NewLine +" for project " + LoggedInUser.projectName;
+                    this.ClockInButtonText = "Clock out from " + LoggedInUser.projectName;
+                    
+                }
+                else
+                {
+                    this.FNameUser = empDtl.FirstName + " is off the clock.";
+                    this.ClockInButtonText = "Clock in to " + empDtl.ProjectName;
                 }
                 //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
                 //{
@@ -130,6 +154,11 @@ namespace RockClockMobile.ViewModels.Onboarding
                     }
                 }
             }
+            else
+            {
+                this.FNameUser = empDtl.FirstName + " is off the clock.";
+                this.ClockInButtonText = "Clock in to " + empDtl.ProjectName;
+            }
         }
 
         #endregion
@@ -151,6 +180,45 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
 
                 this.boardings = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<string> Projects
+        {
+            get
+            {
+                return this.projects;
+            }
+
+            set
+            {
+                if (this.projects == value)
+                {
+                    return;
+                }
+
+                this.projects = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        
+        public string SelectedProject
+        {
+            get
+            {
+                return this.selectedProject;
+            }
+
+            set
+            {
+                if (this.selectedProject == value)
+                {
+                    return;
+                }
+
+                this.selectedProject = value;
                 this.OnPropertyChanged();
             }
         }
@@ -427,7 +495,9 @@ namespace RockClockMobile.ViewModels.Onboarding
                     TimeId = countTimeID + 1,
                     rocksUserID = empDtl.EmpID,
                     TimeIn = DateTime.Now,
-                    IsClockedOut = false
+                    IsClockedOut = false,
+                    projectName = this.SelectedProject
+                   
 
                 };
                 
@@ -439,7 +509,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
 
                 EmployeeTimeLog.Add(userTimeLog);
-
+                
                 GlobalServices.EmployeeTime = EmployeeTimeLog;
             }
             else
@@ -515,8 +585,9 @@ namespace RockClockMobile.ViewModels.Onboarding
             Application.Current.MainPage = new Views.Navigation.NamesListPage();
         }
 
+
+
         #endregion
 
-        
     }
 }

@@ -36,15 +36,15 @@
             <!--  Label to display Clock  -->
             <Label x:Name="lblTimer"
                  BackgroundColor="Transparent"
-                Margin="0,30,0,8"
+                Margin="0,15,0,8"
                 FontFamily="{StaticResource Montserrat-SemiBold}"
                 FontSize="40"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
-                   HeightRequest="{core:OnPlatformOrientationDoubleValue Default=300,
-                                                                      AndroidPhonePortrait=200,
+                   HeightRequest="{core:OnPlatformOrientationDoubleValue Default=150,
+                                                                      AndroidPhonePortrait=150,
                                                                       AndroidPhoneLandscape=140,
-                                                                      iOSPhonePortrait=200,
+                                                                      iOSPhonePortrait=150,
                                                                       iOSPhoneLandscape=140}"
                    WidthRequest="{x:OnIdiom Phone=300,
                                          Desktop=300,
@@ -53,14 +53,14 @@
                                      UWP=1}"
                 Style="{StaticResource LabelStyle}"
                 
-                TranslationY="{OnPlatform Default=60,
+                TranslationY="{OnPlatform Default=30,
                                           UWP=0}"
                 VerticalTextAlignment="Start" 
                    VerticalOptions="Center"/>
 
             <!--  Label to display header  -->
             <Label
-                Margin="0,30,0,8"
+                Margin="0,15,0,8"
                 FontFamily="{StaticResource Montserrat-SemiBold}"
                 FontSize="14"
                 HorizontalOptions="Center"
@@ -69,7 +69,7 @@
                                      UWP=1}"
                 Style="{StaticResource LabelStyle}"
                 Text="{Binding Header}"
-                TranslationY="{OnPlatform Default=60,
+                TranslationY="{OnPlatform Default=30,
                                           UWP=0}"
                 VerticalTextAlignment="Center" />
 

@@ -8,6 +8,7 @@
     xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
     xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:rotator="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
+    xmlns:picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
     xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels.Onboarding"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
@@ -31,8 +32,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 
+
             </Grid.RowDefinitions>
 
             <!--  Gradient view  -->
@@ -84,14 +85,31 @@
                     <behavior:SfRotatorBehavior />
                 </rotator:SfRotator.Behaviors>
             </rotator:SfRotator>
+
+            <!--<picker:SfPicker x:Name="picker" Grid.Row="3" 
+                             HeaderText="Select a Color"
+                             ColumnHeaderText="Color"
+                            ShowColumnHeader="True"
+                             PickerMode="Dialog"
+                             
+                             />-->
+            
             <Grid Grid.Row="3" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    
+                    
                 </Grid.ColumnDefinitions>
                 <!--  ClockIn button  -->
                 <button:SfButton
                     x:Name="NextButtonText"
+                    Grid.Row="0"
                     Grid.Column="0"
                     Command="{Binding ClockInCommand}"
                     CommandParameter="{x:Reference Rotator}"
@@ -101,13 +119,42 @@
                 <!--  Break button  -->
                 <button:SfButton
                     x:Name="BreakButtonText"
+                    Grid.Row="0"
                     Grid.Column="1"
                    Command="{Binding BreakCommand}"
                     CommandParameter="{x:Reference Rotator}"
                     Style="{StaticResource SfButtonStyle}"
+                    HorizontalTextAlignment="Start"
+                    VerticalTextAlignment="Start"
                     IsVisible="{Binding IsBreakButtonVisible}"
                     Text="{Binding BreakButtonText}"/>
+
+                <button:SfButton
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    x:Name="ProjectButton"
+                    Clicked="ProjectButton_Clicked"
+                    CommandParameter="{x:Reference Rotator}"
+                    Style="{StaticResource SfButtonStyle}"
+                    
+                    Text="List of Projects"/>
+
+                <picker:SfPicker x:Name="picker" 
+                             HeaderText="Select Project to Clock In"
+                             ItemsSource="{Binding Projects}"
+                             ColumnHeaderText="Projects"
+                             ShowColumnHeader="True"
+                             HeightRequest="350"
+                             WidthRequest="300"
+                             PickerHeight="250"
+                             PickerWidth="280"
+                             ShowFooter="True"
+                             PickerMode="Dialog" 
+                             OkButtonClicked="picker_OkButtonClicked"
+                             SelectedItem="{Binding SelectedProject,Mode=TwoWay}"/>
+
             </Grid>
+           
         </Grid>
     </ContentPage.Content>
 </ContentPage>
