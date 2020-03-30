@@ -34,7 +34,6 @@ namespace RockClockMobile
             //MainPage = new LoginPage();
             //MainPage = new AppShell(); 
             App.Current.MainPage = new NamesListPage();
-            //App.Current.MainPage = new BreakLogPage();
         }       
 
         protected override void OnStart()

@@ -27,5 +27,11 @@ namespace RockClockMobile.Models
 
         [DataMember(Name = "ProjectName")]
         public string ProjectName { get; set; }
+
+        public List<EmployeeProjects> rocksProjects { get; set; }
+
+        public string email { get; set; }
+        public int rocksUserId { get; set; }
+
     }
 }
