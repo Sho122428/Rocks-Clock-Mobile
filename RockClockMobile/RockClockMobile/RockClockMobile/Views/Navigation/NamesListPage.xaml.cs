@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using RockClockMobile.ViewModels;
 
 namespace RockClockMobile.Views.Navigation
 {
@@ -25,6 +26,7 @@ namespace RockClockMobile.Views.Navigation
         {
             InitializeComponent();
             this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
+            this.BindingContext = new LoginViewModel();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -144,9 +146,9 @@ namespace RockClockMobile.Views.Navigation
 
             if (id != 0)
             {
-                try {
+                //try {
                     var httpClient = new HttpClient();
-                    var response = await httpClient.GetStringAsync("https://localhost:44329/BreakLog/1 ");
+                    var response = await httpClient.GetStringAsync("https://localhost:44329/BreakLog");
                     var employee = JsonConvert.DeserializeObject<List<BreakLog>>(response);
                     var brd = employee;
 
@@ -166,10 +168,10 @@ namespace RockClockMobile.Views.Navigation
                     //else return response.ReasonPhrase;
 
 
-                }
-                catch (Exception ex) { 
+                //}
+                //catch () { 
                 
-                }
+                //}
                
 
             }

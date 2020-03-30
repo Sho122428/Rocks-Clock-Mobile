@@ -17,10 +17,7 @@ namespace RockClockMobile
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
-    {
-        //LoginViewModel loginViewModel = new LoginViewModel();
-        List<Employee> EmployeeList = new List<Employee>();
-        
+    {        
         public LoginPage()
         {
             InitializeComponent();
@@ -34,35 +31,11 @@ namespace RockClockMobile
             });
 
             BindingContext = new LoginViewModel();  
-
-            //foreach (var dtl in loginViewModel.Employees().OrderBy(a => a.FirstName))
-            //{
-            //    dtl.FullName = $"{dtl.FirstName} {dtl.LastName}";
-            //    EmployeeList.Add(new Employee
-            //    {
-            //        FullName = dtl.FullName
-            //    });           
-            //}
-            
-            //userCombo.DataSource = EmployeeList.Select(a => a.FullName);
-            //lvUsers.ItemsSource = loginViewModel.Employees().OrderBy(a => a.FullName);
         }
 
         public async void btnLogin(object sender, EventArgs e)
-        {      
-
-            var httpClient = new HttpClient();
-            //var response = await httpClient.GetStringAsync("https://localhost:44387/user");
-            //var employee = JsonConvert.DeserializeObject<List<User>>(response);
-
-            //httpClient.BaseAddress = new Uri("https://127.0.0.1:44387/user");
-            //var b = httpClient.BaseAddress;
-            //var r = await httpClient.GetStringAsync(httpClient.BaseAddress);
-            //var c = JsonConvert.DeserializeObject<List<User>>(r);
-
-
+        {    
             Application.Current.MainPage = new AppShell();
-
         }
 
         public void SelectUserEvent(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
