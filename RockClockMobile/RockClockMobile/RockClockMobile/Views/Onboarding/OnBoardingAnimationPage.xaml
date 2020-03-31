@@ -124,19 +124,19 @@
                    Command="{Binding BreakCommand}"
                     CommandParameter="{x:Reference Rotator}"
                     Style="{StaticResource SfButtonStyle}"
-                    HorizontalTextAlignment="Start"
-                    VerticalTextAlignment="Start"
                     IsVisible="{Binding IsBreakButtonVisible}"
                     Text="{Binding BreakButtonText}"/>
 
+                <!--Grid.Row="1"
+                    Grid.ColumnSpan="2"-->
                 <button:SfButton
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
+                    Grid.Row="0"
+                    Grid.Column="1"
                     x:Name="ProjectButton"
                     Clicked="ProjectButton_Clicked"
                     CommandParameter="{x:Reference Rotator}"
                     Style="{StaticResource SfButtonStyle}"
-                    
+                    IsVisible="{Binding IsProjectButtonVisible}"
                     Text="List of Projects"/>
 
                 <picker:SfPicker x:Name="picker" 

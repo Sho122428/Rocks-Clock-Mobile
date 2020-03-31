@@ -4,29 +4,35 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace RockClockMobile.Services
 {
     public class EmployeeServices
     {
+        HttpClient client;
         public ObservableCollection<EmpSample> EmpSamples { get; set; }
         public  ObservableCollection<Employee> EmployeeList { get; set; }
 
-        Uri baseAddr;
-        HttpClient client;
-        public EmployeeServices() {
-            baseAddr = new Uri("http://18.136.14.237:8282");
-            client = new HttpClient { BaseAddress = baseAddr };
+        public EmployeeServices() {          
             Employees();
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri($"http://18.136.14.237:8282/");
         }
+        bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
         public async Task<ObservableCollection<Employee>> Employees()
         {
             try
             {
                 EmployeeList = new ObservableCollection<Employee>();
+                //var baseAddr = new Uri("http://18.136.14.237:8282");
+                //var client = new HttpClient { BaseAddress = baseAddr };
 
-                var response = await client.GetStringAsync("http://18.136.14.237:8282/api/RocksUsers");
+
+                var response = await client.GetStringAsync($"api/RocksUsers");
                 var empFromAPI = JsonConvert.DeserializeObject<ObservableCollection<EmpSample>>(response);
 
                 EmpSamples = empFromAPI;
@@ -41,6 +47,7 @@ namespace RockClockMobile.Services
                         email = dtl.email,
                         rocksProjects = dtl.rocksUserProjectMaps
                     }) ;
+
                 }
 
                 return EmployeeList;
@@ -53,16 +60,15 @@ namespace RockClockMobile.Services
             return null;
         }
 
-        //public async Task<bool> AddPincode(Item item)
-        //{
-        //    if (item == null || !IsConnected)
-        //        return false;
+        public async Task<TimeLog> GetEmployeeTimeLog(string id)
+        {
+            if (id != null && IsConnected)
+            {
+                var json = await client.GetStringAsync($"api/item/{id}");
+                return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
+            }
 
-        //    var serializedItem = JsonConvert.SerializeObject(item);
-
-        //    var response = await client.PostAsync($"api/item", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
-
-        //    return response.IsSuccessStatusCode;
-        //}
+            return null;
+        }
     }    
 }
