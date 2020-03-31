@@ -1,16 +1,11 @@
-﻿using System;
+﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
+using RockClockMobile.ViewModels;
+using System;
+using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
-using RockClockMobile.DataService;
-using RockClockMobile.Models;
-using RockClockMobile.Services;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
-using RockClockMobile.ViewModels;
 
 namespace RockClockMobile.Views.Navigation
 {
@@ -140,45 +135,6 @@ namespace RockClockMobile.Views.Navigation
             //await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
             App.Current.MainPage = new PincodePage();
         }
-
-        public async Task<BreakLog> GetItemAsync(int id)
-        {
-
-            if (id != 0)
-            {
-                //try {
-                    var httpClient = new HttpClient();
-                    var response = await httpClient.GetStringAsync("https://localhost:44329/BreakLog");
-                    var employee = JsonConvert.DeserializeObject<List<BreakLog>>(response);
-                    var brd = employee;
-
-
-                    //var client = new HttpClient();
-
-                    //client.BaseAddress = new Uri("http://10.0.0.17:55365/");
-
-                    //client.DefaultRequestHeaders.Accept.Clear();
-                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    //HttpResponseMessage response = await client.GetAsync("api/Customers");
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //    return await response.Content.ReadAsStringAsync();
-                    //}
-                    //else return response.ReasonPhrase;
-
-
-                //}
-                //catch () { 
-                
-                //}
-               
-
-            }
-
-            return null;
-        }
-
         private void HeaderTappedEvent(object sender, EventArgs e)
         {
         }

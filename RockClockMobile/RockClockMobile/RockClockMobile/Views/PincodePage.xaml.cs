@@ -16,6 +16,7 @@ namespace RockClockMobile.Views
     public partial class PincodePage : ContentPage
     {
         PincodeViewModel pincodeViewModel = new PincodeViewModel();
+        Employee employeeSignedIn = GlobalServices.employee;
         public PincodePage()
         {
             InitializeComponent();
@@ -29,28 +30,40 @@ namespace RockClockMobile.Views
             });
 
             NavigationPage.SetHasNavigationBar(this,false);
+
+            if(employeeSignedIn.rocksUserId == 1)
+            {
+                BtnSignIn.Text = "Create PIN";
+            }
         }
 
         private async void BtnSignInEvent(object sender, EventArgs e)
         {
             int pin = EntryPin.Text == ""? 0 : Convert.ToInt32(EntryPin.Text);
 
-            if (pin == 0)
+            if (BtnSignIn.Text == "Create PIN")
             {
-                await DisplayAlert("Error", "Pincode is required.", "OK");
+                await DisplayAlert("Confirmation", "PIN created successfully.", "Ok");
+                EntryPin.Text = string.Empty;
+                BtnSignIn.Text = "Sign In";                
             }
             else {
-                if (!pincodeViewModel.ValidatePin(pin))
+                if (pin == 0)
                 {
-                    await DisplayAlert("Error", "Pincode is not registered.", "OK");
+                    await DisplayAlert("Error", "Pincode is required.", "OK");
                 }
                 else
                 {
-                    //await Navigation.PushModalAsync(new NavigationPage(new TimeClockPage()));
-                    //Application.Current.MainPage = new AppShell();
-                    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                    if (!pincodeViewModel.ValidatePin(pin))
+                    {
+                        await DisplayAlert("Error", "Pincode is not registered.", "OK");
+                    }
+                    else
+                    {
+                        await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                    }
                 }
-            }                      
+            }                               
         }
     }
 }

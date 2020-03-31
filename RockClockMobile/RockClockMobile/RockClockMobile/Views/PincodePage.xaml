@@ -13,14 +13,17 @@
     
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" BackgroundColor="FloralWhite" HorizontalOptions="Center">
-            <Grid Padding="20,0,20,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="130"></RowDefinition>
-                    <RowDefinition Height="80"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
 
-                <Label x:Name="lblTimer"
+            
+                <Grid Padding="20,0,20,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="130"></RowDefinition>
+                        <RowDefinition Height="80"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label x:Name="lblTimer"
                        Grid.Row="0"
                        FontSize="50"
                        FontFamily="{StaticResource Montserrat-SemiBold}"
@@ -29,18 +32,19 @@
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" />
 
-                <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Enter Pin" 
+                    <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Enter Pin" 
                                                Grid.Row="1" Padding="0,0,0,0" EnablePasswordVisibilityToggle="True"
                                                >
-                    <Entry IsPassword="True" x:Name="EntryPin"
+                        <Entry IsPassword="True" x:Name="EntryPin"
                            AutomationId="EntryUserPin"/>
-                </inputLayout:SfTextInputLayout>
+                    </inputLayout:SfTextInputLayout>
 
-                <Button Text="Sign In" CornerRadius="3" FontSize="17" Grid.Row="2"
+                    <Button Text="Sign In" CornerRadius="3" FontSize="17" Grid.Row="2"
                         x:Name="BtnSignIn" AutomationId="BtnSignInUser"
-                        Clicked="BtnSignInEvent"/>
-
-            </Grid>
+                        Clicked="BtnSignInEvent"/>                   
+                </Grid>
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
