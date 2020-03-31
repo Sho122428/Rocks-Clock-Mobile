@@ -41,11 +41,11 @@ namespace RockClockMobile.Services
                     
                     EmployeeList.Add(new Employee
                     {
-                        rocksUserId = dtl.rocksUserId,
+                        rocksUserId = dtl.id,
                         FirstName = dtl.firstName,
                         LastName = dtl.lastName,
-                        email = dtl.email
-                        //rocksProjects = dtl.rocksProjects
+                        email = dtl.email,
+                        rocksProjects = dtl.rocksUserProjectMaps
                     }) ;
 
                 }
