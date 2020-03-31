@@ -25,7 +25,7 @@ namespace RockClockMobile.Views.Navigation
         public NamesListPage()
         {
             InitializeComponent();
-            this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
+            //this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
             this.BindingContext = new LoginViewModel();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
@@ -130,8 +130,8 @@ namespace RockClockMobile.Views.Navigation
                 EmpID = empSignIn.EmpID,
                 FirstName = empSignIn.FirstName,
                 LastName = empSignIn.LastName,
-                ProjectId = empSignIn.ProjectId,
-                ProjectName = empSignIn.ProjectName
+                rocksUserId = empSignIn.rocksUserId,
+                rocksProjects = empSignIn.rocksProjects
             };
 
             GlobalServices.employee = empDtl;
