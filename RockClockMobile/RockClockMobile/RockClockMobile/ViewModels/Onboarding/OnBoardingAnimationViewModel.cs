@@ -29,6 +29,8 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private string selectedProject;
 
+        private bool isProjectButtonVisible = true;
+
         private string nextButtonText = "NEXT";
 
         private bool isSkipButtonVisible = true;
@@ -37,7 +39,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private string clockinButtonText = "CLOCK IN";
 
-        private string breakButtonText = "START BREAK";
+        private string breakButtonText = "Start Break";
 
         private bool isBreakButtonVisible = false;
 
@@ -121,7 +123,9 @@ namespace RockClockMobile.ViewModels.Onboarding
                     this.IsClockedIn = true;
                     this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.TimeIn.ToString("h:mm tt") + System.Environment.NewLine +" for project " + LoggedInUser.projectName;
                     this.ClockInButtonText = "Clock out from " + LoggedInUser.projectName;
-                    
+                    this.IsProjectButtonVisible = false;
+
+
                 }
                 else
                 {
@@ -260,6 +264,26 @@ namespace RockClockMobile.ViewModels.Onboarding
                 this.OnPropertyChanged();
             }
         }
+
+        public bool IsProjectButtonVisible
+        {
+            get
+            {
+                return this.isProjectButtonVisible;
+            }
+
+            set
+            {
+                if (this.isProjectButtonVisible == value)
+                {
+                    return;
+                }
+
+                this.isProjectButtonVisible = value;
+                this.OnPropertyChanged();
+            }
+        }
+        
 
         public string ClockInButtonText
         {

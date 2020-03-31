@@ -26,7 +26,7 @@ namespace RockClockMobile.Views.Navigation
         {
             InitializeComponent();
             this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
-            this.BindingContext = new LoginViewModel();
+            //this.BindingContext = new LoginViewModel();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {

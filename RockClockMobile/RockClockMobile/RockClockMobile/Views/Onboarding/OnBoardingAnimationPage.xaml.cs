@@ -37,10 +37,11 @@ namespace RockClockMobile.Views.Onboarding
             //var selectedProject = picker.SelectedItem;
             var project = "Clock in to " + picker.SelectedItem;
             if (project.Length > 25)
-            { 
-                NextButtonText.FontSize = 10;
-                
-                project = "Clock in to " + System.Environment.NewLine + picker.SelectedItem;
+            {
+                //NextButtonText.FontSize = 10;
+                //NextButtonText.VerticalOptions = LayoutOptions.StartAndExpand;
+                //project = "Clock in to " + System.Environment.NewLine + picker.SelectedItem;
+                project = "Clock In";
             }
             NextButtonText.Text = project;
         }
