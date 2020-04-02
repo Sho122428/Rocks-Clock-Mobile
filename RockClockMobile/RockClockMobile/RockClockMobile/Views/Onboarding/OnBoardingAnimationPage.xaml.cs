@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using System;
 using Syncfusion.SfPicker.XForms;
 using System.Collections.ObjectModel;
+using RockClockMobile.ViewModels.Onboarding;
 
 namespace RockClockMobile.Views.Onboarding
 {
@@ -17,10 +18,11 @@ namespace RockClockMobile.Views.Onboarding
         /// <summary>
         /// Initializes a new instance of the <see cref="OnBoardingAnimationPage" /> class.
         /// </summary>
-        
+        OnBoardingAnimationViewModel viewModel;
         public OnBoardingAnimationPage()
         {
             InitializeComponent();
+            
         }
 
         private void ProjectButton_Clicked(object sender, EventArgs e)

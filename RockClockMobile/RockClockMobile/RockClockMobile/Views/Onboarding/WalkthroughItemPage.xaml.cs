@@ -42,9 +42,9 @@ namespace RockClockMobile.Views.Onboarding
 
             if (empUserLog != null)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
 
-                if (LoggedInUser != null && LoggedInUser.IsClockedOut != true)
+                if (LoggedInUser != null)
                 {
                     //isTimedIn = true;
                     //lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
@@ -52,7 +52,7 @@ namespace RockClockMobile.Views.Onboarding
                     //btnTimeClock.BackgroundColor = Color.Red;
                     //btnTimeClockBreak.IsEnabled = true;
                     //btnTimeClockBreak.Opacity = 1;
-                    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
+                    lblClockedIn.Text = LoggedInUser.timeIn.ToString("h:mm tt");
                 }
                 //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
                 //{
@@ -66,16 +66,16 @@ namespace RockClockMobile.Views.Onboarding
 
                 if (empUserBreakLog != null)
                 {
-                    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+                    BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
 
                     if (takeBreak != null && takeBreak.IsTakingABreak != false)
                     {
-                        lblBreakStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
+                        lblBreakStart.Text = takeBreak.breakIn.ToString("h:mm tt");
                     }
                     else if (takeBreak != null && takeBreak.IsTakingABreak == false)
                     {
-                        lblBreakStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
-                        lblBreakEnd.Text = takeBreak.BreakOut.ToString("h:mm tt");
+                        lblBreakStart.Text = takeBreak.breakIn.ToString("h:mm tt");
+                        lblBreakEnd.Text = takeBreak.breakOut.ToString("h:mm tt");
                     }
                 }
             }

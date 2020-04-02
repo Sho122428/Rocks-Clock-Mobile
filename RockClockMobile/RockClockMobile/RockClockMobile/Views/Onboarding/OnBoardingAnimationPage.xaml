@@ -127,8 +127,18 @@
                     IsVisible="{Binding IsBreakButtonVisible}"
                     Text="{Binding BreakButtonText}"/>
 
-                <!--Grid.Row="1"
-                    Grid.ColumnSpan="2"-->
+               
+                <!--<button:SfButton
+                     Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    x:Name="Testbutton"
+                    Command="{Binding TestCommand}"
+                    CommandParameter="{x:Reference Rotator}"
+                    Style="{StaticResource SfButtonStyle}"
+                   
+                    Text="Test Button"/>-->
+                
+                
                 <button:SfButton
                     Grid.Row="0"
                     Grid.Column="1"

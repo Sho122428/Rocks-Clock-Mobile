@@ -14,8 +14,7 @@ namespace RockClockMobile.Services
         {
             timelogs = new List<TimeLog>()
             {
-                new TimeLog { TimeId = 1, rocksUserID = 1001, projectID = 111, TimeIn = DateTime.Parse("14:00"), TimeOut = DateTime.Parse("23:00")},
-                new TimeLog { TimeId = 2, rocksUserID = 1002, projectID = 112, TimeIn = DateTime.Parse("08:00"), TimeOut = DateTime.Parse("17:00")}
+                
             };
         }
 
@@ -27,7 +26,7 @@ namespace RockClockMobile.Services
 
         public async Task<bool> DeleteTimeLogAsync(int timeid)
         {
-            var oldItem = timelogs.Where((TimeLog arg) => arg.TimeId == timeid).FirstOrDefault();
+            var oldItem = timelogs.Where((TimeLog arg) => arg.timeLogId == timeid).FirstOrDefault();
             timelogs.Remove(oldItem);
 
             return await Task.FromResult(true);
@@ -35,7 +34,7 @@ namespace RockClockMobile.Services
 
         public async Task<TimeLog> GetTimeLogAsync(int timeid)
         {
-            return await Task.FromResult(timelogs.FirstOrDefault(s => s.TimeId == timeid));
+            return await Task.FromResult(timelogs.FirstOrDefault(s => s.timeLogId == timeid));
         }
 
         public async Task<IEnumerable<TimeLog>> GetTimeLogsAsync(bool forceRefresh = false)
@@ -45,7 +44,7 @@ namespace RockClockMobile.Services
 
         public async Task<bool> UpdateTimeLogAsync(TimeLog timelog)
         {
-            var oldItem = timelogs.Where((TimeLog arg) => arg.TimeId == timelog.TimeId).FirstOrDefault();
+            var oldItem = timelogs.Where((TimeLog arg) => arg.timeLogId == timelog.timeLogId).FirstOrDefault();
             timelogs.Remove(oldItem);
             timelogs.Add(timelog);
 
