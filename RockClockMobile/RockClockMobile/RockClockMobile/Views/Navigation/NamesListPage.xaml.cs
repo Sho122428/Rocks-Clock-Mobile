@@ -3,6 +3,7 @@ using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -17,6 +18,9 @@ namespace RockClockMobile.Views.Navigation
     public partial class NamesListPage
     {
         HttpClient client = new HttpClient();
+        UserServices userServices;
+        //PincodeViewModel pincodeViewModel = new PincodeViewModel();
+        //User user;
         public NamesListPage()
         {
             InitializeComponent();
@@ -31,8 +35,10 @@ namespace RockClockMobile.Views.Navigation
                 return true;
             });
 
-            //GetItemAsync(1);
+            //userServices = new UserServices(empDtl.rocksUserId);
         }
+
+     
 
         /// <summary>
         /// Invoked when view size is changed.
@@ -132,7 +138,7 @@ namespace RockClockMobile.Views.Navigation
             GlobalServices.employee = empDtl;
             Application.Current.Properties["user_id "] = empDtl.EmpID;
 
-            //await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
+            userServices = new UserServices(empDtl.rocksUserId);
             App.Current.MainPage = new PincodePage();
         }
         private void HeaderTappedEvent(object sender, EventArgs e)

@@ -13,14 +13,14 @@ namespace RockClockMobile.Services
     public class EmployeeServices
     {
         HttpClient client;
+        Uri baseAddr;
         public ObservableCollection<EmpSample> EmpSamples { get; set; }
         public  ObservableCollection<Employee> EmployeeList { get; set; }
 
-        public EmployeeServices() {          
+        public EmployeeServices() {              
+            baseAddr = new Uri("http://18.136.14.237:8282");
+            client = new HttpClient { BaseAddress = baseAddr};
             Employees();
-
-            client = new HttpClient();
-            client.BaseAddress = new Uri($"http://18.136.14.237:8282/");
         }
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
         public async Task<ObservableCollection<Employee>> Employees()
@@ -28,11 +28,8 @@ namespace RockClockMobile.Services
             try
             {
                 EmployeeList = new ObservableCollection<Employee>();
-                //var baseAddr = new Uri("http://18.136.14.237:8282");
-                //var client = new HttpClient { BaseAddress = baseAddr };
 
-
-                var response = await client.GetStringAsync($"api/RocksUsers");
+                var response = await client.GetStringAsync($"{baseAddr}api/RocksUsers");
                 var empFromAPI = JsonConvert.DeserializeObject<ObservableCollection<EmpSample>>(response);
 
                 EmpSamples = empFromAPI;
@@ -67,7 +64,6 @@ namespace RockClockMobile.Services
                 var json = await client.GetStringAsync($"api/item/{id}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
             }
-
             return null;
         }
     }    

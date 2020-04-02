@@ -14,9 +14,11 @@ namespace RockClockMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PincodePage : ContentPage
-    {
-        PincodeViewModel pincodeViewModel = new PincodeViewModel();
+    {        
         Employee employeeSignedIn = GlobalServices.employee;
+        PincodeViewModel pincodeViewModel = new PincodeViewModel();
+        //UserServices userServices;
+       
         public PincodePage()
         {
             InitializeComponent();
@@ -30,8 +32,11 @@ namespace RockClockMobile.Views
             });
 
             NavigationPage.SetHasNavigationBar(this,false);
+            //UserServices userServices;
+           // userServices = new UserServices(employeeSignedIn.rocksUserId);
+            var existingUser = GlobalServices.User;
 
-            if(employeeSignedIn.rocksUserId == 1)
+            if (existingUser == null)
             {
                 BtnSignIn.Text = "Create PIN";
             }
@@ -54,14 +59,14 @@ namespace RockClockMobile.Views
                 }
                 else
                 {
-                    if (!pincodeViewModel.ValidatePin(pin))
-                    {
-                        await DisplayAlert("Error", "Pincode is not registered.", "OK");
-                    }
-                    else
-                    {
+                    //if (!pincodeViewModel.ValidatePin(pin))
+                    //{
+                    //    await DisplayAlert("Error", "Pincode is not registered.", "OK");
+                    //}
+                    //else
+                    //{
                         await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                    }
+                    //}
                 }
             }                               
         }

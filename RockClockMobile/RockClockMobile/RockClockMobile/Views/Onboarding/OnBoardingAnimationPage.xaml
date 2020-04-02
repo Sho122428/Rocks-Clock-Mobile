@@ -141,7 +141,7 @@
 
                 <picker:SfPicker x:Name="picker" 
                              HeaderText="Select Project to Clock In"
-                             ItemsSource="{Binding Projects}"
+                             ItemsSource="{Binding RocksProjects}"
                              ColumnHeaderText="Projects"
                              ShowColumnHeader="True"
                              HeightRequest="350"
