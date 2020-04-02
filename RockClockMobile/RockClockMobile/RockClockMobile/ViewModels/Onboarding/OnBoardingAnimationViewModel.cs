@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using RockClockMobile.Models;
 using RockClockMobile.Models.Onboarding;
@@ -25,9 +27,9 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private ObservableCollection<Boarding> boardings;
 
-        private ObservableCollection<string> projects;
+        private List<string> rocksProjects;
 
-        private string selectedProject;
+        private string selectedProject = "";
 
         private bool isProjectButtonVisible = true;
 
@@ -51,6 +53,8 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private bool isOnBreak = false;
 
+        private bool isClockOutBtnVisible = false;
+
 
 
         #endregion
@@ -58,7 +62,8 @@ namespace RockClockMobile.ViewModels.Onboarding
         Employee empDtl = GlobalServices.employee;
         List<TimeLog> empUserLog = GlobalServices.EmployeeTime;
         List<BreakLog> empUserBreakLog = GlobalServices.EmployeeBreak;
-        
+
+        public ObservableCollection<TimeLog> TimeLogs { get; set; }
 
         #region Constructor
 
@@ -67,23 +72,27 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// </summary>
         public OnBoardingAnimationViewModel()
         {
-            this.SkipCommand = new Command(this.Skip);
-            this.NextCommand = new Command(this.Next);
-            this.ClockInCommand = new Command(this.ClockIn);
+            //this.SkipCommand = new Command(this.Skip);
+            //this.NextCommand = new Command(this.Next);
+            //this.ClockInCommand = new Command(this.ClockIn);
             this.BreakCommand = new Command(this.Break);
             this.SignOutCommand = new Command(this.SignOut);
-
-
-
-            //fNameUser = "Hello, " + empDtl.FirstName + ", " + empDtl.ProjectName;
-
             
-            this.Projects = new ObservableCollection<string>();
-            this.Projects.Add(empDtl.ProjectName);
-            this.Projects.Add("Rocks Clock Mobile");
-            this.Projects.Add("Urban Necessities");
-            this.Projects.Add("Blockchain Water");
-            this.Projects.Add("Companion Protect");
+            this.LoadEmployeeListCommand = new Command(async () => await GetEmployeeTimeLogList());
+
+            this.ClockInCommand = new Command(async () => await AddEmployeeTimeLog());
+            this.ClockOutCommand = new Command(async () => await UpdateEmployeeTimeLog());
+            
+
+            TimeLogs = new ObservableCollection<TimeLog>();
+            
+
+            this.RocksProjects = new List<string>();
+
+            foreach (var proj in empDtl.rocksProjects)
+            {
+                RocksProjects.Add(proj.rocksProjectId.ToString());
+            }
 
             LoadDataClock();
 
@@ -99,9 +108,9 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             };
 
-            
 
-            
+
+
 
             // Set bindingcontext to content view.
             foreach (var boarding in this.Boardings)
@@ -112,56 +121,64 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         async void LoadDataClock()
         {
-            if (empUserLog != null)
+            await GetEmployeeTimeLogList();
+            try
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
-
-                if (LoggedInUser != null && LoggedInUser.IsClockedOut != true)
+                if (TimeLogs != null)
                 {
-                    this.IsBreakButtonVisible = true;
-                    this.ClockInButtonText = "CLOCK OUT";
-                    this.IsClockedIn = true;
-                    this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.TimeIn.ToString("h:mm tt") + System.Environment.NewLine +" for project " + LoggedInUser.projectName;
-                    this.ClockInButtonText = "Clock out from " + LoggedInUser.projectName;
-                    this.IsProjectButtonVisible = false;
+                    TimeLog LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.rocksUserId).FirstOrDefault();
+
+                    if (LoggedInUser != null)
+                    {
+                        this.IsBreakButtonVisible = true;
+                        this.ClockInButtonText = "CLOCK OUT";
+                        this.IsClockedIn = true;
+                        this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
+                        this.ClockInButtonText = "Clock out from "; //+ LoggedInUser.projectName;
+                        this.IsProjectButtonVisible = false;
 
 
+                    }
+                    else
+                    {
+                        this.FNameUser = empDtl.FirstName + " is off the clock.";
+                        this.ClockInButtonText = "Clock in to " + RocksProjects[0];
+                    }
+                    //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
+                    //{
+                    //    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
+                    //    lblClockedOut.Text = LoggedInUser.TimeOut.ToString("h:mm tt");
+                    //    btnTimeClock.IsEnabled = false;
+                    //    btnTimeClock.Opacity = .5;
+                    //    btnTimeClockBreak.IsEnabled = false;
+                    //    btnTimeClockBreak.Opacity = .5;
+                    //}
+
+                    if (empUserBreakLog != null)
+                    {
+                        BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
+
+                        if (takeBreak != null && takeBreak.IsTakingABreak != false)
+                        {
+                            this.BreakButtonText = "END BREAK";
+                            this.IsOnBreak = true;
+                        }
+                        else if (takeBreak != null && takeBreak.IsTakingABreak == false)
+                        {
+                            this.BreakButtonText = "START BREAK";
+
+                        }
+                    }
                 }
                 else
                 {
                     this.FNameUser = empDtl.FirstName + " is off the clock.";
                     this.ClockInButtonText = "Clock in to " + empDtl.ProjectName;
                 }
-                //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
-                //{
-                //    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
-                //    lblClockedOut.Text = LoggedInUser.TimeOut.ToString("h:mm tt");
-                //    btnTimeClock.IsEnabled = false;
-                //    btnTimeClock.Opacity = .5;
-                //    btnTimeClockBreak.IsEnabled = false;
-                //    btnTimeClockBreak.Opacity = .5;
-                //}
-
-                if (empUserBreakLog != null)
-                {
-                    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
-
-                    if (takeBreak != null && takeBreak.IsTakingABreak != false)
-                    {
-                        this.BreakButtonText = "END BREAK";
-                        this.IsOnBreak = true;
-                    }
-                    else if (takeBreak != null && takeBreak.IsTakingABreak == false)
-                    {
-                        this.BreakButtonText = "START BREAK";
-                        
-                    }
-                }
             }
-            else
+            catch (Exception ex)
             {
-                this.FNameUser = empDtl.FirstName + " is off the clock.";
-                this.ClockInButtonText = "Clock in to " + empDtl.ProjectName;
+                var msg = ex.Message;
             }
         }
 
@@ -188,26 +205,26 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
-        public ObservableCollection<string> Projects
+        public List<string> RocksProjects
         {
             get
             {
-                return this.projects;
+                return this.rocksProjects;
             }
 
             set
             {
-                if (this.projects == value)
+                if (this.rocksProjects == value)
                 {
                     return;
                 }
 
-                this.projects = value;
+                this.rocksProjects = value;
                 this.OnPropertyChanged();
             }
         }
 
-        
+
         public string SelectedProject
         {
             get
@@ -283,7 +300,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 this.OnPropertyChanged();
             }
         }
-        
+
 
         public string ClockInButtonText
         {
@@ -456,6 +473,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// Gets or sets the command that is executed when the Clock In button is clicked.
         /// </summary>
         public ICommand ClockInCommand { get; set; }
+        public ICommand ClockOutCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the command that is executed when the Break button is clicked.
@@ -467,7 +485,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// </summary>
         public ICommand SignOutCommand { get; set; }
 
-        
+        public ICommand LoadEmployeeListCommand { get; set; }
 
         #endregion
 
@@ -507,7 +525,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         }
         private void ClockIn(object obj)
         {
-            if(!IsClockedIn)
+            if (!IsClockedIn)
             {
                 var countTimeID = 0;
 
@@ -516,15 +534,15 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 var userTimeLog = new TimeLog
                 {
-                    TimeId = countTimeID + 1,
-                    rocksUserID = empDtl.EmpID,
-                    TimeIn = DateTime.Now,
-                    IsClockedOut = false,
-                    projectName = this.SelectedProject
-                   
+                    timeLogId = countTimeID + 1,
+                    rocksUserId = empDtl.EmpID,
+                    timeIn = DateTime.Now,
+                    //IsClockedOut = false
+
+
 
                 };
-                
+
                 List<TimeLog> EmployeeTimeLog = new List<TimeLog>();
 
                 if (empUserLog != null)
@@ -533,20 +551,20 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
 
                 EmployeeTimeLog.Add(userTimeLog);
-                
+
                 GlobalServices.EmployeeTime = EmployeeTimeLog;
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
-                    LoggedInUser.TimeOut = DateTime.Now;
-                    LoggedInUser.IsClockedOut = true;
+                    LoggedInUser.timeOut = DateTime.Now;
+                    //LoggedInUser.IsClockedOut = true;
                 }
 
-                
+
             }
             this.SignOut();
         }
@@ -555,7 +573,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             if (!IsOnBreak)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
                 var countTimeID = 0;
                 var ndx = 0;
 
@@ -564,9 +582,9 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 var userBreakLog = new BreakLog
                 {
-                    TimeId = LoggedInUser.TimeId,
-                    BreakId = ndx + 1,
-                    BreakIn = DateTime.Now,
+                    timeLogId = LoggedInUser.timeLogId,
+                    id = ndx + 1,
+                    breakIn = DateTime.Now,
                     IsTakingABreak = true
 
                 };
@@ -584,16 +602,16 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
-                BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
 
                 if (takeBreak != null)
                 {
-                    takeBreak.BreakOut = DateTime.Now;
+                    takeBreak.breakOut = DateTime.Now;
                     takeBreak.IsTakingABreak = false;
                 }
                 this.IsOnBreak = false;
-                
+
 
             }
             this.SignOut();
@@ -608,10 +626,141 @@ namespace RockClockMobile.ViewModels.Onboarding
         {
             Application.Current.MainPage = new Views.Navigation.NamesListPage();
         }
+        #endregion
 
+        #region
+        /// <summary>
+        /// Invoke API calls
+        /// </summary>
+        /// <returns></returns>
+        private async Task TestingOnly()
+        {
+            if (IsBusy)
+                return;
 
+            IsBusy = true;
+
+            try
+            {
+
+                var items = await TimeLogServices.GetEmployeeTimeLog(1);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task GetEmployeeTimeLog()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+
+                var items = await TimeLogServices.GetEmployeeTimeLog(empDtl.rocksUserId);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task GetEmployeeTimeLogList()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                TimeLogs.Clear();
+                var timelogs = await TimeLogServices.GetEmployeeTimeLogList(true);
+                foreach (var tlog in timelogs)
+                {
+                    TimeLogs.Add(tlog);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task AddEmployeeTimeLog()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                var countTimeID = 0;
+
+                if (empUserLog != null)
+                    countTimeID = empUserLog.Count;
+
+                var userTimeLog = new TimeLog
+                {
+                    //timeLogId = countTimeID + 1,
+                    //rocksUserId = empDtl.rocksUserId,
+                    //timeIn = DateTime.Now,
+                    //projectID = 1,
+                    //status = 0,
+                    //isDeleted = false
+
+                    
+                    projectID = 4,
+                    rocksUserId= empDtl.EmpID,
+                    timeIn= DateTime.UtcNow,
+                    timeOut = DateTime.UtcNow,
+                    status= 1,
+                    isDeleted= false
+                    
+                };
+                var items = await TimeLogServices.AddEmployeeTimeLog(userTimeLog);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+                this.SignOut();
+            }
+        }
+
+        private async Task UpdateEmployeeTimeLog()
+        {
+
+        }
 
         #endregion
+
+
+
+
 
     }
 }

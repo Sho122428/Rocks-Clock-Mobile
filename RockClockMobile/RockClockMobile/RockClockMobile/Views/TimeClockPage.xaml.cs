@@ -55,10 +55,10 @@ namespace RockClockMobile.Views
                     countTimeID = empUserLog.Count;
                 
                 var userTimeLog = new TimeLog{
-                    TimeId = countTimeID + 1,
-                    rocksUserID = empDtl.EmpID,
-                    TimeIn = Convert.ToDateTime(cur_time),
-                    IsClockedOut = false
+                    timeLogId = countTimeID + 1,
+                    rocksUserId = empDtl.EmpID,
+                    timeIn = Convert.ToDateTime(cur_time),
+                    //IsClockedOut = false
                     
                 };
 
@@ -75,12 +75,12 @@ namespace RockClockMobile.Views
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
-                    LoggedInUser.TimeOut = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
-                    LoggedInUser.IsClockedOut = true;
+                    LoggedInUser.timeOut = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
+                    //LoggedInUser.IsClockedOut = true;
                 }
 
                 var cur_time = DateTime.Now.ToString("h:mm tt");
@@ -109,7 +109,7 @@ namespace RockClockMobile.Views
                 lblBreakTimeStart.IsVisible = true;
                 btnTimeClockBreak.Text = "End Break";
 
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
                 var ndx = 0; 
                     
                 if(empUserBreakLog != null)
@@ -119,9 +119,9 @@ namespace RockClockMobile.Views
 
                 var userBreakLog = new BreakLog
                 {
-                    TimeId = LoggedInUser.TimeId,
-                    BreakId = ndx + 1,
-                    BreakIn = Convert.ToDateTime(cur_time),
+                    timeLogId = LoggedInUser.timeLogId,
+                    id = ndx + 1,
+                    breakIn = Convert.ToDateTime(cur_time),
                     IsTakingABreak = true
 
                 };
@@ -139,12 +139,12 @@ namespace RockClockMobile.Views
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
-                BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
 
                 if (takeBreak != null)
                 {
-                    takeBreak.BreakOut = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
+                    takeBreak.breakOut = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
                     takeBreak.IsTakingABreak = false;
                 }
                 isOnBreak = false;
@@ -179,21 +179,21 @@ namespace RockClockMobile.Views
 
             if (empUserLog != null)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
 
-                if (LoggedInUser != null && LoggedInUser.IsClockedOut != true)
+                if (LoggedInUser != null)
                 {
                     isTimedIn = true;
-                    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
+                    lblClockedIn.Text = LoggedInUser.timeIn.ToString("h:mm tt");
                     btnTimeClock.Text = "Clock Out";
                     btnTimeClock.BackgroundColor = Color.Red;
                     btnTimeClockBreak.IsEnabled = true;
                     btnTimeClockBreak.Opacity = 1;
                 }
-                else if(LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
+                else if(LoggedInUser != null) //Display data only
                 {
-                    lblClockedIn.Text = LoggedInUser.TimeIn.ToString("h:mm tt");
-                    lblClockedOut.Text = LoggedInUser.TimeOut.ToString("h:mm tt");
+                    lblClockedIn.Text = LoggedInUser.timeIn.ToString("h:mm tt");
+                    lblClockedOut.Text = LoggedInUser.timeOut.ToString("h:mm tt");
                     btnTimeClock.IsEnabled = false;
                     btnTimeClock.Opacity = .5;
                     btnTimeClockBreak.IsEnabled = false;
@@ -202,20 +202,20 @@ namespace RockClockMobile.Views
 
                 if (empUserBreakLog != null)
                 {
-                    BreakLog takeBreak = empUserBreakLog.Where(a => a.TimeId == LoggedInUser.TimeId).FirstOrDefault();
+                    BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
 
                     if (takeBreak != null && takeBreak.IsTakingABreak != false)
                     {
                         isOnBreak = true;
-                        lblBreakTimeStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
+                        lblBreakTimeStart.Text = takeBreak.breakIn.ToString("h:mm tt");
                         
                         lblBreakTimeStart.IsVisible = true;
                         btnTimeClockBreak.Text = "End Break";
                     }
                     else if(takeBreak != null && takeBreak.IsTakingABreak == false)
                     {
-                        lblBreakTimeStart.Text = takeBreak.BreakIn.ToString("h:mm tt");
-                        lblBreakTimeEnd.Text = takeBreak.BreakOut.ToString("h:mm tt");
+                        lblBreakTimeStart.Text = takeBreak.breakIn.ToString("h:mm tt");
+                        lblBreakTimeEnd.Text = takeBreak.breakOut.ToString("h:mm tt");
                     }
                 }
             }

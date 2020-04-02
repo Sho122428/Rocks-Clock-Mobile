@@ -1,3 +1,4 @@
+using Android.Security;
 using RockClockMobile.Services;
 using RockClockMobile.Views;
 using RockClockMobile.Views.Navigation;
@@ -24,22 +25,25 @@ namespace RockClockMobile
         public App()
         {
             InitializeComponent();
-            if (UseMockDataStore)
-            {
-                DependencyService.Register<MockDataStore>();
-                DependencyService.Register<MockDataStoreTimeLog>();
-            }
-            else
-                DependencyService.Register<AzureDataStore>();
+
+            //if (UseMockDataStore)
+            //{
+            //    DependencyService.Register<MockDataStore>();
+            //    DependencyService.Register<MockDataStoreTimeLog>();
+            //}
+            //else
+            //    DependencyService.Register<AzureDataStore>();
             //MainPage = new LoginPage();
             //MainPage = new AppShell(); 
+            DependencyService.Register<TimeLogService>();
+            DependencyService.Register<EmployeeServices>();
             App.Current.MainPage = new NamesListPage();
         }       
 
         protected override void OnStart()
         {
             // On start runs when your application launches from a closed state, 
-
+            //NetworkSecurityPolicy.Instance.IsCleartextTrafficPermitted.Equals(true);
             if (!stopWatch.IsRunning)
             {
                 stopWatch.Start();

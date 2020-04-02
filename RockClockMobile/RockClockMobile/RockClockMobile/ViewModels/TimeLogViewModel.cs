@@ -29,7 +29,7 @@ namespace RockClockMobile.ViewModels
             {
                 var newTimelog = timelog as TimeLog;
                 TimeLogs.Add(newTimelog);
-                await DataStoreTimeLog.AddTimeLogAsync(newTimelog);
+                //await DataStoreTimeLog.AddTimeLogAsync(newTimelog);
             });
         }
 
@@ -48,11 +48,11 @@ namespace RockClockMobile.ViewModels
             try
             {
                 TimeLogs.Clear();
-                var timelogs = await DataStoreTimeLog.GetTimeLogsAsync(true);
-                foreach (var timelog in timelogs)
-                {
-                    TimeLogs.Add(timelog);
-                }
+                //var timelogs = await DataStoreTimeLog.GetTimeLogsAsync(true);
+                //foreach (var timelog in timelogs)
+                //{
+                //    TimeLogs.Add(timelog);
+                //}
             }
             catch (Exception ex)
             {
@@ -77,16 +77,16 @@ namespace RockClockMobile.ViewModels
 
             try
             {
-                TimeLogs.Clear();
-                var timelogs = await DataStoreTimeLog.GetTimeLogsAsync(true);
-                foreach (var timelog in timelogs)
-                {
-                    if(timelog.rocksUserID == employeeTimeLog.rocksUserID)
-                    {
-                        EmployeeTimeLog = await DataStoreTimeLog.GetTimeLogAsync(employeeTimeLog.TimeId);
-                    }
+                //TimeLogs.Clear();
+                //var timelogs = await DataStoreTimeLog.GetTimeLogsAsync(true);
+                //foreach (var timelog in timelogs)
+                //{
+                //    if(timelog.rocksUserId == employeeTimeLog.rocksUserId)
+                //    {
+                //        EmployeeTimeLog = await DataStoreTimeLog.GetTimeLogAsync(employeeTimeLog.timeLogId);
+                //    }
                     
-                }
+                //}
             }
             catch (Exception ex)
             {

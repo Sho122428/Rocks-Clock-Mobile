@@ -10,17 +10,23 @@ using Xamarin.Essentials;
 
 namespace RockClockMobile.Services
 {
-    public class EmployeeServices
+    public class EmployeeServices : IEmployeeServices<TimeLog>
     {
         HttpClient client;
+        Uri baseAddr;
         public ObservableCollection<EmpSample> EmpSamples { get; set; }
         public  ObservableCollection<Employee> EmployeeList { get; set; }
+        IEnumerable<TimeLog> timelogs;
 
-        public EmployeeServices() {          
+        public EmployeeServices() {
+            
+            baseAddr = new Uri("http://18.136.14.237:8282");
+            client = new HttpClient { BaseAddress = baseAddr };
+
+
+            timelogs = new List<TimeLog>();
             Employees();
-
-            client = new HttpClient();
-            client.BaseAddress = new Uri($"http://18.136.14.237:8282/");
+           
         }
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
         public async Task<ObservableCollection<Employee>> Employees()
@@ -32,7 +38,7 @@ namespace RockClockMobile.Services
                 //var client = new HttpClient { BaseAddress = baseAddr };
 
 
-                var response = await client.GetStringAsync($"api/RocksUsers");
+                var response = await client.GetStringAsync("http://18.136.14.237:8282/api/RocksUsers");
                 var empFromAPI = JsonConvert.DeserializeObject<ObservableCollection<EmpSample>>(response);
 
                 EmpSamples = empFromAPI;
@@ -60,15 +66,7 @@ namespace RockClockMobile.Services
             return null;
         }
 
-        public async Task<TimeLog> GetEmployeeTimeLog(string id)
-        {
-            if (id != null && IsConnected)
-            {
-                var json = await client.GetStringAsync($"api/item/{id}");
-                return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
-            }
-
-            return null;
-        }
+        
+        
     }    
 }
