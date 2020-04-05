@@ -1,3 +1,4 @@
+using  Syncfusion.XForms.iOS.Graphics;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.XForms.iOS.Border;
 using Syncfusion.SfRotator.XForms.iOS;

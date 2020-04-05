@@ -10,7 +10,7 @@ using Xamarin.Essentials;
 
 namespace RockClockMobile.Services
 {
-    public class EmployeeServices : IEmployeeServices<TimeLog>
+    public class EmployeeServices 
     {
         HttpClient client;
         Uri baseAddr;
@@ -38,13 +38,14 @@ namespace RockClockMobile.Services
                 //var client = new HttpClient { BaseAddress = baseAddr };
 
 
-                var response = await client.GetStringAsync("http://18.136.14.237:8282/api/RocksUsers");
-                var empFromAPI = JsonConvert.DeserializeObject<ObservableCollection<EmpSample>>(response);
+                var response = await client.GetStringAsync($"{baseAddr}api/RocksUsers");
+                var empFromAPI = await Task.Run(() => JsonConvert.DeserializeObject<ObservableCollection<EmpSample>>(response));
 
                 EmpSamples = empFromAPI;
 
-                foreach (var dtl in EmpSamples) {
-                    
+                foreach (var dtl in EmpSamples)
+                {
+
                     EmployeeList.Add(new Employee
                     {
                         rocksUserId = dtl.id,
@@ -52,7 +53,7 @@ namespace RockClockMobile.Services
                         LastName = dtl.lastName,
                         email = dtl.email,
                         rocksProjects = dtl.rocksUserProjectMaps
-                    }) ;
+                    });
 
                 }
 
@@ -60,13 +61,22 @@ namespace RockClockMobile.Services
             }
             catch (System.Net.WebException e)
             {
-                 e.ToString();
+                e.ToString();
             }
 
             return null;
         }
 
-        
-        
+        public async Task<IEnumerable<EmpSample>> GetRocksUsers(bool forceRefresh)
+        {
+            if (forceRefresh && IsConnected)
+            {
+                var json = await client.GetStringAsync($"{baseAddr}api/RocksUsers");
+                return await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<EmpSample>>(json));
+            }
+
+            return null;
+        }
+
     }    
 }

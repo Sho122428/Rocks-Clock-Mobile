@@ -30,7 +30,7 @@ namespace RockClockMobile
                 return true;
             });
 
-            BindingContext = new LoginViewModel();  
+            //BindingContext = new LoginViewModel();  
         }
 
         public async void btnLogin(object sender, EventArgs e)
@@ -70,7 +70,7 @@ namespace RockClockMobile
            Application.Current.Properties["user_id "] = empDtl.EmpID;
             
 
-            await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
+            await Navigation.PushModalAsync(new NavigationPage(new PincodePage(null)));
         }
     }
 }

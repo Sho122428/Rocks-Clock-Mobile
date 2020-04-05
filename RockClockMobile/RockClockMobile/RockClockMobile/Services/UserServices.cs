@@ -6,40 +6,60 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace RockClockMobile.Services
 {
-    public class UserServices
+    public class UserServices : IUserServices<User>
     {
         HttpClient client;
         Uri baseAddr;
-        public User UserList { get; set; }
-        public UserServices(int rockUserId) {
+        //IEnumerable<TimeLog> timelogs;
+
+        public UserServices() 
+        {
             baseAddr = new Uri("http://18.136.14.237:8282");
             client = new HttpClient { BaseAddress = baseAddr };
-
-            Users(rockUserId);
+            //timelogs = new List<TimeLog>();
         }
-        public async  Task<User> Users(int rockUserId)
+
+        bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
+
+        public async Task<User> GetUser(int id)
         {
-            try
+
+            if (id != 0 && IsConnected)
             {
-                var response = await client.GetStringAsync($"{baseAddr}api/Users/{ rockUserId }");
-                UserList = await Task.Run(() => JsonConvert.DeserializeObject<User>(response));
-                //UserList = JsonConvert.DeserializeObject<User>(response);
-
-                if (UserList != null) {
-                    GlobalServices.User = UserList;
-                }               
-
-                return UserList;
+                var json = await client.GetStringAsync($"{baseAddr}api/Users/{id}");
+                return await Task.Run(() => JsonConvert.DeserializeObject<User>(json));
             }
-            catch (System.Net.WebException e)
-            {
-                e.ToString();
-            }
-
             return null;
         }
+
+        public async Task<bool> AddUser(User user)
+        {
+            if (user == null || !IsConnected)
+                return false;
+
+            var serializedItem = JsonConvert.SerializeObject(user);
+
+            var response = await client.PostAsync($"api/Users", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateUser(User user)
+        {
+            if (user == null || !IsConnected)
+                return false;
+
+            var serializedItem = JsonConvert.SerializeObject(user);
+            var buffer = Encoding.UTF8.GetBytes(serializedItem);
+            var byteContent = new ByteArrayContent(buffer);
+
+            var response = await client.PutAsync(new Uri($"api/Users/{user.userRole.userId}"), byteContent);
+
+            return response.IsSuccessStatusCode;
+        }        
     }
 }

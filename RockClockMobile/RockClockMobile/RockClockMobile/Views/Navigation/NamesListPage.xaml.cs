@@ -1,6 +1,7 @@
 ﻿using RockClockMobile.Models;
 using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
+using RockClockMobile.ViewModels.Navigation;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -17,15 +18,12 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
-        HttpClient client = new HttpClient();
-        UserServices userServices;
-        //PincodeViewModel pincodeViewModel = new PincodeViewModel();
-        //User user;
+        NamesListViewModel userViewModel = new NamesListViewModel();
         public NamesListPage()
         {
             InitializeComponent();
-            //this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
-            this.BindingContext = new LoginViewModel();
+            this.BindingContext = new NamesListViewModel();
+            //this.BindingContext = new LoginViewModel();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -137,9 +135,11 @@ namespace RockClockMobile.Views.Navigation
 
             GlobalServices.employee = empDtl;
             Application.Current.Properties["user_id "] = empDtl.EmpID;
+            
+            var user = await userViewModel.GetUser();
+            string userPassword = user.password;
 
-            userServices = new UserServices(empDtl.rocksUserId);
-            App.Current.MainPage = new PincodePage();
+            App.Current.MainPage = new PincodePage(userPassword);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {
