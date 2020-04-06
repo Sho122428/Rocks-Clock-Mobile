@@ -9,7 +9,9 @@
     xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:rotator="clr-namespace:Syncfusion.SfRotator.XForms;assembly=Syncfusion.SfRotator.XForms"
     xmlns:picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
-    xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels.Onboarding"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels.Onboarding" 
+    
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -25,7 +27,7 @@
         <viewModel:OnBoardingAnimationViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <Grid>
+        <Grid IsEnabled="{Binding IsBusy,Mode=TwoWay}">
             <Grid.RowDefinitions>
                 <!--  Skip Button  -->
                 <RowDefinition Height="50" />
@@ -94,6 +96,7 @@
                              
                              />-->
             
+            
             <Grid Grid.Row="3" Padding="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -108,26 +111,37 @@
                 </Grid.ColumnDefinitions>
                 <!--  ClockIn button  -->
                 <button:SfButton
-                    x:Name="NextButtonText"
+                    x:Name="ClockInBtn"
                     Grid.Row="0"
                     Grid.Column="0"
                     Command="{Binding ClockInCommand}"
                     CommandParameter="{x:Reference Rotator}"
                     Style="{StaticResource SfButtonStyle}"
-                    Text="{Binding ClockInButtonText}" />
+                    Text="{Binding ClockInButtonText}"
+                    />
+
+                <button:SfButton
+                    x:Name="ClockOutBtn"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    
+                    Command="{Binding ClockOutCommand}"
+                    CommandParameter="{x:Reference Rotator}"
+                    Style="{StaticResource SfButtonStyle}"
+                    Text="Test ClockOut" />
 
                 <!--  Break button  -->
                 <button:SfButton
                     x:Name="BreakButtonText"
                     Grid.Row="0"
                     Grid.Column="1"
-                   Command="{Binding BreakCommand}"
+                    Command="{Binding BreakCommand}"
                     CommandParameter="{x:Reference Rotator}"
                     Style="{StaticResource SfButtonStyle}"
                     IsVisible="{Binding IsBreakButtonVisible}"
                     Text="{Binding BreakButtonText}"/>
 
-               
+                
                 <!--<button:SfButton
                      Grid.Row="1"
                     Grid.ColumnSpan="2"
@@ -164,7 +178,15 @@
                              SelectedItem="{Binding SelectedProject,Mode=TwoWay}"/>
 
             </Grid>
-           
+            <busyindicator:SfBusyIndicator x:Name="busyindicator" 
+                                      AnimationType="Box" 
+                                      IsBusy="{Binding IsBusy, Mode=TwoWay}" IsVisible="{Binding IsBusy, Mode=TwoWay}"
+                                      ViewBoxWidth = "150" 
+                                      ViewBoxHeight="150"
+                                      VerticalOptions="CenterAndExpand"
+                                      HorizontalOptions="CenterAndExpand"
+                                      Grid.Row="1"
+                                      TextColor="{x:StaticResource Gray-White}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
