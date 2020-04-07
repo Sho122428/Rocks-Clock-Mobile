@@ -41,7 +41,7 @@ namespace RockClockMobile.Services
 
             if (id != null && IsConnected)
             {
-                var json = await client.GetStringAsync($"{baseAddr}/api/TimeLog/{id}");
+                var json = await client.GetStringAsync($"api/TimeLog/{id}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
                 //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
             }
@@ -66,11 +66,11 @@ namespace RockClockMobile.Services
                 return false;
 
             var serializedItem = JsonConvert.SerializeObject(timelog);
-            var buffer = Encoding.UTF8.GetBytes(serializedItem);
-            var byteContent = new ByteArrayContent(buffer);
+            //var buffer = Encoding.UTF8.GetBytes(serializedItem);
+            //var byteContent = new ByteArrayContent(buffer);
 
-            var response = await client.PutAsync(new Uri($"api/TimeLog/{timelog.timeLogId}"), byteContent);
-
+            //var response = await client.PutAsync(new Uri($"api/TimeLog?id={timelog.timeLogId}"), byteContent);
+            var response = await client.PutAsync($"api/TimeLog?id={timelog.timeLogId}",  new StringContent(serializedItem, Encoding.UTF8, "application/json"));
             return response.IsSuccessStatusCode;
         }
 
