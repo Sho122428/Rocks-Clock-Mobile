@@ -89,7 +89,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             this.RocksProjects = new List<string>();
 
-            foreach (var proj in empDtl.rocksProjects)
+            foreach (var proj in empDtl.rocksUserProjectMaps)
             {
                 RocksProjects.Add(proj.rocksProjectId.ToString());
             }
@@ -126,14 +126,14 @@ namespace RockClockMobile.ViewModels.Onboarding
             {
                 if (TimeLogs != null)
                 {
-                    TimeLog LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.rocksUserId).FirstOrDefault();
+                    TimeLog LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                     if (LoggedInUser != null)
                     {
                         this.IsBreakButtonVisible = true;
                         this.ClockInButtonText = "CLOCK OUT";
                         this.IsClockedIn = true;
-                        this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
+                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
                         this.ClockInButtonText = "Clock out from "; //+ LoggedInUser.projectName;
                         this.IsProjectButtonVisible = false;
 
@@ -141,7 +141,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                     }
                     else
                     {
-                        this.FNameUser = empDtl.FirstName + " is off the clock.";
+                        this.FNameUser = empDtl.firstName + " is off the clock.";
                         this.ClockInButtonText = "Clock in to " + RocksProjects[0];
                     }
                     //else if (LoggedInUser != null && LoggedInUser.IsClockedOut == true) //Display data only
@@ -172,8 +172,8 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
                 else
                 {
-                    this.FNameUser = empDtl.FirstName + " is off the clock.";
-                    this.ClockInButtonText = "Clock in to " + empDtl.ProjectName;
+                    this.FNameUser = empDtl.firstName + " is off the clock.";
+                    this.ClockInButtonText = "Clock in to " + empDtl.rocksUserProjectMaps.Select(a => a.rocksProject).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -535,7 +535,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 var userTimeLog = new TimeLog
                 {
                     timeLogId = countTimeID + 1,
-                    rocksUserId = empDtl.EmpID,
+                    rocksUserId = empDtl.id,
                     timeIn = DateTime.Now,
                     //IsClockedOut = false
 
@@ -556,7 +556,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
@@ -573,7 +573,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             if (!IsOnBreak)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
                 var countTimeID = 0;
                 var ndx = 0;
 
@@ -602,7 +602,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
                 BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
 
                 if (takeBreak != null)
@@ -666,7 +666,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             try
             {
 
-                var items = await TimeLogServices.GetEmployeeTimeLog(empDtl.rocksUserId);
+                var items = await TimeLogServices.GetEmployeeTimeLog(empDtl.id);
 
             }
             catch (Exception ex)
@@ -730,7 +730,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                     
                     projectID = 4,
-                    rocksUserId= empDtl.EmpID,
+                    rocksUserId= empDtl.id,
                     timeIn= DateTime.UtcNow,
                     timeOut = DateTime.UtcNow,
                     status= 1,
@@ -756,11 +756,6 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         }
 
-        #endregion
-
-
-
-
-
+        #endregion    
     }
 }

@@ -42,7 +42,7 @@ namespace RockClockMobile.Views.Onboarding
 
             if (empUserLog != null)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {

@@ -1,9 +1,10 @@
-﻿using RockClockMobile.Models;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using Xamarin.Forms.Xaml;
 
 namespace RockClockMobile.ViewModels.LoginForm
 {
@@ -105,10 +106,41 @@ namespace RockClockMobile.ViewModels.LoginForm
         /// Invoked when the Log In button is clicked.
         /// </summary>
         /// <param name="obj">The Object</param>
-        private void LoginClicked(object x)
+        private async void LoginClicked(object x)
         {
             // Do something
-            string test = $"hello {5}";
+            //string username = this.Username;
+
+            //Email = username;
+
+            this.Username = base.Email;
+
+        }
+
+        private async Task GetEmployeeTimeLogList(string email)
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                //TimeLogs.Clear();
+                //var timelogs = await TimeLogServices.GetEmployeeTimeLogList(true);
+                //foreach (var tlog in timelogs)
+                //{
+                //    TimeLogs.Add(tlog);
+                //}
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         /// <summary>
@@ -143,4 +175,5 @@ namespace RockClockMobile.ViewModels.LoginForm
 
         #endregion
     }
+
 }

@@ -56,7 +56,7 @@ namespace RockClockMobile.Views
                 
                 var userTimeLog = new TimeLog{
                     timeLogId = countTimeID + 1,
-                    rocksUserId = empDtl.EmpID,
+                    rocksUserId = empDtl.id,
                     timeIn = Convert.ToDateTime(cur_time),
                     //IsClockedOut = false
                     
@@ -75,7 +75,7 @@ namespace RockClockMobile.Views
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
@@ -109,7 +109,7 @@ namespace RockClockMobile.Views
                 lblBreakTimeStart.IsVisible = true;
                 btnTimeClockBreak.Text = "End Break";
 
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
                 var ndx = 0; 
                     
                 if(empUserBreakLog != null)
@@ -139,7 +139,7 @@ namespace RockClockMobile.Views
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
                 BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
 
                 if (takeBreak != null)
@@ -179,7 +179,7 @@ namespace RockClockMobile.Views
 
             if (empUserLog != null)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {

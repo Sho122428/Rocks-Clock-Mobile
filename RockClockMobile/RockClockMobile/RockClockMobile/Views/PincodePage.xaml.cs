@@ -1,12 +1,7 @@
 ﻿using RockClockMobile.Models;
-using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -33,8 +28,8 @@ namespace RockClockMobile.Views
             });
 
             NavigationPage.SetHasNavigationBar(this,false);
-            userPassword = null;
-            if (userPassword == null)
+
+            if (userPassword == "0")
             {
                 BtnSignIn.Text = "Create PIN";
             }

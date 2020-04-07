@@ -39,13 +39,13 @@ namespace RockClockMobile.ViewModels.LoginForm
                 }
 
                 this.email = value;
-                this.NotifyPropertyChanged();
+                //this.NotifyPropertyChanged();
             }
         }
 
         private void NotifyPropertyChanged()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /// <summary>

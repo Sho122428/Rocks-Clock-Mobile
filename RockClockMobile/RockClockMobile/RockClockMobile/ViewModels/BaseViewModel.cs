@@ -18,7 +18,7 @@ namespace RockClockMobile.ViewModels
         
         public ITimeLogServices<TimeLog> TimeLogServices => DependencyService.Get<ITimeLogServices<TimeLog>>();
         public IUserServices<User> UserServices => DependencyService.Get<IUserServices<User>>();
-        public IEmployeeServices<EmpSample> EmployeeServices => DependencyService.Get<IEmployeeServices<EmpSample>>();
+        public IEmployeeServices<Employee> EmployeeServices => DependencyService.Get<IEmployeeServices<Employee>>();
 
         bool isBusy = false;
         public bool IsBusy

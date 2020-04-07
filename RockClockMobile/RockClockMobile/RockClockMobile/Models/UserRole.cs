@@ -15,7 +15,7 @@ namespace RockClockMobile.Models
         public DateTime createddt { get; set; }
         public int createdby { get; set; }
         public int status { get; set; }
-        public object modifiednotes { get; set; }
+        public string modifiednotes { get; set; }
         public bool isDeleted { get; set; }
     }
 }

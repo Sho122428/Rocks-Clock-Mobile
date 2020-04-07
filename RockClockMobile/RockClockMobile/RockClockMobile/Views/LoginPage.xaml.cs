@@ -59,15 +59,14 @@ namespace RockClockMobile
             var empSignIn = (Employee)e.ItemData;
 
             var empDtl = new Employee{
-                EmpID = empSignIn.EmpID,
-                FirstName = empSignIn.FirstName,
-                LastName = empSignIn.LastName,
-                ProjectId = empSignIn.ProjectId,
-                ProjectName = empSignIn.ProjectName
+                id = empSignIn.id,
+                firstName = empSignIn.firstName,
+                lastName = empSignIn.lastName,
+                rocksUserProjectMaps = empSignIn.rocksUserProjectMaps
             };
 
            GlobalServices.employee = empDtl;
-           Application.Current.Properties["user_id "] = empDtl.EmpID;
+           Application.Current.Properties["user_id "] = empDtl.id;
             
 
             await Navigation.PushModalAsync(new NavigationPage(new PincodePage(null)));

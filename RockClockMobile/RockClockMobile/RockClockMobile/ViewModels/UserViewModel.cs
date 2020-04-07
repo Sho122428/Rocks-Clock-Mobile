@@ -14,8 +14,6 @@ namespace RockClockMobile.ViewModels
     {
         public UserViewModel()
         {
-            // this.GetUserCommand = new Command(async () => await GetUser());
-            //GetUser();
         }
 
         public ICommand GetUserCommand { get; set; }
@@ -28,7 +26,7 @@ namespace RockClockMobile.ViewModels
 
             try
             {
-                User = await UserServices.GetUser(gg.rocksUserId);
+                User = await UserServices.GetUser(gg.id);
                 return User;
             }
             catch (Exception ex)
@@ -42,27 +40,6 @@ namespace RockClockMobile.ViewModels
 
             return User;
         }
-
-        //public async Task<User> GetUser()
-        //{
-        //    if (IsBusy)
-        //        return;
-
-        //    IsBusy = true;
-
-        //    try
-        //    {
-        //        var items = await UserServices.GetUser(empDtl.rocksUserId);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex);
-        //    }
-        //    finally
-        //    {
-        //        IsBusy = false;
-        //    }
-        //}
         private async Task AddEmployeeTimeLog()
         {
             if (IsBusy)

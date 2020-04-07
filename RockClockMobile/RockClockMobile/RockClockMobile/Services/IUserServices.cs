@@ -10,6 +10,6 @@ namespace RockClockMobile.Services
         Task<T> GetUser(int id);
         Task<bool> AddUser(T user);
         Task<bool> UpdateUser(T timelog);
-        //Task<IEnumerable<T>> GetEmployeeTimeLogList(bool forceRefresh = false);
+        Task<IEnumerable<T>> GetUserList(bool forceRefresh = false);
     }
 }

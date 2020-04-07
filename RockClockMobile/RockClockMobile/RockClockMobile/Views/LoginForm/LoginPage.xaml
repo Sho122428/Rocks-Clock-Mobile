@@ -84,21 +84,7 @@
                             Text="Let's get to work" />-->
 
                         <!--  Entry to get email ID from user  -->
-                        <!--<local:EmailEntry Grid.Row="2" Padding="0,24" />-->
-                        <StackLayout Grid.Row="2" Margin="0,0,0,20">
-                            <border:SfBorder
-                            BorderColor="{Binding Source={x:Reference PasswordEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=0}"
-                            Style="{StaticResource SfBorderStyle}">
-                                <control:BorderlessEntry
-                                x:Name="UsernameEntry"
-                                Placeholder="Username"
-                                Style="{StaticResource EntryStyle}"  
-                                    Text="{Binding Username}"
-                            />
-                            </border:SfBorder>
-                        </StackLayout>
-                        
-
+                        <local:EmailEntry  Grid.Row="2" Padding="0,24" />
 
                         <!--  Entry to get password from user  -->
                         <border:SfBorder
@@ -135,6 +121,7 @@
                             Margin="0,16"
                             Command="{Binding LoginCommand}"
                             CommandParameter="{Binding .}"
+                            Clicked="BtnLoginEvent"
                             Style="{StaticResource SfButtonStyle}"
                             Text="LOG IN" />
 

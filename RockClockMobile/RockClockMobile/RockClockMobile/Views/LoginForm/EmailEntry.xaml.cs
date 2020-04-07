@@ -13,9 +13,13 @@ namespace RockClockMobile.Views.LoginForm
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailEntry" /> class.
         /// </summary>
+        /// 
+       
         public EmailEntry()
         {
             InitializeComponent();
         }
+
+
     }
 }

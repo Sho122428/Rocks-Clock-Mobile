@@ -23,12 +23,21 @@ namespace RockClockMobile.Services
             //timelogs = new List<TimeLog>();
         }
 
-        bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
+        bool isConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
 
+        public async Task<IEnumerable<User>> GetUserList(bool refresh)
+        {
+            if (isConnected)
+            {
+                var json = await client.GetStringAsync($"api/Users");
+                return await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<User>>(json));
+            }
+            return null;
+        }
         public async Task<User> GetUser(int id)
         {
 
-            if (id != 0 && IsConnected)
+            if (id != 0 && isConnected)
             {
                 var json = await client.GetStringAsync($"{baseAddr}api/Users/{id}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<User>(json));
@@ -38,7 +47,7 @@ namespace RockClockMobile.Services
 
         public async Task<bool> AddUser(User user)
         {
-            if (user == null || !IsConnected)
+            if (user == null || !isConnected)
                 return false;
 
             var serializedItem = JsonConvert.SerializeObject(user);
@@ -50,7 +59,7 @@ namespace RockClockMobile.Services
 
         public async Task<bool> UpdateUser(User user)
         {
-            if (user == null || !IsConnected)
+            if (user == null || !isConnected)
                 return false;
 
             var serializedItem = JsonConvert.SerializeObject(user);

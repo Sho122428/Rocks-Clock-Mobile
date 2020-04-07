@@ -3,6 +3,8 @@ using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -18,7 +20,7 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
-        NamesListViewModel userViewModel = new NamesListViewModel();
+        NamesListViewModel nameslistViewModel = new NamesListViewModel();
         public NamesListPage()
         {
             InitializeComponent();
@@ -126,18 +128,32 @@ namespace RockClockMobile.Views.Navigation
 
             var empDtl = new Employee
             {
-                EmpID = empSignIn.EmpID,
-                FirstName = empSignIn.FirstName,
-                LastName = empSignIn.LastName,
-                rocksUserId = empSignIn.rocksUserId,
-                rocksProjects = empSignIn.rocksProjects
+                id = empSignIn.id,
+                firstName = empSignIn.firstName,
+                lastName = empSignIn.lastName,
+                rocksUserProjectMaps = empSignIn.rocksUserProjectMaps
             };
 
             GlobalServices.employee = empDtl;
-            Application.Current.Properties["user_id "] = empDtl.EmpID;
-            
-            var user = await userViewModel.GetUser();
-            string userPassword = user.password;
+            Application.Current.Properties["user_id "] = empDtl.id;
+
+            //for specific user
+            //var user = await userViewModel.GetUser();
+
+            //for all user
+            var user = (List<User>)await nameslistViewModel.GetUserList();
+            string userPassword = string.Empty;
+            User userData = user.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
+
+            if (userData != null)
+            {
+                userPassword = userData.password;
+            }
+            else {
+
+                userPassword = "0";
+            }
+
 
             App.Current.MainPage = new PincodePage(userPassword);
         }

@@ -17,13 +17,13 @@ namespace RockClockMobile.ViewModels.Navigation
     /// ViewModel for names list page.
     /// </summary>
     [Preserve(AllMembers = true)]
-    [DataContract]
     public class NamesListViewModel : BaseViewModel
     {
         #region Fields
 
         private Command<Employee> itemTappedCommand;
-        EmployeeServices employeeServices = new EmployeeServices();       
+        //EmployeeServices employeeServices = new EmployeeServices();
+        public ObservableCollection<Employee> NamesList { get; set; }
 
         #endregion
 
@@ -34,18 +34,15 @@ namespace RockClockMobile.ViewModels.Navigation
         /// </summary>
         public NamesListViewModel()
         {
-            NamesList = employeeServices.EmployeeList;
-            //this.ClockInCommand = new Command(async () => await AddEmployeeTimeLog());
-            //GetEmployee();
+            NamesList = new ObservableCollection<Employee>();
+            GetEmployeeList();
         }
         #endregion
 
         //public ObservableCollection<Employee> NamesList { get; set; }
         #region Properties
-
         public User User { get; set; }
-        //public ObservableCollection<EmpSample> EmpSamples { get; set; }
-        //public ObservableCollection<Employee> EmployeeList { get; set; }
+        public IEnumerable<User> UserList { get; set; }
         public ICommand ClockInCommand { get; set; }
 
         /// <summary>
@@ -62,8 +59,7 @@ namespace RockClockMobile.ViewModels.Navigation
         /// <summary>
         /// Gets or sets a collction of value to be displayed in contacts list page.
         /// </summary>
-        [DataMember(Name = "namesListPage")]
-        public ObservableCollection<Employee> NamesList { get; set; }
+   
         //public IEnumerable<EmpSample> NamesList { get; set; }
 
         #endregion
@@ -79,26 +75,7 @@ namespace RockClockMobile.ViewModels.Navigation
             // Do something
         }
 
-        //public async Task<IEnumerable<EmpSample>> GetEmployee()
-        //{
-        //    IsBusy = true;
-
-        //    try
-        //    {
-        //        NamesList = await EmployeeServices.GetRocksUsers(true);
-        //        return NamesList;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex);
-        //    }
-        //    finally
-        //    {
-        //        IsBusy = false;
-        //    }
-
-        //    return NamesList;
-        //}
+        //Get specific User from Rocks Clock
         public async Task<User> GetUser()
         {
             IsBusy = true;
@@ -107,7 +84,7 @@ namespace RockClockMobile.ViewModels.Navigation
 
             try
             {
-                User = await UserServices.GetUser(emp.rocksUserId);
+                User = await UserServices.GetUser(emp.id);
                 return User;
             }
             catch (Exception ex)
@@ -120,6 +97,57 @@ namespace RockClockMobile.ViewModels.Navigation
             }
 
             return User;
+        }
+
+        //Get all User from Rocks Clock
+        public async Task<IEnumerable<User>> GetUserList()
+        {
+            IsBusy = true;
+
+            var emp = GlobalServices.employee;
+
+            try
+            {
+                UserList = await UserServices.GetUserList();
+                return UserList;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+            return null;
+        }
+
+        //Get all Employee from Rocks
+        private async Task GetEmployeeList()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                NamesList.Clear();
+                var employeeFromAPI = await EmployeeServices.GetEmployeeList(true);
+                foreach (var dtl in employeeFromAPI)
+                {
+                    NamesList.Add(dtl);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         #endregion
