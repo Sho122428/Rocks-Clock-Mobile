@@ -25,6 +25,9 @@ namespace RockClockMobile.Models
         public List<object> breakLogs { get; set; }
         public List<object> locationLogs { get; set; }
 
+
+
+
         //public bool IsClockedOut { get; set; }
     }
 }

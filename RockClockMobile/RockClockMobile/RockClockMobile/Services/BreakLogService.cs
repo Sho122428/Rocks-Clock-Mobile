@@ -1,31 +1,75 @@
-﻿using RockClockMobile.Models;
+﻿using Newtonsoft.Json;
+using RockClockMobile.Models;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace RockClockMobile.Services
 {
     public class BreakLogService : IBreakLogServices<BreakLog>
     {
-        public Task<bool> AddEmployeeBreakLog(int timeId, BreakLog breaklog)
+        HttpClient client;
+        Uri baseAddr;
+        IEnumerable<TimeLog> timelogs;
+        IEnumerable<BreakLog> breaklogs;
+
+        public BreakLogService()
         {
-            throw new NotImplementedException();
+            baseAddr = new Uri("http://18.136.14.237:8282");
+            client = new HttpClient { BaseAddress = baseAddr };
+            timelogs = new List<TimeLog>();
+        }
+        bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
+
+        public async Task<bool> AddEmployeeBreakLog(int timeId, BreakLog breaklog)
+        {
+            if (breaklog == null || !IsConnected)
+                return false;
+
+            var serializedItem = JsonConvert.SerializeObject(breaklog);
+
+            var response = await client.PostAsync($"api/BreakLog", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<BreakLog> GetEmployeeBreakLog(int timeId, int breakId)
+        public async Task<BreakLog> GetEmployeeBreakLog(int timeId, int breakId)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(timeId.ToString()) && String.IsNullOrEmpty(breakId.ToString()) && IsConnected)
+            {
+                var json = await client.GetStringAsync($"{baseAddr}/api/BreakLog/{breakId}");
+                return await Task.Run(() => JsonConvert.DeserializeObject<BreakLog>(json));
+                //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
+            }
+            return null;
         }
 
-        public Task<IEnumerable<BreakLog>> GetEmployeeBreakLogList(bool forceRefresh = false)
+        public async Task<IEnumerable<BreakLog>> GetEmployeeBreakLogList(bool forceRefresh = false)
         {
-            throw new NotImplementedException();
+            if (forceRefresh && IsConnected)
+            {
+                var json = await client.GetStringAsync($"api/BreakLog");
+                breaklogs = await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<BreakLog>>(json));
+            }
+
+            return breaklogs;
         }
 
-        public Task<bool> UpdateEmployeeBreakLog(BreakLog breaklog)
+        public async Task<bool> UpdateEmployeeBreakLog(BreakLog breaklog)
         {
-            throw new NotImplementedException();
+            if (breaklog == null || breaklog.id == null || !IsConnected)
+                return false;
+
+            var serializedItem = JsonConvert.SerializeObject(breaklog);
+            var buffer = Encoding.UTF8.GetBytes(serializedItem);
+            var byteContent = new ByteArrayContent(buffer);
+
+            var response = await client.PutAsync(new Uri($"api/BreakLog?id={breaklog.timeLogId}"), byteContent);
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

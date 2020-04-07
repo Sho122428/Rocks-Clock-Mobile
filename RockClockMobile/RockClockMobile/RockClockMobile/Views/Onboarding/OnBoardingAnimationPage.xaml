@@ -27,7 +27,7 @@
         <viewModel:OnBoardingAnimationViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <Grid IsEnabled="{Binding IsBusy,Mode=TwoWay}">
+        <Grid>
             <Grid.RowDefinitions>
                 <!--  Skip Button  -->
                 <RowDefinition Height="50" />
@@ -88,13 +88,7 @@
                 </rotator:SfRotator.Behaviors>
             </rotator:SfRotator>
 
-            <!--<picker:SfPicker x:Name="picker" Grid.Row="3" 
-                             HeaderText="Select a Color"
-                             ColumnHeaderText="Color"
-                            ShowColumnHeader="True"
-                             PickerMode="Dialog"
-                             
-                             />-->
+            
             
             
             <Grid Grid.Row="3" Padding="10">

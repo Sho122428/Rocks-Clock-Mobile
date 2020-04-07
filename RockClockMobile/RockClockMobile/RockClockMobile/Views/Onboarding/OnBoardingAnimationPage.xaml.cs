@@ -18,7 +18,9 @@ namespace RockClockMobile.Views.Onboarding
         /// <summary>
         /// Initializes a new instance of the <see cref="OnBoardingAnimationPage" /> class.
         /// </summary>
+        /// 
         
+
         public OnBoardingAnimationPage()
         {
             InitializeComponent();
@@ -47,5 +49,6 @@ namespace RockClockMobile.Views.Onboarding
             }
             ClockInBtn.Text = project;
         }
+
     }
 }

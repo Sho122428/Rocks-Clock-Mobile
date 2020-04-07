@@ -42,6 +42,7 @@ namespace RockClockMobile.Behaviors.Onboarding
                 {
                     viewModel.NextButtonText = "DONE";
                     viewModel.IsSkipButtonVisible = false;
+                    
                 }
                 else
                 {

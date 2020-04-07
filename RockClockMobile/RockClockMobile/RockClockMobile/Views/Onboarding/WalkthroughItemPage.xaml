@@ -59,7 +59,7 @@
                    VerticalOptions="Center"/>
 
             <!--  Label to display header  -->
-            <Label
+            <Label x:Name="lblHeader"
                 Margin="0,15,0,8"
                 FontFamily="{StaticResource Montserrat-SemiBold}"
                 FontSize="14"
@@ -74,7 +74,7 @@
                 VerticalTextAlignment="Center" />
 
             <!--  Label to display content  -->
-            <!--<Label
+            <Label
                 FontFamily="{StaticResource Montserrat-Medium}"
                 FontSize="16"
                 HorizontalOptions="Center"
@@ -83,8 +83,8 @@
                 Style="{StaticResource LabelStyle}"
                 Text="{Binding Content}"
                 TranslationY="{OnPlatform Default=60,
-                                          UWP=0}" />-->
-            <Grid>
+                                          UWP=0}" />
+            <!--<Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -113,7 +113,7 @@
                     HorizontalOptions="Center"
                     
                     Style="{StaticResource LabelStyle}"
-                    Text="--:--"
+                    Text=""
                     TranslationY="{OnPlatform Default=60,
                                               UWP=0}"
                        Grid.Row="1"
@@ -137,7 +137,7 @@
                     HorizontalOptions="Center"
                     
                     Style="{StaticResource LabelStyle}"
-                    Text="--:--"
+                    Text=""
                     TranslationY="{OnPlatform Default=60,
                                               UWP=0}"
                        Grid.Row="1"
@@ -160,7 +160,7 @@
                     HorizontalOptions="Center"
                     
                     Style="{StaticResource LabelStyle}"
-                    Text="--:--"
+                    Text=""
                     TranslationY="{OnPlatform Default=60,
                                               UWP=0}"
                        Grid.Row="1"
@@ -168,7 +168,7 @@
 
 
 
-            </Grid>
+            </Grid>-->
 
         </StackLayout>
     </ContentView.Content>
