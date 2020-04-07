@@ -130,42 +130,42 @@ namespace RockClockMobile.ViewModels.Onboarding
                 if (TimeLogs != null)
                 {
                     LoggedInUser = new TimeLog();
-                    LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.rocksUserId).FirstOrDefault();
+                    LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                     if (LoggedInUser != null)
                     {
                         this.IsBreakButtonVisible = true;
                         this.ClockInButtonText = "CLOCK OUT";
                         this.IsClockedIn = true;
-                        this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
+                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
                         this.ClockInButtonText = "Clock out from "; //+ LoggedInUser.projectName;
                         this.IsProjectButtonVisible = false;
                     }
                     else
                     {
-                        this.FNameUser = empDtl.FirstName + " is off the clock.";
+                        this.FNameUser = empDtl.firstName + " is off the clock.";
                         this.ClockInButtonText = "Clock in to test";
                     }
                 }
 
 
-                this.Boardings.Clear();
-                this.Boardings = new ObservableCollection<Boarding>
-                {
-                    new Boarding()
-                    {
-                        //ImagePath = "ReSchedule.png",
-                        Header = FNameUser,
-                        //Content = "Drag and drop meetings in order to reschedule them easily.",
-                        RotatorItem = new WalkthroughItemPage()
-                    }
+                //this.Boardings.Clear();
+                //this.Boardings = new ObservableCollection<Boarding>
+                //{
+                //    new Boarding()
+                //    {
+                //        //ImagePath = "ReSchedule.png",
+                //        Header = FNameUser,
+                //        //Content = "Drag and drop meetings in order to reschedule them easily.",
+                //        RotatorItem = new WalkthroughItemPage()
+                //    }
 
-                };
+                //};
 
-                foreach (var boarding in this.Boardings)
-                {
-                    boarding.RotatorItem.BindingContext = boarding;
-                }
+                //foreach (var boarding in this.Boardings)
+                //{
+                //    boarding.RotatorItem.BindingContext = boarding;
+                //}
 
                 //    }
                 //    else
@@ -582,7 +582,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             else
             {
-                LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
@@ -751,9 +751,8 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 var userTimeLog = new TimeLog
                 {
-                    
-                    projectID = empDtl.ProjectId,
-                    rocksUserId= empDtl.rocksUserId,
+                    projectID = empDtl.rocksUserProjectMaps.Select(a => a.rocksProjectId).FirstOrDefault(),
+                    rocksUserId= empDtl.id,
                     timeIn= DateTime.UtcNow,
                 };
                 var isSuccess = await TimeLogServices.AddEmployeeTimeLog(userTimeLog);

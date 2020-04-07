@@ -39,9 +39,9 @@ namespace RockClockMobile.Views.Onboarding
                 return true;
             });
 
-            if (empUserLog != null)
-            {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+            //if (empUserLog != null)
+            //{
+            //    TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
 
             //    if (LoggedInUser != null)
             //    {
