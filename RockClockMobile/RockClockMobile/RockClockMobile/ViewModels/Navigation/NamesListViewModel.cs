@@ -123,6 +123,45 @@ namespace RockClockMobile.ViewModels.Navigation
             return null;
         }
 
+        //Adds User from Rocks Clock
+        public async Task AddUser(string pin,int userId)
+        {
+            IsBusy = true;
+
+            var empFromRocks = GlobalServices.employee;
+
+            User userToAdd = new User{
+                password = pin,
+                attempts = 0,
+                isLocked = false,
+                isTempPassword = false,
+                rocksUserId = empFromRocks.id,
+                status = 1,
+                isDeleted = false,
+                id = userId +1,
+                userRole = new UserRole{ 
+                    roleId = 2,
+                    userId = 0
+                }
+            };
+
+            try
+            {
+                var user = await UserServices.AddUser(userToAdd);
+                //return User;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+            //return User;
+        }
+
         //Get all Employee from Rocks
         private async Task GetEmployeeList()
         {

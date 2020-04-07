@@ -143,19 +143,20 @@ namespace RockClockMobile.Views.Navigation
             //for all user
             var user = (List<User>)await nameslistViewModel.GetUserList();
             string userPassword = string.Empty;
+            int lastUserId = 0;
             User userData = user.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
             if (userData != null)
             {
-                userPassword = userData.password;
+                userPassword = userData.password;                
             }
             else {
-
                 userPassword = "0";
+                lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
             }
 
 
-            App.Current.MainPage = new PincodePage(userPassword);
+            App.Current.MainPage = new PincodePage(userPassword,lastUserId);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {

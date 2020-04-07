@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using System;
@@ -12,13 +13,15 @@ namespace RockClockMobile.Views
     public partial class PincodePage : ContentPage
     {
         //Employee employeeSignedIn = GlobalServices.employee;
-        NamesListViewModel userViewModel = new NamesListViewModel();
+        NamesListViewModel namesListViewModel = new NamesListViewModel();
         PincodeViewModel pincodeViewModel = new PincodeViewModel();
         User userSign = new User();
-        public PincodePage(string userPassword)
+        Employee employee = GlobalServices.employee;
+        int lastUserId = 0;
+        public PincodePage(string userPassword,int userId)
         {
             InitializeComponent();
-
+            lastUserId = userId;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 Device.BeginInvokeOnMainThread(() =>
@@ -41,10 +44,14 @@ namespace RockClockMobile.Views
 
             if (BtnSignIn.Text == "Create PIN")
             {
-               // await Task.Run(async () => {
-                    await DisplayAlert("Confirmation", "PIN created successfully.", "Ok");
+                await namesListViewModel.AddUser(pin.ToString(), lastUserId);
+
+                // await Task.Run(async () => {
+                await DisplayAlert("Confirmation", "PIN created successfully.", "Ok");
                     EntryPin.Text = string.Empty;
                     BtnSignIn.Text = "Sign In";
+               
+
                // });
                 
                 

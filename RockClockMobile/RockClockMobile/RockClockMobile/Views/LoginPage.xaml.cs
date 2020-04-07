@@ -69,7 +69,7 @@ namespace RockClockMobile
            Application.Current.Properties["user_id "] = empDtl.id;
             
 
-            await Navigation.PushModalAsync(new NavigationPage(new PincodePage(null)));
+            await Navigation.PushModalAsync(new NavigationPage(new PincodePage(null,0)));
         }
     }
 }
