@@ -12,7 +12,7 @@ using RockClockMobile.Models;
 using RockClockMobile.Models.Onboarding;
 using RockClockMobile.Services;
 using RockClockMobile.Views.Onboarding;
-using Syncfusion.SfRotator.XForms;
+//using Syncfusion.SfRotator.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -99,27 +99,23 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             LoadDataClock();
 
-            this.Boardings = new ObservableCollection<Boarding>
-            {
-                new Boarding()
-                {
-                    //ImagePath = "ReSchedule.png",
-                    Header = this.FNameUser,
-                    //Content = "Drag and drop meetings in order to reschedule them easily.",
-                    RotatorItem = new WalkthroughItemPage()
-                }
+            
+            //this.Boardings = new ObservableCollection<Boarding>
+            //{
+            //    new Boarding()
+            //    {
+            //        //ImagePath = "ReSchedule.png",
+            //        Header = FNameUser,
+            //        //Content = "Drag and drop meetings in order to reschedule them easily.",
+            //        RotatorItem = new WalkthroughItemPage()
+            //    }
 
-            };
+            //};
 
-
-
-
-
-            // Set bindingcontext to content view.
-            foreach (var boarding in this.Boardings)
-            {
-                boarding.RotatorItem.BindingContext = boarding;
-            }
+            //foreach (var boarding in this.Boardings)
+            //{
+            //    boarding.RotatorItem.BindingContext = boarding;
+            //}
         }
 
         async void LoadDataClock()
@@ -130,76 +126,41 @@ namespace RockClockMobile.ViewModels.Onboarding
                 if (TimeLogs != null)
                 {
                     LoggedInUser = new TimeLog();
-                    LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.rocksUserId).FirstOrDefault();
+                    LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                     if (LoggedInUser != null)
                     {
                         this.IsBreakButtonVisible = true;
                         this.ClockInButtonText = "CLOCK OUT";
                         this.IsClockedIn = true;
-                        this.FNameUser = empDtl.FirstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
+                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
                         this.ClockInButtonText = "Clock out from "; //+ LoggedInUser.projectName;
                         this.IsProjectButtonVisible = false;
                     }
                     else
                     {
-                        this.FNameUser = empDtl.FirstName + " is off the clock.";
+                        this.FNameUser = empDtl.firstName + " is off the clock.";
                         this.ClockInButtonText = "Clock in to test";
                     }
+                    //this.Boardings.Clear();
+                    //SfRotator rotator = new SfRotator();
+                    //this.Boardings = new ObservableCollection<Boarding>
+                    //{
+                    //    new Boarding()
+                    //    {
+                    //        //ImagePath = "ReSchedule.png",
+                    //        Header = FNameUser,
+                    //        //Content = "Drag and drop meetings in order to reschedule them easily.",
+                    //        RotatorItem = new WalkthroughItemPage()
+                    //    }
+
+                    //};
+
+                    //foreach (var boarding1 in this.Boardings)
+                    //{
+                    //    boarding1.RotatorItem.BindingContext = boarding1;
+                    //}
                 }
-
-
-                this.Boardings.Clear();
-                this.Boardings = new ObservableCollection<Boarding>
-                {
-                    new Boarding()
-                    {
-                        //ImagePath = "ReSchedule.png",
-                        Header = FNameUser,
-                        //Content = "Drag and drop meetings in order to reschedule them easily.",
-                        RotatorItem = new WalkthroughItemPage()
-                    }
-
-                };
-
-                foreach (var boarding in this.Boardings)
-                {
-                    boarding.RotatorItem.BindingContext = boarding;
-                }
-
-                //    }
-                //    else
-                //    {
-                //        this.FNameUser = empDtl.FirstName + " is off the clock.";
-                //        this.ClockInButtonText = "Clock in to " + RocksProjects[0];
-                //    }
-
-
-                //    if (empUserBreakLog != null)
-                //    {
-                //        BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
-
-                //        if (takeBreak != null && takeBreak.IsTakingABreak != false)
-                //        {
-                //            this.BreakButtonText = "END BREAK";
-                //            this.IsOnBreak = true;
-                //        }
-                //        else if (takeBreak != null && takeBreak.IsTakingABreak == false)
-                //        {
-                //            this.BreakButtonText = "START BREAK";
-
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    this.FNameUser = empDtl.FirstName + " is off the clock.";
-                //    this.ClockInButtonText = "Clock in to " + empDtl.ProjectName;
-                //}
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -541,14 +502,14 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// Invoked when the Done button is clicked.
         /// </summary>
         /// <param name="obj">The Object</param>
-        private void Next(object obj)
-        {
-            var itemCount = (obj as SfRotator).ItemsSource.Count();
-            if (this.ValidateAndUpdateSelectedIndex(itemCount))
-            {
-                this.MoveToNextPage();
-            }
-        }
+        //private void Next(object obj)
+        //{
+        //    var itemCount = (obj as SfRotator).ItemsSource.Count();
+        //    if (this.ValidateAndUpdateSelectedIndex(itemCount))
+        //    {
+        //        this.MoveToNextPage();
+        //    }
+        //}
         private void ClockIn(object obj)
         {
             if (!IsClockedIn)
@@ -582,7 +543,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             else
             {
-                LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();
+                LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
@@ -751,9 +712,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 var userTimeLog = new TimeLog
                 {
-                    
-                    projectID = empDtl.ProjectId,
-                    rocksUserId= empDtl.rocksUserId,
+                    rocksUserId= empDtl.id,
                     timeIn= DateTime.UtcNow,
                 };
                 var isSuccess = await TimeLogServices.AddEmployeeTimeLog(userTimeLog);
