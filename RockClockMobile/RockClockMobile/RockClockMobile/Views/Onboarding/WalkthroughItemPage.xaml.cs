@@ -21,7 +21,7 @@ namespace RockClockMobile.Views.Onboarding
         /// Initializes a new instance of the <see cref="WalkthroughItemPage" /> class.
         /// </summary>
         
-        //OnBoardingAnimationViewModel viewmodel = new OnBoardingAnimationViewModel();
+        
         public WalkthroughItemPage()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace RockClockMobile.Views.Onboarding
                 );
                 return true;
             });
-
+            
             //if (empUserLog != null)
             //{
             //    TimeLog LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.EmpID).FirstOrDefault();

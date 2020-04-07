@@ -24,15 +24,23 @@ namespace RockClockMobile.Views.Onboarding
         public OnBoardingAnimationPage()
         {
             InitializeComponent();
-            
+
+
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
+                );
+                return true;
+            });
+
         }
+
+        
 
         private void ProjectButton_Clicked(object sender, EventArgs e)
         {
-            
             picker.IsOpen = true;
-
-
         }
 
         private void picker_OkButtonClicked(object sender, Syncfusion.SfPicker.XForms.SelectionChangedEventArgs e)

@@ -68,7 +68,7 @@
                 Opacity="{OnPlatform Default=0,
                                      UWP=1}"
                 Style="{StaticResource LabelStyle}"
-                Text="{Binding Header}"
+                Text="{Binding FNameUser}"
                 TranslationY="{OnPlatform Default=30,
                                           UWP=0}"
                 VerticalTextAlignment="Center" />
