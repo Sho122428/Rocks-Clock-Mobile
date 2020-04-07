@@ -22,12 +22,12 @@ namespace RockClockMobile.Controls
             if (base.FilterContacts(obj))
             {
                 var taskInfo = obj as Employee;
-                if (taskInfo == null || string.IsNullOrEmpty(taskInfo.FirstName))
+                if (taskInfo == null || string.IsNullOrEmpty(taskInfo.firstName))
                 {
                     return false;
                 }
 
-                return taskInfo.FirstName.ToUpperInvariant().Contains(this.SearchText.ToUpperInvariant());
+                return taskInfo.firstName.ToUpperInvariant().Contains(this.SearchText.ToUpperInvariant());
             }
 
             return false;

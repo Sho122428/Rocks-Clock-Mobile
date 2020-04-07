@@ -1,16 +1,15 @@
-﻿using System;
+﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
+using RockClockMobile.ViewModels;
+using RockClockMobile.ViewModels.Navigation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
-using RockClockMobile.DataService;
-using RockClockMobile.Models;
-using RockClockMobile.Services;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
-using RockClockMobile.ViewModels;
 
 namespace RockClockMobile.Views.Navigation
 {
@@ -21,12 +20,12 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
-        HttpClient client = new HttpClient();
+        NamesListViewModel nameslistViewModel = new NamesListViewModel();
         public NamesListPage()
         {
             InitializeComponent();
-            //this.BindingContext = NamesListDataService.Instance.NamesListViewModel;
-            this.BindingContext = new LoginViewModel();
+            this.BindingContext = new NamesListViewModel();
+            //this.BindingContext = new LoginViewModel();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -36,8 +35,10 @@ namespace RockClockMobile.Views.Navigation
                 return true;
             });
 
-            //GetItemAsync(1);
+            //userServices = new UserServices(empDtl.rocksUserId);
         }
+
+     
 
         /// <summary>
         /// Invoked when view size is changed.
@@ -127,58 +128,35 @@ namespace RockClockMobile.Views.Navigation
 
             var empDtl = new Employee
             {
-                EmpID = empSignIn.EmpID,
-                FirstName = empSignIn.FirstName,
-                LastName = empSignIn.LastName,
-                rocksUserId = empSignIn.rocksUserId,
-                rocksProjects = empSignIn.rocksProjects
+                id = empSignIn.id,
+                firstName = empSignIn.firstName,
+                lastName = empSignIn.lastName,
+                rocksUserProjectMaps = empSignIn.rocksUserProjectMaps
             };
 
             GlobalServices.employee = empDtl;
-            Application.Current.Properties["user_id "] = empDtl.EmpID;
+            Application.Current.Properties["user_id "] = empDtl.id;
 
-            //await Navigation.PushModalAsync(new NavigationPage(new PincodePage()));
-            App.Current.MainPage = new PincodePage();
-        }
+            //for specific user
+            //var user = await userViewModel.GetUser();
 
-        public async Task<BreakLog> GetItemAsync(int id)
-        {
+            //for all user
+            var user = (List<User>)await nameslistViewModel.GetUserList();
+            string userPassword = string.Empty;
+            User userData = user.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
 
-            if (id != 0)
+            if (userData != null)
             {
-                //try {
-                    var httpClient = new HttpClient();
-                    var response = await httpClient.GetStringAsync("https://localhost:44329/BreakLog");
-                    var employee = JsonConvert.DeserializeObject<List<BreakLog>>(response);
-                    var brd = employee;
+                userPassword = userData.password;
+            }
+            else {
 
-
-                    //var client = new HttpClient();
-
-                    //client.BaseAddress = new Uri("http://10.0.0.17:55365/");
-
-                    //client.DefaultRequestHeaders.Accept.Clear();
-                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    //HttpResponseMessage response = await client.GetAsync("api/Customers");
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //    return await response.Content.ReadAsStringAsync();
-                    //}
-                    //else return response.ReasonPhrase;
-
-
-                //}
-                //catch () { 
-                
-                //}
-               
-
+                userPassword = "0";
             }
 
-            return null;
-        }
 
+            App.Current.MainPage = new PincodePage(userPassword);
+        }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {
         }

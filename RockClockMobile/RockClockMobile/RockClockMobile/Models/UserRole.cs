@@ -4,20 +4,18 @@ using System.Text;
 
 namespace RockClockMobile.Models
 {
-    public class EmpSample
+    public class UserRole
     {
-        public string firstName { get; set; }
-        public string middleName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public List<EmployeeProjects> rocksUserProjectMaps { get; set; }
-        public int id { get; set; }
+        public int roleId { get; set; }
+        public int userId { get; set; }
+        public object users { get; set; }
+        public object roles { get; set; }
         public DateTime modifieddt { get; set; }
         public int modifiedby { get; set; }
         public DateTime createddt { get; set; }
         public int createdby { get; set; }
-        public object modifiednotes { get; set; }
         public int status { get; set; }
+        public string modifiednotes { get; set; }
         public bool isDeleted { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -7,10 +8,9 @@ namespace RockClockMobile.Services
 {
     public interface IEmployeeServices<T>
     {
-        //Task<T> GetEmployeeTimeLog(int id);
-        //Task<bool> AddEmployeeTimeLog(T timelog);
-        //Task<bool> UpdateEmployeeTimeLog(T timelog);
-        //Task<T> GetEmployeeBreakLog(int id);
-        //Task<IEnumerable<T>> GetEmployeeTimeLogList(bool forceRefresh = false);
+        //Task<T> GetEmployeeTimeLog(string id);
+        //Task<bool> UpdateEmployeeAsync(T item);
+        //Task<T> GetEmployeeAsync(string id);
+        Task<IEnumerable<T>> GetEmployeeList(bool forceRefresh = false);
     }
 }

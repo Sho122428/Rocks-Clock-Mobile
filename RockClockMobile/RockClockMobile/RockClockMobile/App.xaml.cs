@@ -1,6 +1,4 @@
-using Android.Security;
 using RockClockMobile.Services;
-using RockClockMobile.Views;
 using RockClockMobile.Views.Navigation;
 using System;
 using System.Diagnostics;
@@ -37,7 +35,9 @@ namespace RockClockMobile
             //MainPage = new AppShell(); 
             DependencyService.Register<TimeLogService>();
             DependencyService.Register<EmployeeServices>();
+            DependencyService.Register<UserServices>();
             App.Current.MainPage = new NamesListPage();
+            //App.Current.MainPage = new RockClockMobile.Views.LoginForm.LoginPage();
         }       
 
         protected override void OnStart()

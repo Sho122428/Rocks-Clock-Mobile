@@ -99,7 +99,7 @@
                     <controls:SearchableContactsList.DataSource>
                         <data:DataSource>
                             <data:DataSource.SortDescriptors>
-                                <data:SortDescriptor PropertyName="FirstName" Direction="Ascending"/>
+                                <data:SortDescriptor PropertyName="firstName" Direction="Ascending"/>
                             </data:DataSource.SortDescriptors>
                         </data:DataSource>
                     </controls:SearchableContactsList.DataSource>
@@ -146,9 +146,9 @@
                                             
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="{Binding FirstName}"/>
+                                                    <Span Text="{Binding firstName}"/>
                                                     <Span Text=" "/>
-                                                    <Span Text="{Binding LastName}"/>
+                                                    <Span Text="{Binding lastName}"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
