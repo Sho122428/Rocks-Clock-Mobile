@@ -24,7 +24,7 @@ namespace RockClockMobile.Services
         }
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
 
-        public async Task<bool> AddEmployeeBreakLog(int timeId, BreakLog breaklog)
+        public async Task<bool> AddEmployeeBreakLog(BreakLog breaklog)
         {
             if (breaklog == null || !IsConnected)
                 return false;

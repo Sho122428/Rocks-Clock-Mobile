@@ -36,6 +36,7 @@ namespace RockClockMobile
             DependencyService.Register<TimeLogService>();
             DependencyService.Register<EmployeeServices>();
             DependencyService.Register<UserServices>();
+            DependencyService.Register<BreakLogService>();
             App.Current.MainPage = new NamesListPage();
             //App.Current.MainPage = new RockClockMobile.Views.LoginForm.LoginPage();
         }       

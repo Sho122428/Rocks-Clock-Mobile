@@ -79,7 +79,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             //this.SkipCommand = new Command(this.Skip);
             //this.NextCommand = new Command(this.Next);
             //this.ClockInCommand = new Command(this.ClockIn);
-            this.BreakCommand = new Command(this.Break);
+            //this.BreakCommand = new Command(this.Break);
             this.SignOutCommand = new Command(this.SignOut);
             
             
@@ -465,7 +465,14 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// <summary>
         /// Gets or sets the command that is executed when the Break button is clicked.
         /// </summary>
-        public ICommand BreakCommand { get; set; }
+        //public ICommand BreakCommand { get; set; }
+        public ICommand BreakCommand
+        {
+            get
+            {
+                return new Command<object>((x) => AddEmployeeBreakLog(x));
+            }
+        }
 
         /// <summary>
         /// Gets or sets the command that is executed when the Sign out button is clicked.
@@ -677,12 +684,12 @@ namespace RockClockMobile.ViewModels.Onboarding
             {
                 TimeLogs.Clear();
                 var timelogs = await TimeLogServices.GetEmployeeTimeLogList(true);
+                IEnumerable<TimeLog> userTimeLog = timelogs.Where(a => a.rocksUserId == empDtl.id);
 
-                foreach (var tlog in timelogs)
+                foreach (var tlog in userTimeLog)
                 {
                     await Task.Run(() => { TimeLogs.Add(tlog); }).ConfigureAwait(false);
                 }
-
             }
             catch (Exception ex)
             {
@@ -777,6 +784,49 @@ namespace RockClockMobile.ViewModels.Onboarding
                 IsBusy = false;
                 //ToastPopup.ToastMessage("End Time must be greater than start time.", true);
                 this.SignOut();
+            }
+        }
+
+        //For BreakLogs
+        private async Task AddEmployeeBreakLog(object timeClockDtl)
+        {
+            if (IsBusy)
+                return;
+
+            ToastPopup.ToastMessage("Break In.", false);
+            await Task.Delay(3000);
+            IsBusy = true;
+
+            try
+            {
+                int timeLogId = TimeLogs.OrderByDescending(a => a.timeLogId).Select(a => a.timeLogId).FirstOrDefault();
+                BreakLog breakLog = new BreakLog {
+                    breakIn = DateTime.UtcNow,
+                    timeLogId = timeLogId,
+                    modifiednotes = "app testing"
+                };
+                var isSuccess = await BreakLogServices.AddEmployeeBreakLog(breakLog);
+                if (isSuccess)
+                {
+                    ToastPopup.ToastMessage("Break started.", false);
+                    await Task.Delay(2000);
+                    this.SignOut();
+                }
+                else
+                {
+                    ToastPopup.ToastMessage("An error occured while attempting to log in.", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Debug.WriteLine(ex);
+                ToastPopup.ToastMessage("An error occured while attempting to log in.", true);
+            }
+            finally
+            {
+                IsBusy = false;
+
+
             }
         }
 
