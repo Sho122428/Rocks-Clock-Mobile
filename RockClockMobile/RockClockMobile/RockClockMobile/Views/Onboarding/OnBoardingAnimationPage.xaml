@@ -255,6 +255,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Command="{Binding BreakCommand}"
+                    CommandParameter="{Binding .}"
                     
                     Style="{StaticResource SfButtonStyle}"
                     IsVisible="{Binding IsBreakButtonVisible}"
