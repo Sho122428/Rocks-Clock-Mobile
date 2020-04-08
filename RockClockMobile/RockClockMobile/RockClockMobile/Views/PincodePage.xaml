@@ -7,6 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              mc:Ignorable="d"
              
              x:Class="RockClockMobile.Views.PincodePage">
@@ -41,8 +42,17 @@
 
                     <Button Text="Sign In" CornerRadius="3" FontSize="17" Grid.Row="2"
                         x:Name="BtnSignIn" AutomationId="BtnSignInUser"
-                        Clicked="BtnSignInEvent"/>                   
-                </Grid>
+                        Clicked="BtnSignInEvent"/>
+
+                <StackLayout Grid.Row="3" VerticalOptions="Center"   Opacity="0.75">
+                    <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+                                    
+                                    AnimationType="DoubleCircle"
+                                    IsBusy="{Binding IsLoading, Mode=TwoWay}" IsVisible="{Binding Visible, Mode=TwoWay}"
+                                    TextColor="DarkCyan" ViewBoxHeight="150" ViewBoxWidth="150" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                   
+                </StackLayout>
+            </Grid>
             
             
         </StackLayout>

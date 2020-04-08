@@ -60,14 +60,11 @@ namespace RockClockMobile.Services
 
         public async Task<bool> UpdateEmployeeBreakLog(BreakLog breaklog)
         {
-            if (breaklog == null || breaklog.id == null || !IsConnected)
+            if (breaklog == null || breaklog.id == 0 || !IsConnected)
                 return false;
 
-            var serializedItem = JsonConvert.SerializeObject(breaklog);
-            var buffer = Encoding.UTF8.GetBytes(serializedItem);
-            var byteContent = new ByteArrayContent(buffer);
-
-            var response = await client.PutAsync(new Uri($"api/BreakLog?id={breaklog.timeLogId}"), byteContent);
+            var serializedItem = JsonConvert.SerializeObject(breaklog);  
+            var response = await client.PutAsync($"api/BreakLog?id={breaklog.id}", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;
         }
