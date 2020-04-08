@@ -76,9 +76,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// </summary>
         public OnBoardingAnimationViewModel()
         {
-            //this.SkipCommand = new Command(this.Skip);
-            //this.NextCommand = new Command(this.Next);
-            //this.ClockInCommand = new Command(this.ClockIn);
+            
             this.BreakCommand = new Command(this.Break);
             this.SignOutCommand = new Command(this.SignOut);
             
@@ -100,22 +98,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             LoadDataClock();
 
             
-            //this.Boardings = new ObservableCollection<Boarding>
-            //{
-            //    new Boarding()
-            //    {
-            //        //ImagePath = "ReSchedule.png",
-            //        Header = FNameUser,
-            //        //Content = "Drag and drop meetings in order to reschedule them easily.",
-            //        RotatorItem = new WalkthroughItemPage()
-            //    }
-
-            //};
-
-            //foreach (var boarding in this.Boardings)
-            //{
-            //    boarding.RotatorItem.BindingContext = boarding;
-            //}
+            
         }
 
         async void LoadDataClock()
@@ -142,24 +125,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                         this.FNameUser = empDtl.firstName + " is off the clock.";
                         this.ClockInButtonText = "Clock in to test";
                     }
-                    //this.Boardings.Clear();
-                    //SfRotator rotator = new SfRotator();
-                    //this.Boardings = new ObservableCollection<Boarding>
-                    //{
-                    //    new Boarding()
-                    //    {
-                    //        //ImagePath = "ReSchedule.png",
-                    //        Header = FNameUser,
-                    //        //Content = "Drag and drop meetings in order to reschedule them easily.",
-                    //        RotatorItem = new WalkthroughItemPage()
-                    //    }
-
-                    //};
-
-                    //foreach (var boarding1 in this.Boardings)
-                    //{
-                    //    boarding1.RotatorItem.BindingContext = boarding1;
-                    //}
+                    
                 }
             }
             catch (Exception ex)
