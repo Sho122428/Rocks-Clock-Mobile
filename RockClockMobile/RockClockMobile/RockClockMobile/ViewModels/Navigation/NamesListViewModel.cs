@@ -10,6 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RockClockMobile.ViewModels.Navigation
 {
@@ -54,12 +55,12 @@ namespace RockClockMobile.ViewModels.Navigation
             {
                 return this.itemTappedCommand ?? (this.itemTappedCommand = new Command<Employee>(this.NavigateToNextPage));
             }
-        }
+        }      
 
         /// <summary>
         /// Gets or sets a collction of value to be displayed in contacts list page.
         /// </summary>
-   
+
         //public IEnumerable<EmpSample> NamesList { get; set; }
 
         #endregion
@@ -174,7 +175,8 @@ namespace RockClockMobile.ViewModels.Navigation
             {
                 NamesList.Clear();
                 var employeeFromAPI = await EmployeeServices.GetEmployeeList(true);
-                foreach (var dtl in employeeFromAPI)
+                IEnumerable<Employee> employeeList = employeeFromAPI.OrderBy(a => a.firstName);
+                foreach (var dtl in employeeList)
                 {
                     NamesList.Add(dtl);
                 }

@@ -136,6 +136,18 @@ namespace RockClockMobile.ViewModels.Onboarding
                         this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.timeIn.ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
                         this.ClockInButtonText = "Clock out from "; //+ LoggedInUser.projectName;
                         this.IsProjectButtonVisible = false;
+
+                        //For Breaklogs
+                        var minDate = DateTime.MinValue;
+                        var breakOutVal = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).Select(a => a.breakOut).FirstOrDefault();
+                        
+                        if (LoggedInUser.breakLogs.Count > 0)
+                        {
+                            if (breakOutVal == minDate)
+                            {
+                                this.BreakButtonText = "End Break";
+                            }
+                        }
                     }
                     else
                     {
@@ -470,7 +482,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         {
             get
             {
-                return new Command<object>((x) => AddEmployeeBreakLog(x));
+                return new Command<object>((x) => AddAndUpdateEmployeeBreakLog(x));
             }
         }
 
@@ -788,45 +800,69 @@ namespace RockClockMobile.ViewModels.Onboarding
         }
 
         //For BreakLogs
-        private async Task AddEmployeeBreakLog(object timeClockDtl)
+        private async Task AddAndUpdateEmployeeBreakLog(object timeClockDtl)
         {
             if (IsBusy)
                 return;
 
-            ToastPopup.ToastMessage("Break In.", false);
-            await Task.Delay(3000);
+            string message = string.Empty;
+            string commandText = BreakButtonText.ToLower();
+            bool isSuccess = false;
+
+            //if (commandText == "start break")
+            //{
+            //    message = "Break In.";
+            //}
+
+            //ToastPopup.ToastMessage(message, false);
+            //await Task.Delay(3000);
             IsBusy = true;
 
             try
             {
-                int timeLogId = TimeLogs.OrderByDescending(a => a.timeLogId).Select(a => a.timeLogId).FirstOrDefault();
-                BreakLog breakLog = new BreakLog {
-                    breakIn = DateTime.UtcNow,
-                    timeLogId = timeLogId,
-                    modifiednotes = "app testing"
-                };
-                var isSuccess = await BreakLogServices.AddEmployeeBreakLog(breakLog);
+                int timeLogId = LoggedInUser.timeLogId;
+
+                if (commandText == "start break")
+                {
+                    BreakLog breakLog = new BreakLog
+                    {
+                        breakIn = DateTime.UtcNow,
+                        timeLogId = timeLogId,
+                        modifiednotes = "app testing break log"
+                    };
+
+                    isSuccess = await BreakLogServices.AddEmployeeBreakLog(breakLog);
+                    message = "Break started.";
+                }
+                else
+                {
+                    BreakLog breakLog = new BreakLog();
+
+                    breakLog = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
+                    breakLog.breakOut = DateTime.UtcNow;                  
+
+                    isSuccess = await BreakLogServices.UpdateEmployeeBreakLog(breakLog);
+                    message = "Break End.";
+                }
+
                 if (isSuccess)
                 {
-                    ToastPopup.ToastMessage("Break started.", false);
+                    ToastPopup.ToastMessage(message, false);
                     await Task.Delay(2000);
                     this.SignOut();
                 }
                 else
                 {
-                    ToastPopup.ToastMessage("An error occured while attempting to log in.", true);
+                    ToastPopup.ToastMessage("An error occured while attempting to break.", true);
                 }
             }
             catch (Exception ex)
             {
-                //Debug.WriteLine(ex);
-                ToastPopup.ToastMessage("An error occured while attempting to log in.", true);
+                ToastPopup.ToastMessage("An error occured while attempting to break.", true);
             }
             finally
             {
                 IsBusy = false;
-
-
             }
         }
 

@@ -257,7 +257,8 @@
                     Command="{Binding BreakCommand}"
                     Style="{StaticResource SfButtonStyle}"
                     IsVisible="{Binding IsBreakButtonVisible}"
-                    Text="{Binding BreakButtonText}"/>
+                    Text="{Binding BreakButtonText}"
+                    CommandParameter="{Binding .}"/>
 
                 
                 <!--<button:SfButton

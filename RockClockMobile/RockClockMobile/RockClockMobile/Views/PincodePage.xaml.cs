@@ -15,13 +15,16 @@ namespace RockClockMobile.Views
     {
         //Employee employeeSignedIn = GlobalServices.employee;
         NamesListViewModel namesListViewModel = new NamesListViewModel();
-        PincodeViewModel pincodeViewModel = new PincodeViewModel();
+        //PincodeViewModel pincodeViewModel = new PincodeViewModel();
         User userSign = new User();
         Employee employee = GlobalServices.employee;
         int lastUserId = 0;
         public PincodePage(string userPassword,int userId)
         {
             InitializeComponent();
+
+            BindingContext = new PincodeViewModel();
+
             lastUserId = userId;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {

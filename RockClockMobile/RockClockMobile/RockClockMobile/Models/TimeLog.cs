@@ -22,7 +22,7 @@ namespace RockClockMobile.Models
         public DateTime timeOut { get; set; }
         public int status { get; set; }
         public bool isDeleted { get; set; }
-        public List<object> breakLogs { get; set; }
+        public List<BreakLog> breakLogs { get; set; }
         public List<object> locationLogs { get; set; }
 
 
