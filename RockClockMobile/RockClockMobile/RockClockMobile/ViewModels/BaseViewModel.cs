@@ -22,10 +22,17 @@ namespace RockClockMobile.ViewModels
         public IEmployeeServices<Employee> EmployeeServices => DependencyService.Get<IEmployeeServices<Employee>>();
 
         bool isBusy = false;
+        double isBusyOpacity = 1;
         public bool IsBusy
         {
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
+        }
+
+        public double IsBusyOpacity
+        {
+            get { return isBusyOpacity; }
+            set { SetProperty(ref isBusyOpacity, value); }
         }
 
         string title = string.Empty;

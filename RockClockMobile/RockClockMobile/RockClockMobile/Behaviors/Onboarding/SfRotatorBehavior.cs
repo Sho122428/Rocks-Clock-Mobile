@@ -40,14 +40,14 @@ namespace RockClockMobile.Behaviors.Onboarding
                 var viewModel = rotator.BindingContext as OnBoardingAnimationViewModel;
                 if (selectedIndex == itemsCount - 1)
                 {
-                    viewModel.NextButtonText = "DONE";
-                    viewModel.IsSkipButtonVisible = false;
+                    //viewModel.NextButtonText = "DONE";
+                    //viewModel.IsSkipButtonVisible = false;
                     
                 }
                 else
                 {
-                    viewModel.NextButtonText = "NEXT";
-                    viewModel.IsSkipButtonVisible = true;
+                    //viewModel.NextButtonText = "NEXT";
+                    //viewModel.IsSkipButtonVisible = true;
                 }
 
                 if (Device.RuntimePlatform != Device.UWP)

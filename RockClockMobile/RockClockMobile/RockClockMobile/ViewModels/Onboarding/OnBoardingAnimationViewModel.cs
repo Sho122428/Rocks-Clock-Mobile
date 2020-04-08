@@ -34,10 +34,6 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private bool isProjectButtonVisible = true;
 
-        private string nextButtonText = "NEXT";
-
-        private bool isSkipButtonVisible = true;
-
         private int selectedIndex;
 
         private string clockinButtonText = "CLOCK IN";
@@ -55,6 +51,12 @@ namespace RockClockMobile.ViewModels.Onboarding
         private bool isOnBreak = false;
 
         private bool isClockOutBtnVisible = false;
+
+        private string clockIn = "--:--";
+
+        private string breakStart = "--:--";
+
+        private string breakStop = "--:--";
 
 
 
@@ -76,10 +78,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         /// </summary>
         public OnBoardingAnimationViewModel()
         {
-            //this.SkipCommand = new Command(this.Skip);
-            //this.NextCommand = new Command(this.Next);
-            //this.ClockInCommand = new Command(this.ClockIn);
-            //this.BreakCommand = new Command(this.Break);
+            
             this.SignOutCommand = new Command(this.SignOut);
             
             
@@ -98,24 +97,6 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
 
             LoadDataClock();
-
-            
-            //this.Boardings = new ObservableCollection<Boarding>
-            //{
-            //    new Boarding()
-            //    {
-            //        //ImagePath = "ReSchedule.png",
-            //        Header = FNameUser,
-            //        //Content = "Drag and drop meetings in order to reschedule them easily.",
-            //        RotatorItem = new WalkthroughItemPage()
-            //    }
-
-            //};
-
-            //foreach (var boarding in this.Boardings)
-            //{
-            //    boarding.RotatorItem.BindingContext = boarding;
-            //}
         }
 
         async void LoadDataClock()
@@ -126,7 +107,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 if (TimeLogs != null)
                 {
                     LoggedInUser = new TimeLog();
-                    LoggedInUser = TimeLogs.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
+                    LoggedInUser = TimeLogs.Where(a => a.createddt.Date <= DateTime.Now.Date).FirstOrDefault();
 
                     if (LoggedInUser != null)
                     {
@@ -140,26 +121,9 @@ namespace RockClockMobile.ViewModels.Onboarding
                     else
                     {
                         this.FNameUser = empDtl.firstName + " is off the clock.";
-                        this.ClockInButtonText = "Clock in to test";
+                        this.ClockInButtonText = "Clock in to ";
                     }
-                    //this.Boardings.Clear();
-                    //SfRotator rotator = new SfRotator();
-                    //this.Boardings = new ObservableCollection<Boarding>
-                    //{
-                    //    new Boarding()
-                    //    {
-                    //        //ImagePath = "ReSchedule.png",
-                    //        Header = FNameUser,
-                    //        //Content = "Drag and drop meetings in order to reschedule them easily.",
-                    //        RotatorItem = new WalkthroughItemPage()
-                    //    }
-
-                    //};
-
-                    //foreach (var boarding1 in this.Boardings)
-                    //{
-                    //    boarding1.RotatorItem.BindingContext = boarding1;
-                    //}
+                    
                 }
             }
             catch (Exception ex)
@@ -227,44 +191,6 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
 
                 this.selectedProject = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public string NextButtonText
-        {
-            get
-            {
-                return this.nextButtonText;
-            }
-
-            set
-            {
-                if (this.nextButtonText == value)
-                {
-                    return;
-                }
-
-                this.nextButtonText = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public bool IsSkipButtonVisible
-        {
-            get
-            {
-                return this.isSkipButtonVisible;
-            }
-
-            set
-            {
-                if (this.isSkipButtonVisible == value)
-                {
-                    return;
-                }
-
-                this.isSkipButtonVisible = value;
                 this.OnPropertyChanged();
             }
         }
@@ -442,6 +368,64 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
+        public string ClockIn
+        {
+            get
+            {
+                return this.clockIn;
+            }
+
+            set
+            {
+                if (this.clockIn == value)
+                {
+                    return;
+                }
+
+                this.clockIn = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string BreakStart
+        {
+            get
+            {
+                return this.breakStart;
+            }
+
+            set
+            {
+                if (this.breakStart == value)
+                {
+                    return;
+                }
+
+                this.breakStart = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string BreakStop
+        {
+            get
+            {
+                return this.breakStop;
+            }
+
+            set
+            {
+                if (this.breakStop == value)
+                {
+                    return;
+                }
+
+                this.breakStop = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+
         #endregion
 
         #region Commands
@@ -505,63 +489,6 @@ namespace RockClockMobile.ViewModels.Onboarding
             this.MoveToNextPage();
         }
 
-        /// <summary>
-        /// Invoked when the Done button is clicked.
-        /// </summary>
-        /// <param name="obj">The Object</param>
-        //private void Next(object obj)
-        //{
-        //    var itemCount = (obj as SfRotator).ItemsSource.Count();
-        //    if (this.ValidateAndUpdateSelectedIndex(itemCount))
-        //    {
-        //        this.MoveToNextPage();
-        //    }
-        //}
-        private void ClockIn(object obj)
-        {
-            if (!IsClockedIn)
-            {
-                var countTimeID = 0;
-
-                if (empUserLog != null)
-                    countTimeID = empUserLog.Count;
-
-                var userTimeLog = new TimeLog
-                {
-                    timeLogId = countTimeID + 1,
-                    rocksUserId = empDtl.id,
-                    timeIn = DateTime.Now,
-                    //IsClockedOut = false
-
-
-
-                };
-
-                List<TimeLog> EmployeeTimeLog = new List<TimeLog>();
-
-                if (empUserLog != null)
-                {
-                    EmployeeTimeLog = empUserLog;
-                }
-
-                EmployeeTimeLog.Add(userTimeLog);
-
-                GlobalServices.EmployeeTime = EmployeeTimeLog;
-            }
-            else
-            {
-                LoggedInUser = empUserLog.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
-
-                if (LoggedInUser != null)
-                {
-                    LoggedInUser.timeOut = DateTime.Now;
-                    //LoggedInUser.IsClockedOut = true;
-                }
-
-
-            }
-            this.SignOut();
-        }
         private void Break(object obj)
         {
 
@@ -616,8 +543,14 @@ namespace RockClockMobile.ViewModels.Onboarding
             Application.Current.MainPage.Navigation.PopAsync();
         }
 
-        private void SignOut()
+        private async void SignOut()
         {
+            IsBusy = true;
+            IsBusyOpacity = .5;
+            await Task.Delay(3000);
+            IsBusy = false;
+            IsBusyOpacity = 1;
+            
             Application.Current.MainPage = new Views.Navigation.NamesListPage();
         }
         #endregion
@@ -679,7 +612,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 return;
 
             IsBusy = true;
-
+            IsBusyOpacity = .5;
             try
             {
                 TimeLogs.Clear();
@@ -698,6 +631,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             finally
             {
                 IsBusy = false;
+                IsBusyOpacity = 1;
             }
         }
 
@@ -753,6 +687,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 return;
 
             IsBusy = true;
+            IsBusyOpacity = .5;
             ToastPopup.ToastMessage("Clocking out...", true);
             await Task.Delay(3000);
             
@@ -782,6 +717,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             finally
             {
                 IsBusy = false;
+                IsBusyOpacity = 1;
                 //ToastPopup.ToastMessage("End Time must be greater than start time.", true);
                 this.SignOut();
             }
