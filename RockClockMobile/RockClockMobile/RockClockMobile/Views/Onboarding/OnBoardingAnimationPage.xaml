@@ -35,13 +35,13 @@
                 <RowDefinition Height="150" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                
                 
 
             </Grid.RowDefinitions>
 
             <!--  Gradient view  -->
-            <gradient:SfGradientView Grid.RowSpan="4" Style="{StaticResource SfGradientViewStyle}" />
+            <gradient:SfGradientView Grid.RowSpan="6" Style="{StaticResource SfGradientViewStyle}" />
 
             <!--  Skip button  -->
             <button:SfButton
@@ -255,8 +255,6 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Command="{Binding BreakCommand}"
-                    CommandParameter="{Binding .}"
-                    
                     Style="{StaticResource SfButtonStyle}"
                     IsVisible="{Binding IsBreakButtonVisible}"
                     Text="{Binding BreakButtonText}"/>
@@ -278,7 +276,6 @@
                     Grid.Column="1"
                     x:Name="ProjectButton"
                     Clicked="ProjectButton_Clicked"
-                    
                     Style="{StaticResource SfButtonStyle}"
                     IsVisible="{Binding IsProjectButtonVisible}"
                     Text="List of Projects"/>
