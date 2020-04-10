@@ -5,6 +5,7 @@ using System;
 using Syncfusion.SfPicker.XForms;
 using System.Collections.ObjectModel;
 using RockClockMobile.ViewModels.Onboarding;
+using RockClockMobile.Custom;
 
 namespace RockClockMobile.Views.Onboarding
 {
@@ -19,22 +20,23 @@ namespace RockClockMobile.Views.Onboarding
         /// Initializes a new instance of the <see cref="OnBoardingAnimationPage" /> class.
         /// </summary>
         /// 
-        
 
         public OnBoardingAnimationPage()
         {
             InitializeComponent();
-
-
+            
+            
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
+                
                 Device.BeginInvokeOnMainThread(() =>
                 lblTimer.Text = DateTime.Now.ToString("hh:mm:ss tt")
                 );
-                return true;
-            });
 
-        }
+                return true;
+                
+            });
+         }
 
         
 
@@ -45,6 +47,7 @@ namespace RockClockMobile.Views.Onboarding
 
         private void picker_OkButtonClicked(object sender, Syncfusion.SfPicker.XForms.SelectionChangedEventArgs e)
         {
+            
             //Picker p = sender as Picker;
             //var selectedProject = picker.SelectedItem;
             var project = "Clock in to " + picker.SelectedItem;
@@ -58,5 +61,6 @@ namespace RockClockMobile.Views.Onboarding
             ClockInBtn.Text = project;
         }
 
+        
     }
 }

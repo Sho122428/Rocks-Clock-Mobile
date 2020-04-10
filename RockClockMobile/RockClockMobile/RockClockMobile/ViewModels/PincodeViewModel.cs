@@ -47,6 +47,17 @@ namespace RockClockMobile.ViewModels
                 OnPropertyChanged("IsLoading");
             }
         }
+
+        private double isLoadingOpacity = 1;
+        public double IsLoadingOpacity
+        {
+            get { return isLoadingOpacity; }
+            set
+            {
+                isLoadingOpacity = value;
+                OnPropertyChanged("IsLoadingOpacity");
+            }
+        }
         #endregion
 
         #region Methods
@@ -55,8 +66,8 @@ namespace RockClockMobile.ViewModels
         {
             Visible = true;
             IsLoading = true;
-
-            await Task.Delay(5000);
+            IsLoadingOpacity = .5;
+            await Task.Delay(3000);
             try
             {             
 
@@ -70,6 +81,7 @@ namespace RockClockMobile.ViewModels
 
             IsLoading = false;
             Visible = false;
+            IsLoadingOpacity = 1;
         }
         public bool ValidatePin(int pin)
         {

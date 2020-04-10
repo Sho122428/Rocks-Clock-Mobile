@@ -61,7 +61,7 @@
                 Text="Sign Out"
                 TextColor="{x:StaticResource Gray-White}"
                 VerticalOptions="StartAndExpand"
-                WidthRequest="80" />
+                WidthRequest="80"/>
 
             
             <Label x:Name="lblTimer" 
@@ -82,35 +82,7 @@
                    WidthRequest="350"
                    Text="{Binding FNameUser}"
                    Style="{StaticResource LabelStyle}"/>
-            <!--<Label x:Name="lblTimer"
-                 BackgroundColor="Transparent"
-                   Grid.Row="1"
-                 Margin="{x:OnIdiom Phone='15,0,15,0',
-                                   Desktop='0',
-                                   Tablet='0'}"
-                FontFamily="{StaticResource Montserrat-SemiBold}"
-                FontSize="40"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                   HeightRequest="{core:OnPlatformOrientationDoubleValue Default=150,
-                                                                      AndroidPhonePortrait=150,
-                                                                      AndroidPhoneLandscape=140,
-                                                                      iOSPhonePortrait=150,
-                                                                      iOSPhoneLandscape=140}"
-                   WidthRequest="{core:OnPlatformOrientationDoubleValue Default=300,
-                                                                     AndroidPhonePortrait=300,
-                                                                     AndroidPhoneLandscape=150,
-                                                                     iOSPhonePortrait=300,
-                                                                     iOSPhoneLandscape=150}"
-                Opacity="{OnPlatform Default=0,
-                                     UWP=1}"
-                Style="{StaticResource LabelStyle}"
-                
-                TranslationY="{OnPlatform Default=30,
-                                          UWP=0}"
-                VerticalTextAlignment="Start" 
-                VerticalOptions="Center"/>-->
-
+            
             <Grid Grid.Row="3" Padding="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -244,7 +216,7 @@
                     Style="{StaticResource SfButtonStyle}"
                     IsVisible="{Binding IsProjectButtonVisible}"
                     Text="List of Projects"
-                     IsEnabled="{Binding IsBusy}"
+                    IsEnabled="{Binding IsBusy, Converter={Helpers:InverseBoolConverter}}"
                     Opacity="{Binding IsBusyOpacity}"/>
 
                 <picker:SfPicker x:Name="picker" 

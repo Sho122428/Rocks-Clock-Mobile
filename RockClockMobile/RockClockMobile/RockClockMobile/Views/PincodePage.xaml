@@ -4,57 +4,90 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:controls="clr-namespace:RockClockMobile.Controls"
+             xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:Helpers="clr-namespace:RockClockMobile.Converters"
              xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels" 
              mc:Ignorable="d"
              
              x:Class="RockClockMobile.Views.PincodePage">
-    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Onboarding/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="ItemTemplate">
+                <ContentPresenter Content="{Binding RotatorItem}" />
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModel:PincodeViewModel />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" BackgroundColor="FloralWhite" HorizontalOptions="Center">
 
-            
-                <Grid Padding="20,0,20,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="130"></RowDefinition>
-                        <RowDefinition Height="80"></RowDefinition>
-                        <RowDefinition Height="50"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
 
-                    <Label x:Name="lblTimer"
-                       Grid.Row="0"
-                       FontSize="50"
-                       FontFamily="{StaticResource Montserrat-SemiBold}"
-                       FontAttributes="Bold"
-                       TextColor="ForestGreen"
-                       HorizontalOptions="Center" 
-                       VerticalOptions="Center" />
 
-                    <inputLayout:SfTextInputLayout ContainerType="Outlined" Hint="Enter Pin" 
-                                               Grid.Row="1" Padding="0,0,0,0" EnablePasswordVisibilityToggle="True"
-                                               >
-                        <Entry IsPassword="True" x:Name="EntryPin"
-                           AutomationId="EntryUserPin"/>
-                    </inputLayout:SfTextInputLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="130"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
 
-                    <Button Text="Sign In" CornerRadius="3" FontSize="17" Grid.Row="2"
-                        x:Name="BtnSignIn" AutomationId="BtnSignInUser"
+            <!--  Gradient view  -->
+            <gradient:SfGradientView Grid.RowSpan="5" Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
+
+
+            <Label x:Name="lblTimer"
+                    Grid.Row="0"
+                    FontSize="40"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                   
+                    HorizontalOptions="Center" 
+                    VerticalOptions="Center"
+                    WidthRequest="300"
+                    Style="{StaticResource LabelStyle}"/>
+
+            <inputLayout:SfTextInputLayout ContainerType="Outlined" 
+                                           Hint="Enter Pin" 
+                                            Grid.Row="1" 
+                                           Padding="15,15,15,15" 
+                                           EnablePasswordVisibilityToggle="True"
+                                            >
+                <Entry IsPassword="True" x:Name="EntryPin"
+                        AutomationId="EntryUserPin"/>
+            </inputLayout:SfTextInputLayout>
+
+            <button:SfButton Text="Sign In" 
+                        
+                        FontSize="17" 
+                        Grid.Row="2"
+                        x:Name="BtnSignIn" 
+                        AutomationId="BtnSignInUser"
+                        Style="{StaticResource SfButtonStyle}"
+                        IsEnabled="{Binding IsLoading, Converter={Helpers:InverseBoolConverter}}"
+                        Opacity="{Binding IsLoadingOpacity}"
                         Clicked="BtnSignInEvent"/>
 
-                <StackLayout Grid.Row="3" VerticalOptions="Center"   Opacity="0.75">
-                    <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
-                                    
-                                    AnimationType="DoubleCircle"
-                                    IsBusy="{Binding IsLoading, Mode=TwoWay}" IsVisible="{Binding Visible, Mode=TwoWay}"
-                                    TextColor="DarkCyan" ViewBoxHeight="150" ViewBoxWidth="150" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                   
-                </StackLayout>
-            </Grid>
-            
-            
-        </StackLayout>
+            <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+                            AnimationType="Battery"
+                            IsBusy="{Binding IsLoading, Mode=TwoWay}" 
+                            IsVisible="{Binding Visible, Mode=TwoWay}"
+                            TextColor="ForestGreen" 
+                            Grid.RowSpan="5" 
+                            Grid.Row="0"
+                            ViewBoxHeight="150" ViewBoxWidth="150" 
+                            HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </Grid>
+
+
+
     </ContentPage.Content>
 </ContentPage>
