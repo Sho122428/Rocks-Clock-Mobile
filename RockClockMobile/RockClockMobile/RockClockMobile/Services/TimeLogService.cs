@@ -74,6 +74,28 @@ namespace RockClockMobile.Services
             return response.IsSuccessStatusCode;
         }
 
+        //public async Task<bool> ClockOut(int rocksUserID)
+        //{
+        //    if (timelog == null || !IsConnected)
+        //        return false;
+
+
+        //    var json = await client.GetStringAsync($"api/TimeLog/{id}");
+            
+
+
+
+        //    if (id != null && IsConnected)
+        //    {
+        //        var json = await client.GetStringAsync($"api/TimeLog/{id}");
+        //        return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
+        //        //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
+        //    }
+        //    return Jso
+        //    //return response.IsSuccessStatusCode;
+
+        //}
+
 
 
         public async Task<TimeLog> GetEmployeeBreakLog(int id)

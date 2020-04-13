@@ -28,7 +28,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private ObservableCollection<Boarding> boardings;
 
-        private List<string> rocksProjects;
+        //private List<string> rocksProjects;
 
         private string selectedProject = "";
 
@@ -85,7 +85,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             
 
             TimeLogs = new ObservableCollection<TimeLog>();
-            
+            /*
             this.RocksProjects = new List<string>();
 
             foreach (var proj in empDtl.rocksUserProjectMaps)
@@ -94,7 +94,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             if(RocksProjects != null)
                 this.SelectedProject = RocksProjects[0];
-
+            */
             this.IsLoggedIn = true;
             LoadDataClock();
         }
@@ -167,7 +167,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 this.OnPropertyChanged();
             }
         }
-
+        /*
         public List<string> RocksProjects
         {
             get
@@ -186,7 +186,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                 this.OnPropertyChanged();
             }
         }
-
+        */
 
         public string SelectedProject
         {
