@@ -33,5 +33,7 @@ namespace RockClockMobile.Models
         public int status { get; set; }
         public bool isDeleted { get; set; }
 
+        public DateTime loginTime { get; set; }
+
     }
 }
