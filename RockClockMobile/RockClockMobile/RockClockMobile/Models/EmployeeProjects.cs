@@ -8,7 +8,7 @@ namespace RockClockMobile.Models
     {
         public int rocksProjectId { get; set; }
         public int rocksUserId { get; set; }
-        public string rocksProject { get; set; }
+       // public string rocksProject { get; set; }
         public DateTime modifieddt { get; set; }
         public int modifiedby { get; set; }
         public DateTime createddt { get; set; }
