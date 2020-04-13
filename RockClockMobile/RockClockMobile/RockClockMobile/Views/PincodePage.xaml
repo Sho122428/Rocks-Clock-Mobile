@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:controls="clr-namespace:RockClockMobile.Controls"
-             xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:Helpers="clr-namespace:RockClockMobile.Converters"
+             xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels"
              xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels" 
-             mc:Ignorable="d"
-             
+             xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control="clr-namespace:RockClockMobile.Controls"
+             xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+             mc:Ignorable="d"             
              x:Class="RockClockMobile.Views.PincodePage">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,27 +25,39 @@
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
     <ContentPage.BindingContext>
         <viewModel:PincodeViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
 
-
-
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="130"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-
             <!--  Gradient view  -->
-            <gradient:SfGradientView Grid.RowSpan="5" Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
+            <gradient:SfGradientView Grid.RowSpan="1" Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
 
+    
+        <StackLayout
+                    Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                                 PhoneLandscape='150,32',
+                                                                 TabletPortrait='200,50',
+                                                                 TabletLandscape='300,50',
+                                                                 Desktop='30'}"
+                    Spacing="0"
+                    VerticalOptions="FillAndExpand"
+                    WidthRequest="{OnPlatform Default='-1',
+                                              UWP='350'}">
 
-            <Label x:Name="lblTimer"
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="130"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                 
+                </Grid.RowDefinitions>
+
+              
+
+                <Label x:Name="lblTimer"
                     Grid.Row="0"
                     FontSize="40"
                     FontFamily="{StaticResource Montserrat-SemiBold}"
@@ -55,18 +67,46 @@
                     WidthRequest="300"
                     Style="{StaticResource LabelStyle}"/>
 
-            <inputLayout:SfTextInputLayout ContainerType="Outlined" 
+                <!--<inputLayout:SfTextInputLayout ContainerType="Outlined" 
                                            Hint="Enter Pin" 
                                             Grid.Row="1" 
                                            Padding="15,15,15,15" 
                                            EnablePasswordVisibilityToggle="True"
                                             >
                 <Entry IsPassword="True" x:Name="EntryPin"
-                        AutomationId="EntryUserPin"/>
-            </inputLayout:SfTextInputLayout>
+                        AutomationId="EntryUserPin"
+                       HeightRequest="40"
+                       />               
+                
+                
+            </inputLayout:SfTextInputLayout>-->
 
-            <button:SfButton Text="Sign In" 
-                        
+                <border:SfBorder BorderColor="{Binding Path=IsFocused, 
+                Source={x:Reference EntryPin},  
+                ConverterParameter={x:Reference EntryPin}}" 
+                             Style="{StaticResource SfBorderStyle}"
+                             Grid.Row="1"
+                                 
+                                 WidthRequest="80">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                    <control:BorderlessEntry
+                            x:Name="EntryPin"
+                            Placeholder="Enter a pin"
+                                IsPassword="True"
+                            Style="{StaticResource EntryStyle}"/>
+                </Grid>
+                </border:SfBorder>
+
+
+
+                <button:SfButton Text="Sign In" 
+                                 BackgroundColor="ForestGreen"
+                        TextColor="White"
                         FontSize="17" 
                         Grid.Row="2"
                         x:Name="BtnSignIn" 
@@ -76,18 +116,21 @@
                         Opacity="{Binding IsLoadingOpacity}"
                         Clicked="BtnSignInEvent"/>
 
-            <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+
+
+                <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
                             AnimationType="Battery"
                             IsBusy="{Binding IsLoading, Mode=TwoWay}" 
                             IsVisible="{Binding Visible, Mode=TwoWay}"
                             TextColor="ForestGreen" 
-                            Grid.RowSpan="5" 
+                            Grid.RowSpan="3" 
                             Grid.Row="0"
                             ViewBoxHeight="150" ViewBoxWidth="150" 
                             HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            </Grid>
+
+        </StackLayout>
         </Grid>
-
-
 
     </ContentPage.Content>
 </ContentPage>

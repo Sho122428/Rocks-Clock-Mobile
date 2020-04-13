@@ -1,12 +1,9 @@
 ﻿using RockClockMobile.Models;
 using RockClockMobile.Services;
-using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;

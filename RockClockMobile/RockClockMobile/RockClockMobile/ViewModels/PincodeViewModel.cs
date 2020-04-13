@@ -25,6 +25,7 @@ namespace RockClockMobile.ViewModels
 
         #region Properties
         private bool visible = false;
+        private string email;
 
         public bool Visible
         {
@@ -56,6 +57,25 @@ namespace RockClockMobile.ViewModels
             {
                 isLoadingOpacity = value;
                 OnPropertyChanged("IsLoadingOpacity");
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                return this.email;
+            }
+
+            set
+            {
+                if (this.email == value)
+                {
+                    return;
+                }
+
+                this.email = value;
+                //this.NotifyPropertyChanged();
             }
         }
         #endregion
