@@ -24,7 +24,7 @@ namespace RockClockMobile.Models
         public DateTime changePasswordTime { get; set; }
         public User user { get; set; }
         public UserRole rocksUserRoleMap { get; set; }
-        public List<EmployeeProjects> rocksUserProjectMaps { get; set; }
+        public List<EmployeeProjectMap> rocksUserProjectMaps { get; set; }
         public int id { get; set; }
         public DateTime modifieddt { get; set; }
         public int modifiedby { get; set; }
@@ -33,6 +33,5 @@ namespace RockClockMobile.Models
         public string modifiednotes { get; set; }
         public int status { get; set; }
         public bool isDeleted { get; set; }
-
     }
 }

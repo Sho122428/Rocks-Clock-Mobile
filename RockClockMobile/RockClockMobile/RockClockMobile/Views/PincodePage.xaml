@@ -80,9 +80,9 @@
 
                             <control:BorderlessEntry
                                     x:Name="EntryPin"
-                                    Placeholder="Enter a pin"
+                                    Placeholder="Enter pin"
                                         IsPassword="True"
-                        
+                            
                                     Style="{StaticResource EntryStyle}"/>
                         </Grid>
                     </border:SfBorder>
