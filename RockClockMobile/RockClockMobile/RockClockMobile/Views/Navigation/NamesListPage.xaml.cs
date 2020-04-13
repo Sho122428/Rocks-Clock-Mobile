@@ -122,17 +122,9 @@ namespace RockClockMobile.Views.Navigation
         private async void TapUserEvent(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
             var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
-
-            var empDtl = new Employee
-            {
-                id = empSignIn.id,
-                firstName = empSignIn.firstName,
-                lastName = empSignIn.lastName,
-                rocksUserProjectMaps = empSignIn.rocksUserProjectMaps
-            };
-
-            GlobalServices.employee = empDtl;
-            Application.Current.Properties["user_id "] = empDtl.id;
+            
+            GlobalServices.employee = await nameslistViewModel.GetEmployeeById(empSignIn.id);
+            Application.Current.Properties["user_id "] = empSignIn.id;
 
             //for specific user
             //var user = await userViewModel.GetUser();
@@ -141,7 +133,7 @@ namespace RockClockMobile.Views.Navigation
             var user = (List<User>)await nameslistViewModel.GetUserList();
             string userPassword = string.Empty;
             int lastUserId = 0;
-            User userData = user.Where(a => a.rocksUserId == empDtl.id).FirstOrDefault();
+            User userData = user.Where(a => a.rocksUserId == empSignIn.id).FirstOrDefault();
 
             if (userData != null)
             {

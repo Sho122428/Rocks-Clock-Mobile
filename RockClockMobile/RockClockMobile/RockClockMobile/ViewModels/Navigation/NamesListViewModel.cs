@@ -191,6 +191,28 @@ namespace RockClockMobile.ViewModels.Navigation
             }
         }
 
+        //Get specific Employee from Rocks
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            IsBusy = true;
+
+            try
+            {
+                Employee employee = await EmployeeServices.GetEmployeeById(id);
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+            return null;
+        }
+
         #endregion
     }
 }

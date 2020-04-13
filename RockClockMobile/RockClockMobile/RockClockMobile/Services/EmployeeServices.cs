@@ -33,5 +33,16 @@ namespace RockClockMobile.Services
 
             return null;
         }
+
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            if (id != 0 && IsConnected)
+            {
+                var json = await client.GetStringAsync($"api/RocksUsers/{id}?includeProjects=true");
+                return await Task.Run(() => JsonConvert.DeserializeObject<Employee>(json));
+            }
+
+            return null;
+        }
     }    
 }
