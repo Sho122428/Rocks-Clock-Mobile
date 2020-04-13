@@ -84,7 +84,16 @@ namespace RockClockMobile.Views
                         //}
                         //else
                         //{
-                        await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
+                            await pincodeVM.OnLoadPage();
+
+                            await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                        });
+
+                       
                         //}
                     }
                 }

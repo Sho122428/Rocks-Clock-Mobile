@@ -26,9 +26,9 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <viewModel:PincodeViewModel />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     <ContentPage.Content>
 
         <Grid>
@@ -52,8 +52,6 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-
-
 
                     <Label x:Name="lblTimer"
                         Grid.Row="0"

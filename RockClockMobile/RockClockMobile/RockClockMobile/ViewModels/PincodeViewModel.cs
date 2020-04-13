@@ -15,10 +15,6 @@ namespace RockClockMobile.ViewModels
         {
             //UserServices employeeServices = new UserServices();
             //UserList = employeeServices.UserList;
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                await OnLoadPage();
-            });
 
             UserList = GlobalServices.User;
         }
@@ -82,7 +78,7 @@ namespace RockClockMobile.ViewModels
 
         #region Methods
 
-        private async Task OnLoadPage()
+        public async Task OnLoadPage()
         {
             Visible = true;
             IsLoading = true;
