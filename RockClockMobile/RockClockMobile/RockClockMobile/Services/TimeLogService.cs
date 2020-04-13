@@ -41,7 +41,7 @@ namespace RockClockMobile.Services
 
             if (id != null && IsConnected)
             {
-                var json = await client.GetStringAsync($"api/TimeLog/{id}");
+                var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogDataByRocksUserId/{id}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
                 //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
             }
@@ -60,6 +60,18 @@ namespace RockClockMobile.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<int> GetTimeLogStatus(int rocksUserID)
+        {
+
+            if (rocksUserID != null && IsConnected)
+            {
+                var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogStatusFromDb/{rocksUserID}");
+                return int.Parse(json);
+                //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
+            }
+            return -1;
+        }
+
         public async Task<bool> UpdateEmployeeTimeLog(TimeLog timelog)
         {
             if (timelog == null || timelog.timeLogId == null || !IsConnected)
@@ -74,27 +86,16 @@ namespace RockClockMobile.Services
             return response.IsSuccessStatusCode;
         }
 
-        //public async Task<bool> ClockOut(int rocksUserID)
-        //{
-        //    if (timelog == null || !IsConnected)
-        //        return false;
+        public async Task<bool> ClockOut(int rocksUserID)
+        {
+            if (String.IsNullOrEmpty(rocksUserID.ToString()) || !IsConnected)
+                return false;
 
 
-        //    var json = await client.GetStringAsync($"api/TimeLog/{id}");
-            
+            var json = await client.GetStringAsync($"api/TimeLog/ClockOut/{rocksUserID}");
+            return bool.Parse(json);
 
-
-
-        //    if (id != null && IsConnected)
-        //    {
-        //        var json = await client.GetStringAsync($"api/TimeLog/{id}");
-        //        return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
-        //        //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
-        //    }
-        //    return Jso
-        //    //return response.IsSuccessStatusCode;
-
-        //}
+        }
 
 
 

@@ -36,7 +36,7 @@ namespace RockClockMobile.ViewModels.Navigation
         public NamesListViewModel()
         {
             NamesList = new ObservableCollection<Employee>();
-            GetEmployeeList();
+             GetEmployeeList();
         }
         #endregion
 
