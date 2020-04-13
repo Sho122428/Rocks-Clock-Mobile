@@ -40,6 +40,7 @@ namespace RockClockMobile.Views
             {
                 BtnSignIn.Text = "Create PIN";
             }
+            EntryPin.Keyboard = Keyboard.Numeric;
         }
 
         private async void BtnSignInEvent(object sender, EventArgs e)

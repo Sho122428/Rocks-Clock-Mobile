@@ -33,98 +33,82 @@
 
         <Grid>
             <!--  Gradient view  -->
-            <gradient:SfGradientView Grid.RowSpan="1" Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
+            <gradient:SfGradientView  Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
 
-    
-        <StackLayout
-                    Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
-                                                                 PhoneLandscape='150,32',
-                                                                 TabletPortrait='200,50',
-                                                                 TabletLandscape='300,50',
-                                                                 Desktop='30'}"
-                    Spacing="0"
-                    VerticalOptions="FillAndExpand"
-                    WidthRequest="{OnPlatform Default='-1',
-                                              UWP='350'}">
+            <StackLayout
+                Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
+                                                                PhoneLandscape='150,32',
+                                                                TabletPortrait='200,50',
+                                                                TabletLandscape='300,50',
+                                                                Desktop='30'}"
+                Spacing="0"
+                VerticalOptions="FillAndExpand"
+                WidthRequest="{OnPlatform Default='-1',
+                                            UWP='350'}">
 
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="130"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                 
-                </Grid.RowDefinitions>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="130"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-              
 
-                <Label x:Name="lblTimer"
-                    Grid.Row="0"
-                    FontSize="40"
-                    FontFamily="{StaticResource Montserrat-SemiBold}"
+
+                    <Label x:Name="lblTimer"
+                        Grid.Row="0"
+                        FontSize="40"
+                        FontFamily="{StaticResource Montserrat-SemiBold}"
                    
-                    HorizontalOptions="Center" 
-                    VerticalOptions="Center"
-                    WidthRequest="300"
-                    Style="{StaticResource LabelStyle}"/>
+                        HorizontalOptions="Center" 
+                        VerticalOptions="Center"
+                        WidthRequest="300"
+                        Style="{StaticResource LabelStyle}"/>
 
-                <!--<inputLayout:SfTextInputLayout ContainerType="Outlined" 
-                                           Hint="Enter Pin" 
-                                            Grid.Row="1" 
-                                           Padding="15,15,15,15" 
-                                           EnablePasswordVisibilityToggle="True"
-                                            >
-                <Entry IsPassword="True" x:Name="EntryPin"
-                        AutomationId="EntryUserPin"
-                       HeightRequest="40"
-                       />               
-                
-                
-            </inputLayout:SfTextInputLayout>-->
-
-                <border:SfBorder BorderColor="{Binding Path=IsFocused, 
-                Source={x:Reference EntryPin},  
-                ConverterParameter={x:Reference EntryPin}}" 
-                             Style="{StaticResource SfBorderStyle}"
-                             Grid.Row="1"
+                    <border:SfBorder BorderColor="{Binding Path=IsFocused, 
+                        Source={x:Reference EntryPin},  
+                        ConverterParameter={x:Reference EntryPin}}" 
+                                     Style="{StaticResource SfBorderStyle}"
+                                     Grid.Row="1"
                                  
-                                 WidthRequest="80">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                                         WidthRequest="80">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                    <control:BorderlessEntry
-                            x:Name="EntryPin"
-                            Placeholder="Enter a pin"
-                                IsPassword="True"
-                            Style="{StaticResource EntryStyle}"/>
-                </Grid>
-                </border:SfBorder>
-
-
-
-                <button:SfButton Text="Sign In" 
-                                 BackgroundColor="ForestGreen"
-                        TextColor="White"
-                        FontSize="17" 
-                        Grid.Row="2"
-                        x:Name="BtnSignIn" 
-                        AutomationId="BtnSignInUser"
-                        Style="{StaticResource SfButtonStyle}"
-                        IsEnabled="{Binding IsLoading, Converter={Helpers:InverseBoolConverter}}"
-                        Opacity="{Binding IsLoadingOpacity}"
-                        Clicked="BtnSignInEvent"/>
+                            <control:BorderlessEntry
+                                    x:Name="EntryPin"
+                                    Placeholder="Enter a pin"
+                                        IsPassword="True"
+                        
+                                    Style="{StaticResource EntryStyle}"/>
+                        </Grid>
+                    </border:SfBorder>
 
 
+                    <button:SfButton Text="Sign In" 
+                                     BackgroundColor="ForestGreen"
+                            TextColor="White"
+                            FontSize="17" 
+                            Grid.Row="2"
+                            x:Name="BtnSignIn" 
+                            AutomationId="BtnSignInUser"
+                            Style="{StaticResource SfButtonStyle}"
+                            IsEnabled="{Binding IsLoading, Converter={Helpers:InverseBoolConverter}}"
+                            Opacity="{Binding IsLoadingOpacity}"
+                            Clicked="BtnSignInEvent"/>
 
-                <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+
+
+                    <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
                             AnimationType="Battery"
                             IsBusy="{Binding IsLoading, Mode=TwoWay}" 
                             IsVisible="{Binding Visible, Mode=TwoWay}"
                             TextColor="ForestGreen" 
                             Grid.RowSpan="3" 
-                            Grid.Row="0"
+                            Grid.Row="2"
                             ViewBoxHeight="150" ViewBoxWidth="150" 
                             HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
             </Grid>
