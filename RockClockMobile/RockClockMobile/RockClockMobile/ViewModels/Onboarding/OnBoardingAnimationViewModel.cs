@@ -93,7 +93,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             foreach (var proj in empDtl.rocksUserProjectMaps)
             {
-                RocksProjects.Add(proj.rocksProjectId.ToString());
+                RocksProjects.Add(proj.rocksProject.projectName);
             }
             this.SelectedProject = RocksProjects[0];
 
@@ -116,23 +116,27 @@ namespace RockClockMobile.ViewModels.Onboarding
                     {
                         this.IsBreakButtonVisible = true;
                         this.ClockInButtonText = "CLOCK OUT";
-                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.timeIn.ToLocalTime().ToString("h:mm tt") + System.Environment.NewLine + " for project "; //+ LoggedInUser.projectName;
-                        this.ClockInButtonText = "Clock out from "; //+ LoggedInUser.projectName;
+                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.timeIn.ToLocalTime().ToString("h:mm tt") + System.Environment.NewLine + " for project " + SelectedProject;
+                        this.ClockInButtonText = "Clock out from "+ SelectedProject;
                         this.IsProjectButtonVisible = false;
                         this.ClockIn = LoggedInUser.timeIn.ToLocalTime().ToString("h:mm tt");
                     
                         //For Breaklogs
-                        var minDate = DateTime.MinValue;
-                        var breakOutVal = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).Select(a => a.breakOut).FirstOrDefault();
-                        
-                        if (LoggedInUser.breakLogs.Count > 0)
+                        if(TimeLogStatus == 13)
                         {
-                            if (breakOutVal == minDate)
-                            {
-                                this.BreakButtonText = "End Break";
-                                
-                            }
+                            this.BreakButtonText = "End Break";
                         }
+                        //var minDate = DateTime.MinValue;
+                        //var breakOutVal = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).Select(a => a.breakOut).FirstOrDefault();
+                        
+                        //if (LoggedInUser.breakLogs.Count > 0)
+                        //{
+                        //    if (breakOutVal == minDate)
+                        //    {
+                        //        this.BreakButtonText = "End Break";
+                                
+                        //    }
+                        //}
                     }
                     else
                     {
@@ -663,15 +667,15 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
-        /* Get Employee Time Log status
-            InActive = 0,
-            Active = 1,
-            HasNoTimeLogData = 11,
-            HasClockedInData = 12,
-            HasBreakInData = 13,
-            HasBreakOutData = 14,
-            HasClockedOutData = 15
-         * */
+        ///Get Employee Time Log status
+        ///   InActive = 0,
+        ///   Active = 1,
+        ///   HasNoTimeLogData = 11,
+        ///   HasClockedInData = 12,
+        ///   HasBreakInData = 13,
+        ///   HasBreakOutData = 14,
+        ///   HasClockedOutData = 15
+        
         private async Task GetTimeLogStatus(int rocksUserID)
         {
             if (IsBusy)
@@ -712,13 +716,22 @@ namespace RockClockMobile.ViewModels.Onboarding
                 if (empUserLog != null)
                     countTimeID = empUserLog.Count;
 
+                int projid = 0;
+
+                foreach(var proj in empDtl.rocksUserProjectMaps)
+                {
+                    if(proj.rocksProject.projectName == SelectedProject)
+                    {
+                        projid = proj.rocksProjectId;
+                    }
+                }
+
                 var userTimeLog = new TimeLog
                 {
                     rocksUserId = empDtl.id,
-                    projectID = int.Parse(SelectedProject),
-                    timeIn= DateTime.UtcNow,
-                    createddt= DateTime.UtcNow,
-                    status = 1
+                    projectID = projid,
+                    timeIn = DateTime.UtcNow,
+                    createddt= DateTime.UtcNow
             };
                 var isSuccess = await TimeLogServices.AddEmployeeTimeLog(userTimeLog);
                 if(isSuccess)
@@ -860,18 +873,22 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
                 else
                 {
-                    BreakLog breakLog = new BreakLog();
+                    //BreakLog breakLog = new BreakLog();
 
-                    breakLog = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
+                    //breakLog = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
                     
-                    breakLog.breakOut = DateTime.UtcNow;                  
+                    //breakLog.breakOut = DateTime.UtcNow;
 
-                    isSuccess = await BreakLogServices.UpdateEmployeeBreakLog(breakLog);
-                    message = "Enjoy your work.";
+                    //isSuccess = await BreakLogServices.UpdateEmployeeBreakLog(breakLog);
+                    isSuccess = await BreakLogServices.BreakOut(LoggedInUser.timeLogId);
+                    
+                    if(isSuccess)
+                        message = "Welcome back. Enjoy your work.";
                 }
 
                 if (isSuccess)
                 {
+                    
                     ToastPopup.ToastMessage(message, false);
                     await Task.Delay(3000);
                     this.SignOut();
@@ -891,6 +908,11 @@ namespace RockClockMobile.ViewModels.Onboarding
                 IsBusyOpacity = 1;
                 this.SignOut();
             }
+        }
+
+        private async Task GetBreakLogData()
+        {
+
         }
 
         #endregion

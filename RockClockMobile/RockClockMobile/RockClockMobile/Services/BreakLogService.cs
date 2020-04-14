@@ -63,8 +63,20 @@ namespace RockClockMobile.Services
             if (breaklog == null || breaklog.id == 0 || !IsConnected)
                 return false;
 
-            var serializedItem = JsonConvert.SerializeObject(breaklog);  
+            var serializedItem = JsonConvert.SerializeObject(breaklog);
             var response = await client.PutAsync($"api/BreakLog?id={breaklog.id}", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+            
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> BreakOut(int timeLogID)
+        {
+            if (String.IsNullOrEmpty(timeLogID.ToString()) || !IsConnected)
+                return false;
+
+            //var serializedItem = JsonConvert.SerializeObject(breaklog);
+            //var response = await client.PutAsync($"api/BreakLog?id={breaklog.id}", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync($"api/BreakLog/BreakOut/{timeLogID}",null);
 
             return response.IsSuccessStatusCode;
         }
