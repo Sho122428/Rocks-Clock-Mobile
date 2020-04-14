@@ -71,9 +71,10 @@ namespace RockClockMobile.ViewModels.Navigation
         /// Invoked when an item is selected from the movies list.
         /// </summary>
         /// <param name="selectedItem">Selected item from the list view.</param>
-        private void NavigateToNextPage(object selectedItem)
+        private async void NavigateToNextPage(object selectedItem)
         {
             // Do something
+            //await OnLoadPage();
         }
 
         //Get specific User from Rocks Clock
@@ -211,6 +212,65 @@ namespace RockClockMobile.ViewModels.Navigation
             }
 
             return null;
+        }
+
+        //For loading screen
+
+        private bool visible = false;
+        private string email;
+
+        public bool Visible
+        {
+            get { return visible; }
+            set
+            {
+                visible = value;
+                OnPropertyChanged("Visible");
+            }
+        }
+
+        private bool isLoading = false;
+
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set
+            {
+                isLoading = value;
+                OnPropertyChanged("IsLoading");
+            }
+        }
+
+        private double isLoadingOpacity = 1;
+        public double IsLoadingOpacity
+        {
+            get { return isLoadingOpacity; }
+            set
+            {
+                isLoadingOpacity = value;
+                OnPropertyChanged("IsLoadingOpacity");
+            }
+        }
+        public async Task OnLoadPage()
+        {
+            Visible = true;
+            IsLoading = true;
+            IsLoadingOpacity = .5;
+            await Task.Delay(3000);
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
+
+
+            IsLoading = false;
+            Visible = false;
+            IsLoadingOpacity = 1;
         }
 
         #endregion
