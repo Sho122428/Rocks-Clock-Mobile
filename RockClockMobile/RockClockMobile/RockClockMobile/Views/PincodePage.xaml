@@ -105,8 +105,8 @@
                             IsBusy="{Binding IsLoading, Mode=TwoWay}" 
                             IsVisible="{Binding Visible, Mode=TwoWay}"
                             TextColor="ForestGreen" 
-                            Grid.RowSpan="0" 
-                            Grid.Row="3"
+                            Grid.RowSpan="3" 
+                            Grid.Row="2"
                             ViewBoxHeight="150" ViewBoxWidth="150" 
                             HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
             </Grid>
