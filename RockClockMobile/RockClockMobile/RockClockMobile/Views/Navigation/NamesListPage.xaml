@@ -9,6 +9,7 @@
              xmlns:data="clr-namespace:Syncfusion.DataSource;assembly=Syncfusion.DataSource.Portable"
              xmlns:behavior="clr-namespace:RockClockMobile.Behaviors.Navigation"
              xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
+             xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              mc:Ignorable="d"
              x:Class="RockClockMobile.Views.Navigation.NamesListPage"
              BackgroundColor="{DynamicResource Gray-White}"
@@ -44,7 +45,8 @@
                    WidthRequest="300"
                 Style="{StaticResource LabelStyle}"
                 VerticalTextAlignment="Start" 
-                   VerticalOptions="Center"/>
+                   VerticalOptions="Center"
+                   Grid.Row="0"/>
 
             <StackLayout x:Name="TitleView"  Padding="8,8" Grid.Row="1"
                          BackgroundColor="{DynamicResource Gray-White}" Spacing="0"
@@ -158,8 +160,18 @@
                             </ViewCell>
                         </DataTemplate>
                     </controls:SearchableContactsList.ItemTemplate>
-                </controls:SearchableContactsList>
+                </controls:SearchableContactsList>              
             </StackLayout>
+
+            <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+                                        AnimationType="Battery"
+                                        IsBusy="{Binding IsLoading, Mode=TwoWay}" 
+                                        IsVisible="{Binding Visible, Mode=TwoWay}"
+                                        TextColor="ForestGreen" 
+                                        Grid.RowSpan="3" 
+                                        Grid.Row="1"
+                                        ViewBoxHeight="150" ViewBoxWidth="150" 
+                                        HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/> 
         </Grid>
     </ContentPage.Content>
 

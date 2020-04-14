@@ -17,7 +17,7 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
-        NamesListViewModel nameslistViewModel = new NamesListViewModel();
+        //NamesListViewModel nameslistViewModel = new NamesListViewModel();
         public NamesListPage()
         {
             InitializeComponent();
@@ -121,16 +121,17 @@ namespace RockClockMobile.Views.Navigation
 
         private async void TapUserEvent(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
+            NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
             var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
             
-            GlobalServices.employee = await nameslistViewModel.GetEmployeeById(empSignIn.id);
+            GlobalServices.employee = await namesListVM.GetEmployeeById(empSignIn.id);
             Application.Current.Properties["user_id "] = empSignIn.id;
 
             //for specific user
             //var user = await userViewModel.GetUser();
 
             //for all user
-            var user = (List<User>)await nameslistViewModel.GetUserList();
+            var user = (List<User>)await namesListVM.GetUserList();
             string userPassword = string.Empty;
             int lastUserId = 0;
             User userData = user.Where(a => a.rocksUserId == empSignIn.id).FirstOrDefault();
@@ -144,8 +145,14 @@ namespace RockClockMobile.Views.Navigation
                 lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
             }
 
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+              
+                await namesListVM.OnLoadPage();
 
-            App.Current.MainPage = new PincodePage(userPassword,lastUserId);
+                App.Current.MainPage = new PincodePage(userPassword, lastUserId);
+            });
+            //App.Current.MainPage = new PincodePage(userPassword,lastUserId);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {
