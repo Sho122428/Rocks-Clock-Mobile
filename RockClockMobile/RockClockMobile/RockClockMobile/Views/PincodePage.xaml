@@ -44,7 +44,9 @@
                 Spacing="0"
                 VerticalOptions="FillAndExpand"
                 WidthRequest="{OnPlatform Default='-1',
-                                            UWP='350'}">
+                                            UWP='350'}"
+                Opacity="{Binding IsLoadingOpacity}"
+                IsEnabled="{Binding Enable}">
 
                 <Grid >
                     <Grid.RowDefinitions>

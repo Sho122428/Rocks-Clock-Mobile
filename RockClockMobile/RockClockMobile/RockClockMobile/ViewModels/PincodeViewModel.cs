@@ -19,10 +19,9 @@ namespace RockClockMobile.ViewModels
             UserList = GlobalServices.User;
         }
 
-        #region Properties
+        #region Properties      
+        private string email;     
         private bool visible = false;
-        private string email;
-
         public bool Visible
         {
             get { return visible; }
@@ -30,6 +29,17 @@ namespace RockClockMobile.ViewModels
             {
                 visible = value;
                 OnPropertyChanged("Visible");
+            }
+        }
+
+        private bool enable = true;
+        public bool Enable
+        {
+            get { return enable; }
+            set
+            {
+                enable = value;
+                OnPropertyChanged("Enable");
             }
         }
 
@@ -83,6 +93,7 @@ namespace RockClockMobile.ViewModels
             Visible = true;
             IsLoading = true;
             IsLoadingOpacity = .5;
+            Enable = false;
             await Task.Delay(3000);
             try
             {             
@@ -98,6 +109,7 @@ namespace RockClockMobile.ViewModels
             IsLoading = false;
             Visible = false;
             IsLoadingOpacity = 1;
+            Enable = true;
         }
         public bool ValidatePin(int pin)
         {

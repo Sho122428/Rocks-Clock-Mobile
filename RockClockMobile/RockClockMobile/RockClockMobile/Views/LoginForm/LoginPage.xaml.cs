@@ -21,18 +21,35 @@ namespace RockClockMobile.Views.LoginForm
         public LoginPage()
         {
             InitializeComponent();
+            BindingContext = new LoginPageViewModel();
+
+            PasswordEntry.Text = "Fullsc@l3";
         }
 
         private async void BtnLoginEvent(object sender, System.EventArgs e)
         {          
             var details = (LoginPageViewModel)this.BindingContext;
+            //var email = details.
 
-            if (details.Username.ToLower() == "sho@gmail.com")
+            if (details.UserEmail.ToLower() == "denolantest@email.com")
             {
-                App.Current.MainPage = new Views.Navigation.NamesListPage();
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                    await loginPageVM.OnLoadPage();
+
+                    App.Current.MainPage = new Views.Navigation.NamesListPage();
+                });                
             }
             else {
-                await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+
+                //Device.BeginInvokeOnMainThread(async () =>
+                //{
+                //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                //    await loginPageVM.OnLoadPage();
+
+                //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                //});                
             }
         }
     }

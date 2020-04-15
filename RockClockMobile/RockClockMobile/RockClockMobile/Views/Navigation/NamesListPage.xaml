@@ -89,7 +89,7 @@
 
             </StackLayout>
             <BoxView Grid.Row="2" Style="{StaticResource SeparatorStyle}"/>
-            <StackLayout Grid.Row="3" Spacing="0">
+            <StackLayout Grid.Row="3" Spacing="0" Opacity="{Binding IsLoadingOpacity}" IsEnabled="{Binding Enable}">
                 <controls:SearchableContactsList x:Name="NamesList"  IsScrollBarVisible="False"
                                                 AllowSwiping="True" AutoFitMode="Height" ItemSpacing="0"
                                                 AllowGroupExpandCollapse="False" SelectionGesture="Tap"

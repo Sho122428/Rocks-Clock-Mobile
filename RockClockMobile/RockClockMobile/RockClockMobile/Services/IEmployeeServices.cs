@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RockClockMobile.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -11,6 +12,7 @@ namespace RockClockMobile.Services
         //Task<T> GetEmployeeTimeLog(string id);
         //Task<bool> UpdateEmployeeAsync(T item);
         Task<T> GetEmployeeById(int id);
+        Task<UserLoginM> UserLoginById(UserLoginParam userLoginParam);
         Task<IEnumerable<T>> GetEmployeeList(bool forceRefresh = false);
     }
 }

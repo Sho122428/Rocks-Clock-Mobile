@@ -37,9 +37,9 @@
 
     <!--  Common style for entries  -->
     <Style x:Key="EntryStyle" TargetType="control:BorderlessEntry">
-        <Setter Property="PlaceholderColor" Value="{StaticResource EntryPlaceholderColor}" />
+        <Setter Property="PlaceholderColor" Value="Green" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="TextColor" Value="Green" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="Margin" Value="15,0" />
         <Setter Property="HeightRequest" Value="40" />
@@ -53,13 +53,13 @@
             <Setter.Value>
                 <graphics:SfLinearGradientBrush>
                     <graphics:SfLinearGradientBrush.GradientStops>
-                        <graphics:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
-                        <graphics:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
+                        <graphics:SfGradientStop Offset="0" Color="Green" />
+                        <graphics:SfGradientStop Offset="1" Color="Green" />
                     </graphics:SfLinearGradientBrush.GradientStops>
                 </graphics:SfLinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="TextColor" Value="White" />
         <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="FontSize" Value="16" />
@@ -79,13 +79,15 @@
 
     <!--  Common style for borders  -->
     <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
-        <Setter Property="BackgroundColor" Value="{StaticResource BorderBackgroundColor}" />
+        <Setter Property="BackgroundColor" Value="White" />
         <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="CornerRadius" Value="20" />
         <Setter Property="BorderWidth" Value="1" />
     </Style>
 
     <!--  Common style for gradient view  -->
+    <!--<graphics:SfGradientStop Offset="0.0" Color="{StaticResource GradientEndColor}" />
+    <graphics:SfGradientStop Offset="1.0" Color="{StaticResource GradientStartColor}" />-->
     <Style x:Key="SfGradientViewStyle" TargetType="graphics:SfGradientView">
         <Setter Property="Opacity" Value="0.82" />
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
@@ -93,9 +95,9 @@
         <Setter Property="BackgroundBrush">
             <Setter.Value>
                 <graphics:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <graphics:SfLinearGradientBrush.GradientStops>
-                        <graphics:SfGradientStop Offset="0.0" Color="{StaticResource GradientEndColor}" />
-                        <graphics:SfGradientStop Offset="1.0" Color="{StaticResource GradientStartColor}" />
+                    <graphics:SfLinearGradientBrush.GradientStops>                        
+                        <graphics:SfGradientStop Color="#95e6b4" Offset="0.0" />
+                        <graphics:SfGradientStop Color="#007840" Offset="1.0" />
                     </graphics:SfLinearGradientBrush.GradientStops>
                 </graphics:SfLinearGradientBrush>
             </Setter.Value>
@@ -128,7 +130,7 @@
         <Setter Property="FontFamily" Value="{StaticResource Montserrat-Regular}"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="TextColor" Value="{DynamicResource Gray-900}"/>
-        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}"/>
+        <Setter Property="PlaceholderColor" Value="Green"/>
     </Style>
 
     <Style x:Key="DatePickerStyle" TargetType="DatePicker">
