@@ -4,6 +4,9 @@ using System;
 using System.Diagnostics;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace RockClockMobile
 {
@@ -17,8 +20,7 @@ namespace RockClockMobile
             DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
         public static bool UseMockDataStore = true;
 
-        private static Stopwatch stopWatch = new Stopwatch();
-        private const int defaultTimespan = 20; //In Seconds        
+             
 
         public App()
         {
@@ -43,46 +45,21 @@ namespace RockClockMobile
 
         protected override void OnStart()
         {
-            // On start runs when your application launches from a closed state, 
-            //NetworkSecurityPolicy.Instance.IsCleartextTrafficPermitted.Equals(true);
-            if (!stopWatch.IsRunning)
-            {
-                stopWatch.Start();
-            }
-            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
-            {
-                // Logic for logging out if the device is inactive for a period of time.
-
-                if (stopWatch.IsRunning && stopWatch.Elapsed.Seconds >= defaultTimespan)
-                {
-                    //prepare to perform your data pull here as we have hit the 1 minute mark   
-
-                    // Perform your long running operations here.
-                    
-                    Device.BeginInvokeOnMainThread(() => {
-                        // If you need to do anything with your UI, you need to wrap it in this.
-
-
-                    });
-
-                    stopWatch.Restart();
-                }
-
-                // Always return true as to keep our device timer running.
-                return true;
-            });
+            AppCenter.Start("android=734872ab-ddac-44a0-b6d3-d8bf0a581fcb;" +
+                  "uwp={Your UWP App secret here};" +
+                  "ios=6584353c-a808-4fa2-8feb-ebe455b27325;",
+                  typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()
         {
-            // Ensure our stopwatch is reset so the elapsed time is 0.
-            stopWatch.Reset();
+            
         }
 
         protected override void OnResume()
         {
-            // App enters the foreground so start our stopwatch again.
-            stopWatch.Start();
+            
         }
+
     }
 }

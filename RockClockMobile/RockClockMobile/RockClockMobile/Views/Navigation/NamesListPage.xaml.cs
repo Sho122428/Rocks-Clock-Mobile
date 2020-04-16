@@ -1,4 +1,6 @@
-﻿using RockClockMobile.Models;
+﻿using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using RockClockMobile.Models;
 using RockClockMobile.Services;
 using RockClockMobile.ViewModels.Navigation;
 using System;
@@ -31,6 +33,25 @@ namespace RockClockMobile.Views.Navigation
                 );
                 return true;
             });
+
+
+
+            try
+            {
+                Analytics.TrackEvent("My custom event");
+
+                Crashes.GenerateTestCrash();
+            }
+            catch (Exception exception)
+            {
+                var properties = new Dictionary<string, string>
+                {
+                    { "Category", "Music" },
+                    { "Wifi", "On" }
+                };
+                Crashes.TrackError(exception, properties);
+            }
+
 
             //userServices = new UserServices(empDtl.rocksUserId);
         }

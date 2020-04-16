@@ -141,7 +141,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                     else
                     {
                         this.FNameUser = empDtl.firstName + " is off the clock.";
-                        this.ClockInButtonText = "Clock in to ";
+                        this.ClockInButtonText = "Clock in";
                     }
 
                     TimeStartLogout();
