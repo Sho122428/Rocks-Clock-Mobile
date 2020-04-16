@@ -74,7 +74,7 @@ namespace RockClockMobile.Services
 
         public async Task<bool> UpdateEmployeeTimeLog(TimeLog timelog)
         {
-            if (timelog == null || timelog.timeLogId == null || !IsConnected)
+            if (timelog == null || timelog.id == null || !IsConnected)
                 return false;
 
             var serializedItem = JsonConvert.SerializeObject(timelog);
@@ -82,7 +82,7 @@ namespace RockClockMobile.Services
             //var byteContent = new ByteArrayContent(buffer);
 
             //var response = await client.PutAsync(new Uri($"api/TimeLog?id={timelog.timeLogId}"), byteContent);
-            var response = await client.PutAsync($"api/TimeLog?id={timelog.timeLogId}",  new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync($"api/TimeLog?id={timelog.id}",  new StringContent(serializedItem, Encoding.UTF8, "application/json"));
             return response.IsSuccessStatusCode;
         }
 
