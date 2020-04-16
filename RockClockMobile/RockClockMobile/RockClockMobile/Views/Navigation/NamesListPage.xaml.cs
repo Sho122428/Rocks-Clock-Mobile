@@ -144,8 +144,16 @@ namespace RockClockMobile.Views.Navigation
         {
             NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
             var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
-            
-            GlobalServices.employee = await namesListVM.GetEmployeeById(empSignIn.id);
+
+            var userLoginParam = new UserLoginParam {
+                RocksUserId = empSignIn.id,
+                Password = "1234",
+                Remember = true
+            };
+
+            //GlobalServices.employee = await namesListVM.GetEmployeeById(empSignIn.id);
+            var d = await namesListVM.UserLoginById(userLoginParam); 
+            GlobalServices.employee = d.rocksUser;
             Application.Current.Properties["user_id "] = empSignIn.id;
 
             //for specific user

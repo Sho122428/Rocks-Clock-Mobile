@@ -18,6 +18,7 @@ namespace RockClockMobile.Views.LoginForm
         public EmailEntry()
         {
             InitializeComponent();
+            Email.Text = "Denolantest@email.com";
         }
 
 

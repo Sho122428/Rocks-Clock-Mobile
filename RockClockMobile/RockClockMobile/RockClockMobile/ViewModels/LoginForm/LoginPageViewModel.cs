@@ -1,5 +1,9 @@
-﻿using System;
+﻿using RockClockMobile.Models;
+using RockClockMobile.Services;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -27,12 +31,13 @@ namespace RockClockMobile.ViewModels.LoginForm
         /// </summary>
         public LoginPageViewModel()
         {
-            //this.LoginCommand = new Command(this.LoginClicked);
+            GetEmployeeDetail();
+            //this.LoginCommand = new Command(async () => await AdminLoginAccount());
             //this.LoginCommand = new Command(async () => await LoginClicked(x));
             this.SignUpCommand = new Command(this.SignUpClicked);
             this.ForgotPasswordCommand = new Command(this.ForgotPasswordClicked);
             this.SocialMediaLoginCommand = new Command(this.SocialLoggedIn);
-        }
+    }
 
         #endregion
 
@@ -60,11 +65,60 @@ namespace RockClockMobile.ViewModels.LoginForm
             }
         }
 
-        public string Username { get; set; }
-
+        public string UserEmail { get; set; }
+        public User user { get; set; }
         private void NotifyPropertyChanged()
         {
             throw new NotImplementedException();
+        }
+
+
+        //For loading screen
+        private bool visible = false;
+        private string email;
+
+        public bool Visible
+        {
+            get { return visible; }
+            set
+            {
+                visible = value;
+                OnPropertyChanged("Visible");
+            }
+        }
+
+        private bool isLoading = false;
+
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set
+            {
+                isLoading = value;
+                OnPropertyChanged("IsLoading");
+            }
+        }
+
+        private double isLoadingOpacity = 1;
+        public double IsLoadingOpacity
+        {
+            get { return isLoadingOpacity; }
+            set
+            {
+                isLoadingOpacity = value;
+                OnPropertyChanged("IsLoadingOpacity");
+            }
+        }
+
+        private bool enable = true;
+        public bool Enable
+        {
+            get { return enable; }
+            set
+            {
+                enable = value;
+                OnPropertyChanged("Enable");
+            }
         }
 
         #endregion
@@ -109,29 +163,30 @@ namespace RockClockMobile.ViewModels.LoginForm
         private async void LoginClicked(object x)
         {
             // Do something
-            //string username = this.Username;
+            this.UserEmail = base.Email;
+            var loggedInUser = GlobalServices.employeeList.Where(a => a.email == this.UserEmail).FirstOrDefault();
 
-            //Email = username;
+            var userLogin = new UserLogin
+            {
+                UserName = loggedInUser.userName,
+                Password = "Fullsc@l3",
+                Remember = true
+            };
 
-            this.Username = base.Email;
-
+            if (userLogin != null)
+            {
+                await AdminLoginAccount(userLogin);
+            }            
         }
 
-        private async Task GetEmployeeTimeLogList(string email)
+        //Get Admin login response
+        private async Task AdminLoginAccount(UserLogin userLogin)
         {
-            if (IsBusy)
-                return;
-
             IsBusy = true;
-
+            
             try
             {
-                //TimeLogs.Clear();
-                //var timelogs = await TimeLogServices.GetEmployeeTimeLogList(true);
-                //foreach (var tlog in timelogs)
-                //{
-                //    TimeLogs.Add(tlog);
-                //}
+                var dd = await UserLoginService.AddUserLogin(userLogin);
             }
             catch (Exception ex)
             {
@@ -141,6 +196,52 @@ namespace RockClockMobile.ViewModels.LoginForm
             {
                 IsBusy = false;
             }
+        }
+
+        private async Task GetEmployeeDetail()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                var empList = await EmployeeServices.GetEmployeeList(true);
+                GlobalServices.employeeList = empList;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public async Task OnLoadPage()
+        {
+            Visible = true;
+            IsLoading = true;
+            IsLoadingOpacity = .5;
+            Enable = false;
+            await Task.Delay(3000);
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
+
+
+            IsLoading = false;
+            Visible = false;
+            IsLoadingOpacity = 1;
+            Enable = true;
         }
 
         /// <summary>

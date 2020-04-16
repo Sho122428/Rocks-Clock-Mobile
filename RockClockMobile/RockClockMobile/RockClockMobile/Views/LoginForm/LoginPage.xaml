@@ -12,6 +12,7 @@
     xmlns:local="clr-namespace:RockClockMobile.Views.LoginForm"
     xmlns:viewModel="clr-namespace:RockClockMobile.ViewModels.LoginForm"
     xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     BackgroundImageSource=""
     NavigationPage.HasNavigationBar="False"
     Style="{StaticResource ContentPageStyle}">
@@ -26,12 +27,12 @@
     </ContentPage.Resources>
 
     <!--  Binding context for login page  -->
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <viewModel:LoginPageViewModel />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
 
     <ContentPage.Content>
-        <Grid>
+        <Grid IsEnabled="{Binding Enable}" Opacity="{Binding IsLoadingOpacity}">
             <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" />
 
             <ScrollView HorizontalOptions="Center">
@@ -42,7 +43,7 @@
                         Phone="FillAndExpand" />
                 </ScrollView.VerticalOptions>
 
-                <StackLayout
+                <StackLayout 
                     Margin="{core:OnPlatformOrientationThickness PhonePortrait='20,32',
                                                                  PhoneLandscape='150,32',
                                                                  TabletPortrait='200,50',
@@ -84,7 +85,7 @@
                             Text="Let's get to work" />-->
 
                         <!--  Entry to get email ID from user  -->
-                        <local:EmailEntry  Grid.Row="2" Padding="0,24" />
+                        <local:EmailEntry  Grid.Row="2" Padding="0,24"/>
 
                         <!--  Entry to get password from user  -->
                         <border:SfBorder
@@ -123,7 +124,9 @@
                             CommandParameter="{Binding .}"
                             Clicked="BtnLoginEvent"
                             Style="{StaticResource SfButtonStyle}"
-                            Text="LOG IN" />
+                            Text="LOG IN" 
+                            IsEnabled="{Binding Enable}"
+                            Opacity="{Binding IsLoadingOpacity}"/>
 
 
                         <Label
@@ -161,6 +164,16 @@
                             </buttons:SfButton.Content>
                         </buttons:SfButton>
 
+                        <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
+                                        AnimationType="Battery"
+                                        IsBusy="{Binding IsLoading, Mode=TwoWay}" 
+                                        IsVisible="{Binding Visible, Mode=TwoWay}"
+                                        TextColor="ForestGreen" 
+                                        Grid.RowSpan="3" 
+                                        Grid.Row="3"
+                                        ViewBoxHeight="150" ViewBoxWidth="150" 
+                                        HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
                     </Grid>
 
                     <StackLayout
@@ -194,7 +207,7 @@
                     </StackLayout>
 
                 </StackLayout>
-            </ScrollView>
+            </ScrollView>           
         </Grid>
     </ContentPage.Content>
 

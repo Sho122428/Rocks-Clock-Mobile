@@ -39,8 +39,9 @@ namespace RockClockMobile
             DependencyService.Register<EmployeeServices>();
             DependencyService.Register<UserServices>();
             DependencyService.Register<BreakLogService>();
-            App.Current.MainPage = new NamesListPage();
-            //App.Current.MainPage = new Views.LoginForm.LoginPage();
+            DependencyService.Register<UserLoginService>();
+            //App.Current.MainPage = new NamesListPage();
+            App.Current.MainPage = new Views.LoginForm.LoginPage();
         }       
 
         protected override void OnStart()

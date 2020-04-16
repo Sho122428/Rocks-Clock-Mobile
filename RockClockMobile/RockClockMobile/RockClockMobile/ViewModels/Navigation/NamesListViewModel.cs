@@ -214,8 +214,28 @@ namespace RockClockMobile.ViewModels.Navigation
             return null;
         }
 
-        //For loading screen
+        public async Task<UserLoginM> UserLoginById(UserLoginParam userLoginParam)
+        {
+            IsBusy = true;
 
+            try
+            {
+                UserLoginM employee = await EmployeeServices.UserLoginById(userLoginParam);
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+            return null;
+        }
+
+        //For loading screen
         private bool visible = false;
         private string email;
 
@@ -251,11 +271,23 @@ namespace RockClockMobile.ViewModels.Navigation
                 OnPropertyChanged("IsLoadingOpacity");
             }
         }
+
+        private bool enable = true;
+        public bool Enable
+        {
+            get { return enable; }
+            set
+            {
+                enable = value;
+                OnPropertyChanged("Enable");
+            }
+        }
         public async Task OnLoadPage()
         {
             Visible = true;
             IsLoading = true;
             IsLoadingOpacity = .5;
+            Enable = false;
             await Task.Delay(3000);
             try
             {
@@ -271,6 +303,7 @@ namespace RockClockMobile.ViewModels.Navigation
             IsLoading = false;
             Visible = false;
             IsLoadingOpacity = 1;
+            Enable = true;
         }
 
         #endregion
