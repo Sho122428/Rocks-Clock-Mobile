@@ -81,7 +81,7 @@ namespace RockClockMobile.Services
             //var buffer = Encoding.UTF8.GetBytes(serializedItem);
             //var byteContent = new ByteArrayContent(buffer);
 
-            //var response = await client.PutAsync(new Uri($"api/TimeLog?id={timelog.id}"), byteContent);
+            //var response = await client.PutAsync(new Uri($"api/TimeLog?id={timelog.timeLogId}"), byteContent);
             var response = await client.PutAsync($"api/TimeLog?id={timelog.id}",  new StringContent(serializedItem, Encoding.UTF8, "application/json"));
             return response.IsSuccessStatusCode;
         }

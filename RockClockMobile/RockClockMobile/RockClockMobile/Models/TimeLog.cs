@@ -31,11 +31,6 @@ namespace RockClockMobile.Models
         //public int status { get; set; }
         //public bool isDeleted { get; set; }
 
-
-
-        //public bool IsClockedOut { get; set; }
-
-        //new properties
         public int id { get; set; }
         public int jobcode_id { get; set; }
         public DateTime start { get; set; }
@@ -51,5 +46,9 @@ namespace RockClockMobile.Models
         public DateTime date { get; set; }
         public List<BreakLog> breakLogs { get; set; }
         public string location { get; set; }
+
+
+
+        //public bool IsClockedOut { get; set; }
     }
 }
