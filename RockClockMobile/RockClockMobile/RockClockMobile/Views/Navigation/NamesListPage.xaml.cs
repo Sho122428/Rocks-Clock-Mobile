@@ -151,16 +151,25 @@ namespace RockClockMobile.Views.Navigation
             else {
                 userPassword = "0";
                 lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
-            }
+            }           
 
-            Device.BeginInvokeOnMainThread(async () =>
+            if (d.rocksUser.isTempPassword)
             {
-              
-                await namesListVM.OnLoadPage();
-
-                App.Current.MainPage = new PincodePage(userPassword, lastUserId);
-            });
-            //App.Current.MainPage = new PincodePage(userPassword,lastUserId);
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await namesListVM.OnLoadPage();
+                    App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage();
+                });
+            }
+            else {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await namesListVM.OnLoadPage();
+                    App.Current.MainPage = new PincodePage(userPassword, lastUserId);
+                });
+            }                
+           
+         //App.Current.MainPage = new PincodePage(userPassword,lastUserId);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {

@@ -43,6 +43,7 @@ namespace RockClockMobile.Views.LoginForm
             }
             else {
 
+                await DisplayAlert("Info","use Denolantest@email.com","OK");
                 //Device.BeginInvokeOnMainThread(async () =>
                 //{
                 //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
