@@ -24,14 +24,15 @@ namespace RockClockMobile.Services
         }
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
 
-        public async Task<bool> AddEmployeeBreakLog(BreakLog breaklog)
+        public async Task<bool> AddEmployeeBreakLog(BreakLog breaklog, int rocksUserId)
         {
             if (breaklog == null || !IsConnected)
                 return false;
 
             var serializedItem = JsonConvert.SerializeObject(breaklog);
 
-            var response = await client.PostAsync($"api/BreakLog", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+            //var response = await client.PostAsync($"api/BreakLog", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync($"api/timelog/BreakIn?rocksUserId={ rocksUserId }", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;
         }
@@ -69,14 +70,14 @@ namespace RockClockMobile.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> BreakOut(int timeLogID)
+        public async Task<bool> BreakOut(int rocksUserId)
         {
-            if (String.IsNullOrEmpty(timeLogID.ToString()) || !IsConnected)
+            if (String.IsNullOrEmpty(rocksUserId.ToString()) || !IsConnected)
                 return false;
 
             //var serializedItem = JsonConvert.SerializeObject(breaklog);
             //var response = await client.PutAsync($"api/BreakLog?id={breaklog.id}", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
-            var response = await client.PutAsync($"api/BreakLog/BreakOut/{timeLogID}",null);
+            var response = await client.PutAsync($"api/timelog/BreakOut?rocksUserId={ rocksUserId }",null);
 
             return response.IsSuccessStatusCode;
         }

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using RockClockMobile.Custom;
 using RockClockMobile.Models;
 using RockClockMobile.Services;
 using RockClockMobile.ViewModels.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -19,7 +21,7 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
-        //NamesListViewModel nameslistViewModel = new NamesListViewModel();
+        int tapCount;
         public NamesListPage()
         {
             InitializeComponent();
@@ -33,8 +35,6 @@ namespace RockClockMobile.Views.Navigation
                 );
                 return true;
             });
-
-
 
             try
             {
@@ -52,7 +52,7 @@ namespace RockClockMobile.Views.Navigation
                 Crashes.TrackError(exception, properties);
             }
 
-
+            tapCount = 0;
             //userServices = new UserServices(empDtl.rocksUserId);
         }
 
@@ -139,49 +139,77 @@ namespace RockClockMobile.Views.Navigation
             this.Search.IsVisible = false;
             this.Title.IsVisible = true;
         }
-
+        
         private async void TapUserEvent(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
-        {
-            NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
-            var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
-
-            var userLoginParam = new UserLoginParam {
-                RocksUserId = empSignIn.id,
-                Password = "1234",
-                Remember = true
-            };
-
-            //GlobalServices.employee = await namesListVM.GetEmployeeById(empSignIn.id);
-            var d = await namesListVM.UserLoginById(userLoginParam); 
-            GlobalServices.employee = d.rocksUser;
-            Application.Current.Properties["user_id "] = empSignIn.id;
-
-            //for specific user
-            //var user = await userViewModel.GetUser();
-
-            //for all user
-            var user = (List<User>)await namesListVM.GetUserList();
-            string userPassword = string.Empty;
-            int lastUserId = 0;
-            User userData = user.Where(a => a.rocksUserId == empSignIn.id).FirstOrDefault();
-
-            if (userData != null)
+        {         
+            if (tapCount > 1)
             {
-                userPassword = userData.password;                
+                ToastPopup.ToastMessage("Request is loading, please wait.", false);
+                await Task.Delay(2000);
+                tapCount++;
             }
             else {
-                userPassword = "0";
-                lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
-            }
+                tapCount++;
+                NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
+                var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
 
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-              
-                await namesListVM.OnLoadPage();
+                var userLoginParam = new UserLoginParam
+                {
+                    RocksUserId = empSignIn.id,
+                    Password = "1234",
+                    Remember = true
+                };
 
-                App.Current.MainPage = new PincodePage(userPassword, lastUserId);
-            });
-            //App.Current.MainPage = new PincodePage(userPassword,lastUserId);
+                //GlobalServices.employee = await namesListVM.GetEmployeeById(empSignIn.id);
+                var userLoggedIn = await namesListVM.UserLoginById(userLoginParam);
+
+                if (userLoggedIn != null)
+                {
+                    GlobalServices.employee = userLoggedIn.rocksUser;
+                    Application.Current.Properties["user_id "] = empSignIn.id;
+
+                    //for specific user
+                    //var user = await userViewModel.GetUser();
+
+                    //for all user
+                    var user = (List<User>)await namesListVM.GetUserList();
+                    string userPassword = string.Empty;
+                    int lastUserId = 0;
+                    User userData = user.Where(a => a.rocksUserId == empSignIn.id).FirstOrDefault();
+
+                    if (userData != null)
+                    {
+                        userPassword = userData.password;
+                    }
+                    else
+                    {
+                        userPassword = "0";
+                        lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
+                    }
+
+                    if (userLoggedIn.rocksUser.isTempPassword)
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await namesListVM.OnLoadPage();
+                            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage();
+                        });
+                    }
+                    else
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await namesListVM.OnLoadPage();
+                            App.Current.MainPage = new PincodePage(userPassword, lastUserId);
+                        });
+                    }
+                }
+                else {
+                    ToastPopup.ToastMessage("User not found.",false);
+                }
+            }                       
+           
+         //App.Current.MainPage = new PincodePage(userPassword,lastUserId);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {

@@ -13,10 +13,8 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PincodePage : ContentPage
     {
-        //Employee employeeSignedIn = GlobalServices.employee;
         NamesListViewModel namesListViewModel = new NamesListViewModel();
-        //PincodeViewModel pincodeViewModel = new PincodeViewModel();
-        User userSign = new User();
+
         Employee employee = GlobalServices.employee;
         int lastUserId = 0;
         public PincodePage(string userPassword,int userId)

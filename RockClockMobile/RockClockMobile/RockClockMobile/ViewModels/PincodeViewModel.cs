@@ -1,4 +1,5 @@
-﻿using RockClockMobile.Models;
+﻿using RockClockMobile.Custom;
+using RockClockMobile.Models;
 using RockClockMobile.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -10,13 +11,15 @@ namespace RockClockMobile.ViewModels
     public class PincodeViewModel : BaseViewModel
     {
         public User UserList { get; set; }
-
+        private bool isLoggedIn = false;
         public PincodeViewModel()
         {
             //UserServices employeeServices = new UserServices();
             //UserList = employeeServices.UserList;
 
             UserList = GlobalServices.User;
+            this.IsLoggedIn = true;
+            TimeStartLogout();
         }
 
         #region Properties      
@@ -84,6 +87,25 @@ namespace RockClockMobile.ViewModels
                 //this.NotifyPropertyChanged();
             }
         }
+        public bool IsLoggedIn
+        {
+            get
+            {
+                return this.isLoggedIn;
+            }
+
+            set
+            {
+                if (this.isLoggedIn == value)
+                {
+                    return;
+                }
+
+                this.isLoggedIn = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -119,6 +141,32 @@ namespace RockClockMobile.ViewModels
             }
 
             return true;
+        }
+
+        private void TimeStartLogout()
+        {
+
+            Device.StartTimer(TimeSpan.FromSeconds(30), () =>
+            {
+                if (IsLoggedIn)
+                {
+                    ToastPopup.ToastMessage("You have been inactive. Logging out.", true);
+                    this.SignOut();
+                }
+                return false;
+            });
+        }
+
+        private async void SignOut()
+        {
+            this.IsLoggedIn = false;
+            IsBusy = true;
+            IsBusyOpacity = .5;
+            await Task.Delay(3000);
+            IsBusy = false;
+            IsBusyOpacity = 1;
+
+            Application.Current.MainPage = new Views.Navigation.NamesListPage();
         }
 
         #endregion        
