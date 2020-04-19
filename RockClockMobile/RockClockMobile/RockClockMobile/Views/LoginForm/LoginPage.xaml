@@ -85,7 +85,7 @@
                             Text="Let's get to work" />-->
 
                         <!--  Entry to get email ID from user  -->
-                        <local:EmailEntry  Grid.Row="2" Padding="0,24"/>
+                        <local:EmailEntry Grid.Row="2" Padding="0,24"/>
 
                         <!--  Entry to get password from user  -->
                         <border:SfBorder

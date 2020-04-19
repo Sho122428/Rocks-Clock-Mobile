@@ -868,21 +868,15 @@ namespace RockClockMobile.ViewModels.Onboarding
                         modifiednotes = "app testing break log"
                     };
 
-                    isSuccess = await BreakLogServices.AddEmployeeBreakLog(breakLog);
+                    isSuccess = await BreakLogServices.AddEmployeeBreakLog(breakLog, empDtl.id);
                     message = "Enjoy your break.";
                 }
                 else
                 {
-                    //BreakLog breakLog = new BreakLog();
+                    //isSuccess = await BreakLogServices.BreakOut(LoggedInUser.id);
+                    isSuccess = await BreakLogServices.BreakOut(empDtl.id);
 
-                    //breakLog = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).FirstOrDefault();
-                    
-                    //breakLog.breakOut = DateTime.UtcNow;
-
-                    //isSuccess = await BreakLogServices.UpdateEmployeeBreakLog(breakLog);
-                    isSuccess = await BreakLogServices.BreakOut(LoggedInUser.id);
-                    
-                    if(isSuccess)
+                    if (isSuccess)
                         message = "Welcome back. Enjoy your work.";
                 }
 

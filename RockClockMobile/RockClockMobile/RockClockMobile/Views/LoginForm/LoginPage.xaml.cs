@@ -3,6 +3,8 @@ using Xamarin.Forms.Xaml;
 
 using Xamarin.Forms;
 using RockClockMobile.ViewModels.LoginForm;
+using RockClockMobile.Custom;
+using System.Threading.Tasks;
 
 namespace RockClockMobile.Views.LoginForm
 {
@@ -29,28 +31,40 @@ namespace RockClockMobile.Views.LoginForm
         private async void BtnLoginEvent(object sender, System.EventArgs e)
         {          
             var details = (LoginPageViewModel)this.BindingContext;
-            //var email = details.
 
-            if (details.UserEmail.ToLower() == "denolantest@email.com")
+            //if(EmlEntry.GetValue().ToString() == "")
+
+            if (details.CanLogin)
             {
-                Device.BeginInvokeOnMainThread(async () =>
+                if (details.UserEmail.ToLower() == "denolantest@email.com")
                 {
-                    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                    await loginPageVM.OnLoadPage();
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                        await loginPageVM.OnLoadPage();                       
 
-                    App.Current.MainPage = new Views.Navigation.NamesListPage();
-                });                
+                        App.Current.MainPage = new Views.Navigation.NamesListPage();
+
+                        ToastPopup.ToastMessage("Successfully logged in.", false);
+                        await Task.Delay(2000);
+                    });
+                }
+                else
+                {
+
+                    await DisplayAlert("Info", "use Denolantest@email.com", "OK");
+                    //Device.BeginInvokeOnMainThread(async () =>
+                    //{
+                    //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                    //    await loginPageVM.OnLoadPage();
+
+                    //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                    //});                
+                }
             }
             else {
-
-                await DisplayAlert("Info","use Denolantest@email.com","OK");
-                //Device.BeginInvokeOnMainThread(async () =>
-                //{
-                //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                //    await loginPageVM.OnLoadPage();
-
-                //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                //});                
+                ToastPopup.ToastMessage("Login error, please check the credentials.", false);
+                await Task.Delay(2000);
             }
         }
     }

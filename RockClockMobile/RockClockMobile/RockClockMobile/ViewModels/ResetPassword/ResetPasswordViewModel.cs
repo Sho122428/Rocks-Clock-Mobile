@@ -107,6 +107,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
         private void SubmitClicked(object obj)
         {
             // Do something
+
         }
 
         /// <summary>

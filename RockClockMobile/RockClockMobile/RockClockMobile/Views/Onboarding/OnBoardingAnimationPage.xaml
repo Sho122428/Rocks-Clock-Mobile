@@ -22,6 +22,7 @@
                 <ContentPresenter Content="{Binding RotatorItem}" />
             </DataTemplate>
         </ResourceDictionary>
+        
     </ContentPage.Resources>
     <ContentPage.BindingContext>
         <viewModel:OnBoardingAnimationViewModel />

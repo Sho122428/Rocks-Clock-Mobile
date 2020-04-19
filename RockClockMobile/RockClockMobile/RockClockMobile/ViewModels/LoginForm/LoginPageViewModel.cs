@@ -121,6 +121,8 @@ namespace RockClockMobile.ViewModels.LoginForm
             }
         }
 
+        public bool CanLogin { get; set; }
+
         #endregion
 
         #region Command
@@ -166,17 +168,26 @@ namespace RockClockMobile.ViewModels.LoginForm
             this.UserEmail = base.Email;
             var loggedInUser = GlobalServices.employeeList.Where(a => a.email == this.UserEmail).FirstOrDefault();
 
-            var userLogin = new UserLogin
+            if (loggedInUser != null)
             {
-                UserName = loggedInUser.userName,
-                Password = "Fullsc@l3",
-                Remember = true
-            };
+                var userLogin = new UserLogin
+                {
+                    UserName = loggedInUser.userName,
+                    Password = "Fullsc@l3",
+                    Remember = true
+                };
 
-            if (userLogin != null)
-            {
-                await AdminLoginAccount(userLogin);
-            }            
+                if (userLogin != null)
+                {
+                    await AdminLoginAccount(userLogin);
+                }
+
+                CanLogin = true;
+            }
+            else {
+                CanLogin = false;
+            }
+                
         }
 
         //Get Admin login response
