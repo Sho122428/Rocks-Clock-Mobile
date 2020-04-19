@@ -13,6 +13,8 @@ namespace RockClockMobile.Services
         Task<T> GetEmployeeBreakLog(int id);
         Task<IEnumerable<T>> GetEmployeeTimeLogList(bool forceRefresh = false);
         Task<int> GetTimeLogStatus(int rocksUserID);
+
+        Task<bool> ClockIn(int projectId,int rocksUserID);
         Task<bool> ClockOut(int id);
         
     }

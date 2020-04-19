@@ -83,7 +83,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             
             this.SignOutCommand = new Command(this.SignOut);
             
-            this.ClockInCommand = new Command(async () => await AddEmployeeTimeLog());
+            this.ClockInCommand = new Command(async () => await EmployeeClockIn(projectId, empDtl.id));
             this.ClockOutCommand = new Command(async () => await EmployeeClockOut(empDtl.id));
             
 
@@ -799,6 +799,45 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
+        private async Task EmployeeClockIn(int projectID,int rocksUserID)
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+            IsBusyOpacity = .5;
+            ToastPopup.ToastMessage("Clocking out...", true);
+            await Task.Delay(3000);
+
+            try
+            {
+
+
+                var isSuccess = await TimeLogServices.ClockIn(projectID,rocksUserID);
+
+                if (isSuccess)
+                {
+                    ToastPopup.ToastMessage("Successfully clocked in.", false);
+                    await Task.Delay(3000);
+                    this.SignOut();
+                }
+                else
+                {
+                    ToastPopup.ToastMessage("An error occured saving the record.", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+                IsBusyOpacity = 1;
+                //ToastPopup.ToastMessage("End Time must be greater than start time.", true);
+                this.SignOut();
+            }
+        }
         private async Task EmployeeClockOut(int rocksUserID)
         {
             if (IsBusy)

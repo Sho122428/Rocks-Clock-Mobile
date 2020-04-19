@@ -92,8 +92,23 @@ namespace RockClockMobile.Services
                 return false;
 
 
-            var json = await client.GetStringAsync($"api/TimeLog/ClockOut/{rocksUserID}");
-            return bool.Parse(json);
+            //var json = await client.GetStringAsync($"api/TimeLog/ClockOut?rocksUserId={rocksUserID}");
+            var response = await client.PostAsync($"api/TimeLog/ClockOut?rocksUserId={rocksUserID}",null);
+
+            return response.IsSuccessStatusCode;
+
+        }
+
+        public async Task<bool> ClockIn(int projectID,int rocksUserID)
+        {
+            if (String.IsNullOrEmpty(rocksUserID.ToString()) || !IsConnected)
+                return false;
+
+
+            //var json = await client.GetStringAsync($"api/TimeLog/ClockOut/{rocksUserID}");
+
+            var results = await client.PostAsync($"api/ClockIn?projectId={projectID}&rocksUserId={rocksUserID}", null);
+            return results.IsSuccessStatusCode;
 
         }
 
