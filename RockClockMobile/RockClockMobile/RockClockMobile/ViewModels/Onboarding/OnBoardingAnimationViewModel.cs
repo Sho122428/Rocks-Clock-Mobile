@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
 using RockClockMobile.Custom;
 using RockClockMobile.Models;
 using RockClockMobile.Models.Onboarding;
@@ -31,6 +30,7 @@ namespace RockClockMobile.ViewModels.Onboarding
         private List<string> rocksProjects;
 
         private string selectedProject = "";
+        private int selectedProjectID = 0;
 
         private bool isProjectButtonVisible = true;
 
@@ -82,23 +82,35 @@ namespace RockClockMobile.ViewModels.Onboarding
         {
             
             this.SignOutCommand = new Command(this.SignOut);
-            
-            this.ClockInCommand = new Command(async () => await EmployeeClockIn(projectId, empDtl.id));
+            this.ClockInCommand = new Command(async () => await EmployeeClockIn());
             this.ClockOutCommand = new Command(async () => await EmployeeClockOut(empDtl.id));
-            
+
 
             TimeLogs = new ObservableCollection<TimeLog>();
 
-            this.RocksProjects = new List<string>();
-
-            foreach (var proj in empDtl.rocksUserProjectMaps)
-            {
-                RocksProjects.Add(proj.rocksProject.projectName);
-            }
-            this.SelectedProject = RocksProjects[0];
+            LoadRocksProject();
 
             this.IsLoggedIn = true;
+
+            
             LoadDataClock();
+        }
+
+        private void LoadRocksProject()
+        {
+            this.RocksProjects = new List<string>();
+
+            int ndxproj = 0;
+            foreach (var proj in empDtl.rocksUserProjectMaps)
+            {
+                if (ndxproj == 0)
+                {
+                    this.SelectedProject = proj.rocksProject.projectName;
+                    this.SelectedProjectID = proj.rocksProjectId;
+                    ndxproj += 1;
+                }
+                RocksProjects.Add(proj.rocksProject.projectName);
+            }
         }
 
         async void LoadDataClock()
@@ -217,6 +229,25 @@ namespace RockClockMobile.ViewModels.Onboarding
                 this.OnPropertyChanged();
             }
         }
+        public int SelectedProjectID
+        {
+            get
+            {
+                return this.selectedProjectID;
+            }
+
+            set
+            {
+                if (this.selectedProjectID == value)
+                {
+                    return;
+                }
+
+                this.selectedProjectID = value;
+                this.OnPropertyChanged();
+            }
+        }
+        
 
         public bool IsProjectButtonVisible
         {
@@ -799,21 +830,26 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
-        private async Task EmployeeClockIn(int projectID,int rocksUserID)
+        private async Task EmployeeClockIn()
         {
             if (IsBusy)
                 return;
 
             IsBusy = true;
             IsBusyOpacity = .5;
-            ToastPopup.ToastMessage("Clocking out...", true);
+            ToastPopup.ToastMessage("Clocking in...", true);
             await Task.Delay(3000);
 
             try
             {
+                var userTimeLog = new TimeLog
+                {
+                    user_id = empDtl.id,
+                    start = DateTime.UtcNow,
+                    create_at = DateTime.UtcNow
+                };
 
-
-                var isSuccess = await TimeLogServices.ClockIn(projectID,rocksUserID);
+                var isSuccess = await TimeLogServices.ClockIn(this.SelectedProjectID,empDtl.id, userTimeLog);
 
                 if (isSuccess)
                 {

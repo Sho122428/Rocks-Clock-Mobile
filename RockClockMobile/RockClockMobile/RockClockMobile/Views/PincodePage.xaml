@@ -103,7 +103,7 @@
 
 
                     <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
-                            AnimationType="Battery"
+                            AnimationType="Cupertino"
                             IsBusy="{Binding IsLoading, Mode=TwoWay}" 
                             IsVisible="{Binding Visible, Mode=TwoWay}"
                             TextColor="ForestGreen" 

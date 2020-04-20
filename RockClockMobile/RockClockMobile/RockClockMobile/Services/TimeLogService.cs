@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace RockClockMobile.Services
 {
@@ -99,15 +100,16 @@ namespace RockClockMobile.Services
 
         }
 
-        public async Task<bool> ClockIn(int projectID,int rocksUserID)
+        public async Task<bool> ClockIn(int projectID,int rocksUserID, TimeLog timelog)
         {
             if (String.IsNullOrEmpty(rocksUserID.ToString()) || !IsConnected)
                 return false;
 
 
-            //var json = await client.GetStringAsync($"api/TimeLog/ClockOut/{rocksUserID}");
+            var accessToken = GlobalServices.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            var results = await client.PostAsync($"api/ClockIn?projectId={projectID}&rocksUserId={rocksUserID}", null);
+            var results = await client.PostAsync($"api/timelog/ClockIn?projectId={projectID}&rocksUserId={rocksUserID}", null);
             return results.IsSuccessStatusCode;
 
         }

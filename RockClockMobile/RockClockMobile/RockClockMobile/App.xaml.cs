@@ -38,6 +38,7 @@ namespace RockClockMobile
             DependencyService.Register<UserServices>();
             DependencyService.Register<BreakLogService>();
             DependencyService.Register<UserLoginService>();
+            
             //App.Current.MainPage = new NamesListPage();
             App.Current.MainPage = new Views.LoginForm.LoginPage();
             //App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage();

@@ -141,6 +141,7 @@ namespace RockClockMobile.ViewModels
             }
 
             return true;
+            
         }
 
         private void TimeStartLogout()

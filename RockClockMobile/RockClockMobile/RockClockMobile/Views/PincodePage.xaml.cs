@@ -86,8 +86,9 @@ namespace RockClockMobile.Views
                         Device.BeginInvokeOnMainThread(async () =>
                         {
                             PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
+                            
                             await pincodeVM.OnLoadPage();
-
+                            pincodeVM.IsLoggedIn = false;
                             await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
                         });
 

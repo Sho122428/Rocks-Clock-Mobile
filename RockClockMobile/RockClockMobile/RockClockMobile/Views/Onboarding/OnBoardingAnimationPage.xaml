@@ -236,8 +236,7 @@
 
             </Grid>
             <busyindicator:SfBusyIndicator x:Name="busyindicator" 
-                                      Title="Loading..."
-                                      AnimationType="Battery"
+                                      AnimationType="Cupertino"
                                       Duration="1"
                                       IsBusy="{Binding IsBusy, Mode=TwoWay}" IsVisible="{Binding IsBusy, Mode=TwoWay}"
                                       ViewBoxWidth = "150" 
