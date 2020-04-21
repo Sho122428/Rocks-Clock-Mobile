@@ -36,7 +36,7 @@ namespace RockClockMobile.Views.LoginForm
 
             if (details.CanLogin)
             {
-                if (details.UserEmail.ToLower() == "denolantest@email.com")
+                if (details.UserEmail.ToLower() == "denolantest@email.com" || details.user.ToString().ToLower() == "admin")
                 {
                     Device.BeginInvokeOnMainThread(async () =>
                     {

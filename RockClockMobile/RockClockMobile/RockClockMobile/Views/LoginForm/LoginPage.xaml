@@ -85,7 +85,7 @@
                             Text="Let's get to work" />-->
 
                         <!--  Entry to get email ID from user  -->
-                        <local:EmailEntry Grid.Row="2" Padding="0,24"/>
+                        <local:EmailEntry AutomationId="username" Grid.Row="2" Padding="0,24"/>
 
                         <!--  Entry to get password from user  -->
                         <border:SfBorder
@@ -98,6 +98,7 @@
                                 Placeholder="Password"
                                 Style="{StaticResource EntryStyle}"
                                 Text="{Binding Password}"
+                                AutomationId="password"
                             />
                         </border:SfBorder>
 
@@ -126,7 +127,8 @@
                             Style="{StaticResource SfButtonStyle}"
                             Text="LOG IN" 
                             IsEnabled="{Binding Enable}"
-                            Opacity="{Binding IsLoadingOpacity}"/>
+                            Opacity="{Binding IsLoadingOpacity}"
+                            AutomationId="signin"/>
 
 
                         <Label
