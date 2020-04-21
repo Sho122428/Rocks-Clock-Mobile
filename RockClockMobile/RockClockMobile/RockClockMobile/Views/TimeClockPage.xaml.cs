@@ -56,8 +56,8 @@ namespace RockClockMobile.Views
                 
                 var userTimeLog = new TimeLog{
                     id = countTimeID + 1,
-                    user_id = empDtl.id,
-                    start = Convert.ToDateTime(cur_time),
+                    RocksUserId = empDtl.id,
+                    Start = Convert.ToDateTime(cur_time),
                     //IsClockedOut = false
                     
                 };
@@ -75,11 +75,11 @@ namespace RockClockMobile.Views
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.user_id == empDtl.id).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.RocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
-                    LoggedInUser.end = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
+                    LoggedInUser.End = Convert.ToDateTime(DateTime.Now.ToString("h:mm tt").ToString());
                     //LoggedInUser.IsClockedOut = true;
                 }
 
@@ -109,7 +109,7 @@ namespace RockClockMobile.Views
                 lblBreakTimeStart.IsVisible = true;
                 btnTimeClockBreak.Text = "End Break";
 
-                TimeLog LoggedInUser = empUserLog.Where(a => a.user_id == empDtl.id).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.RocksUserId == empDtl.id).FirstOrDefault();
                 var ndx = 0; 
                     
                 if(empUserBreakLog != null)
@@ -139,7 +139,7 @@ namespace RockClockMobile.Views
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.user_id == empDtl.id).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.RocksUserId == empDtl.id).FirstOrDefault();
                 BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.id).FirstOrDefault();
 
                 if (takeBreak != null)
@@ -179,12 +179,12 @@ namespace RockClockMobile.Views
 
             if (empUserLog != null)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.user_id == empDtl.id).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.RocksUserId == empDtl.id).FirstOrDefault();
 
                 if (LoggedInUser != null)
                 {
                     isTimedIn = true;
-                    lblClockedIn.Text = LoggedInUser.start.ToString("h:mm tt");
+                    lblClockedIn.Text = LoggedInUser.Start.Value.ToString("h:mm tt");
                     btnTimeClock.Text = "Clock Out";
                     btnTimeClock.BackgroundColor = Color.Red;
                     btnTimeClockBreak.IsEnabled = true;
@@ -192,8 +192,8 @@ namespace RockClockMobile.Views
                 }
                 else if(LoggedInUser != null) //Display data only
                 {
-                    lblClockedIn.Text = LoggedInUser.start.ToString("h:mm tt");
-                    lblClockedOut.Text = LoggedInUser.end.ToString("h:mm tt");
+                    lblClockedIn.Text = LoggedInUser.Start.Value.ToString("h:mm tt");
+                    lblClockedOut.Text = LoggedInUser.End.Value.ToString("h:mm tt");
                     btnTimeClock.IsEnabled = false;
                     btnTimeClock.Opacity = .5;
                     btnTimeClockBreak.IsEnabled = false;

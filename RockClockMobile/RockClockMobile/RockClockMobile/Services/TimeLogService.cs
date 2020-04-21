@@ -30,6 +30,9 @@ namespace RockClockMobile.Services
         {
             if (forceRefresh && IsConnected)
             {
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
                 var json = await client.GetStringAsync($"api/TimeLog");
                 timelogs = await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<TimeLog>>(json));
             }
@@ -40,8 +43,11 @@ namespace RockClockMobile.Services
         public async Task<TimeLog> GetEmployeeTimeLog(int id)
         {
 
-            if (id != null && IsConnected)
+            if (id != 0 && IsConnected)
             {
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
                 var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogDataByRocksUserId/{id}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
                 //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
@@ -66,6 +72,9 @@ namespace RockClockMobile.Services
 
             if (rocksUserID != null && IsConnected)
             {
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
                 var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogStatusFromDb/{rocksUserID}");
                 return int.Parse(json);
                 //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
@@ -77,6 +86,9 @@ namespace RockClockMobile.Services
         {
             if (timelog == null || timelog.id == null || !IsConnected)
                 return false;
+
+            var accessToken = GlobalServices.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var serializedItem = JsonConvert.SerializeObject(timelog);
             //var buffer = Encoding.UTF8.GetBytes(serializedItem);
@@ -92,6 +104,8 @@ namespace RockClockMobile.Services
             if (String.IsNullOrEmpty(rocksUserID.ToString()) || !IsConnected)
                 return false;
 
+            var accessToken = GlobalServices.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //var json = await client.GetStringAsync($"api/TimeLog/ClockOut?rocksUserId={rocksUserID}");
             var response = await client.PostAsync($"api/TimeLog/ClockOut?rocksUserId={rocksUserID}",null);
@@ -120,9 +134,11 @@ namespace RockClockMobile.Services
         {
             try
             {
-
                 if (id != null && IsConnected)
                 {
+                    var accessToken = GlobalServices.AccessToken;
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
                     var json = await client.GetStringAsync($"api/BreakLog/{id}");
                     return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
                 }

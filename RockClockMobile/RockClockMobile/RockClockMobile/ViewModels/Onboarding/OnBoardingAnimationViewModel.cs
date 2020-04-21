@@ -128,15 +128,16 @@ namespace RockClockMobile.ViewModels.Onboarding
                     {
                         this.IsBreakButtonVisible = true;
                         this.ClockInButtonText = "CLOCK OUT";
-                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.start.ToLocalTime().ToString("h:mm tt") + System.Environment.NewLine + " for project " + SelectedProject;
+                        this.FNameUser = empDtl.firstName + " clocked in at " + LoggedInUser.Start.Value.ToLocalTime().ToString("h:mm tt") + System.Environment.NewLine + " for project " + SelectedProject;
                         this.ClockInButtonText = "Clock out from "+ SelectedProject;
                         this.IsProjectButtonVisible = false;
-                        this.ClockIn = LoggedInUser.start.ToLocalTime().ToString("h:mm tt");
+                        this.ClockIn = LoggedInUser.Start.Value.ToLocalTime().ToString("h:mm tt");
                     
                         //For Breaklogs
                         if(TimeLogStatus == 13)
                         {
                             this.BreakButtonText = "End Break";
+                            this.BreakStart = LoggedInUser.Start.Value.ToLocalTime().ToString("h:mm tt");
                         }
                         //var minDate = DateTime.MinValue;
                         //var breakOutVal = LoggedInUser.breakLogs.OrderByDescending(a => a.id).Where(a => a.timeLogId == LoggedInUser.timeLogId).Select(a => a.breakOut).FirstOrDefault();
@@ -578,7 +579,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
             if (!IsOnBreak)
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.user_id == empDtl.id).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.RocksUserId == empDtl.id).FirstOrDefault();
                 var countTimeID = 0;
                 var ndx = 0;
 
@@ -607,7 +608,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             else
             {
-                TimeLog LoggedInUser = empUserLog.Where(a => a.user_id == empDtl.id).FirstOrDefault();
+                TimeLog LoggedInUser = empUserLog.Where(a => a.RocksUserId == empDtl.id).FirstOrDefault();
                 BreakLog takeBreak = empUserBreakLog.Where(a => a.timeLogId == LoggedInUser.id).FirstOrDefault();
 
                 if (takeBreak != null)
@@ -680,7 +681,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             {
                 TimeLogs.Clear();
                 var timelogs = await TimeLogServices.GetEmployeeTimeLogList(true);
-                IEnumerable<TimeLog> userTimeLog = timelogs.Where(a => a.user_id == empDtl.id);
+                IEnumerable<TimeLog> userTimeLog = timelogs.Where(a => a.RocksUserId == empDtl.id);
 
                 foreach (var tlog in userTimeLog)
                 {
@@ -759,10 +760,10 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 var userTimeLog = new TimeLog
                 {
-                    user_id = empDtl.id,
-                    jobcode_id = projid,
-                    start = DateTime.UtcNow,
-                    create_at= DateTime.UtcNow
+                    RocksUserId = empDtl.id,
+                    ProjectID = projid,
+                    Start = DateTime.UtcNow,
+                    createddt= DateTime.UtcNow
             };
                 var isSuccess = await TimeLogServices.AddEmployeeTimeLog(userTimeLog);
                 if(isSuccess)
@@ -802,7 +803,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             
             try
             {
-                tlog.end = DateTime.UtcNow;
+                tlog.End = DateTime.UtcNow;
                 
                 var isSuccess = await TimeLogServices.UpdateEmployeeTimeLog(tlog);
 
@@ -844,9 +845,9 @@ namespace RockClockMobile.ViewModels.Onboarding
             {
                 var userTimeLog = new TimeLog
                 {
-                    user_id = empDtl.id,
-                    start = DateTime.UtcNow,
-                    create_at = DateTime.UtcNow
+                    RocksUserId = empDtl.id,
+                    Start = DateTime.UtcNow,
+                    createddt = DateTime.UtcNow
                 };
 
                 var isSuccess = await TimeLogServices.ClockIn(this.SelectedProjectID,empDtl.id, userTimeLog);
@@ -936,14 +937,14 @@ namespace RockClockMobile.ViewModels.Onboarding
 
                 if (commandText == "start break")
                 {
-                    BreakLog breakLog = new BreakLog
-                    {
-                        breakIn = DateTime.UtcNow,
-                        timeLogId = timeLogId,
-                        modifiednotes = "app testing break log"
-                    };
+                    //BreakLog breakLog = new BreakLog
+                    //{
+                    //    breakIn = DateTime.UtcNow,
+                    //    timeLogId = timeLogId,
+                    //    modifiednotes = "app testing break log"
+                    //};
 
-                    isSuccess = await BreakLogServices.AddEmployeeBreakLog(breakLog, empDtl.id);
+                    isSuccess = await BreakLogServices.AddEmployeeBreakLog(empDtl.id);
                     message = "Enjoy your break.";
                 }
                 else

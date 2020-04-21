@@ -36,8 +36,8 @@ namespace RockClockMobile.Views.LoginForm
 
             if (details.CanLogin)
             {
-                if (details.UserEmail.ToLower() == "denolantest@email.com")
-                {
+                //if (details.UserEmail.ToLower() == "denolantest@email.com")
+                //{
                     Device.BeginInvokeOnMainThread(async () =>
                     {
                         LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
@@ -48,19 +48,19 @@ namespace RockClockMobile.Views.LoginForm
                         ToastPopup.ToastMessage("Successfully logged in.", false);
                         await Task.Delay(2000);
                     });
-                }
-                else
-                {
+                //}
+                //else
+                //{
 
-                    await DisplayAlert("Info", "use Denolantest@email.com", "OK");
-                    //Device.BeginInvokeOnMainThread(async () =>
-                    //{
-                    //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                    //    await loginPageVM.OnLoadPage();
+                //    await DisplayAlert("Info", "use Denolantest@email.com", "OK");
+                //    //Device.BeginInvokeOnMainThread(async () =>
+                //    //{
+                //    //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                //    //    await loginPageVM.OnLoadPage();
 
-                    //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                    //});                
-                }
+                //    //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                //    //});                
+                //}
             }
             else {
                 ToastPopup.ToastMessage("Login error, please check the credentials.", false);
