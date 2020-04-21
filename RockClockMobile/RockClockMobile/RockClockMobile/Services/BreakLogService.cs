@@ -3,6 +3,7 @@ using RockClockMobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -24,15 +25,18 @@ namespace RockClockMobile.Services
         }
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
 
-        public async Task<bool> AddEmployeeBreakLog(BreakLog breaklog, int rocksUserId)
+        public async Task<bool> AddEmployeeBreakLog(int rocksUserId)
         {
-            if (breaklog == null || !IsConnected)
+            if (rocksUserId == 0 || !IsConnected)
                 return false;
 
-            var serializedItem = JsonConvert.SerializeObject(breaklog);
+            var accessToken = GlobalServices.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
+            //var serializedItem = JsonConvert.SerializeObject(breaklog);
             //var response = await client.PostAsync($"api/BreakLog", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
-            var response = await client.PostAsync($"api/timelog/BreakIn?rocksUserId={ rocksUserId }", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+
+            var response = await client.PostAsync($"api/timelog/BreakIn?rocksUserId={ rocksUserId }", null);
 
             return response.IsSuccessStatusCode;
         }
@@ -41,9 +45,11 @@ namespace RockClockMobile.Services
         {
             if (String.IsNullOrEmpty(timeId.ToString()) && String.IsNullOrEmpty(breakId.ToString()) && IsConnected)
             {
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
                 var json = await client.GetStringAsync($"{baseAddr}/api/BreakLog/{breakId}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<BreakLog>(json));
-                //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
             }
             return null;
         }
@@ -52,6 +58,9 @@ namespace RockClockMobile.Services
         {
             if (forceRefresh && IsConnected)
             {
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
                 var json = await client.GetStringAsync($"api/BreakLog");
                 breaklogs = await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<BreakLog>>(json));
             }
@@ -64,6 +73,9 @@ namespace RockClockMobile.Services
             if (breaklog == null || breaklog.id == 0 || !IsConnected)
                 return false;
 
+            var accessToken = GlobalServices.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
             var serializedItem = JsonConvert.SerializeObject(breaklog);
             var response = await client.PutAsync($"api/BreakLog?id={breaklog.id}", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
             
@@ -75,9 +87,10 @@ namespace RockClockMobile.Services
             if (String.IsNullOrEmpty(rocksUserId.ToString()) || !IsConnected)
                 return false;
 
-            //var serializedItem = JsonConvert.SerializeObject(breaklog);
-            //var response = await client.PutAsync($"api/BreakLog?id={breaklog.id}", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
-            var response = await client.PutAsync($"api/timelog/BreakOut?rocksUserId={ rocksUserId }",null);
+            var accessToken = GlobalServices.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await client.PostAsync($"api/timelog/BreakOut?rocksUserId={ rocksUserId }", null);
 
             return response.IsSuccessStatusCode;
         }
