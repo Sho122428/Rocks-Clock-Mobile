@@ -116,14 +116,16 @@ namespace RockClockMobile.ViewModels.Onboarding
         async void LoadDataClock()
         {
             //await GetEmployeeTimeLogList();
+            LoggedInUser = new TimeLog();
             await GetTimeLogStatus(empDtl.id);
+            
             try
             {
-                if (TimeLogStatus != -1)
-                {
-                    LoggedInUser = new TimeLog();
+                //if (LoggedInUser != null)
+                //{
+                    //LoggedInUser = new TimeLog();
                     
-                    await GetEmployeeTimeLog(empDtl.id);
+                    //await GetEmployeeTimeLog(empDtl.id);
                     if (LoggedInUser != null)
                     {
                         this.IsBreakButtonVisible = true;
@@ -134,7 +136,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                         this.ClockIn = LoggedInUser.Start.Value.ToLocalTime().ToString("h:mm tt");
                     
                         //For Breaklogs
-                        if(TimeLogStatus == 13)
+                        if(LoggedInUser.status == 13)
                         {
                             this.BreakButtonText = "End Break";
                             this.BreakStart = LoggedInUser.Start.Value.ToLocalTime().ToString("h:mm tt");
@@ -158,7 +160,7 @@ namespace RockClockMobile.ViewModels.Onboarding
                     }
 
                     TimeStartLogout();
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -718,8 +720,9 @@ namespace RockClockMobile.ViewModels.Onboarding
             try
             {
                 
-                this.TimeLogStatus = await TimeLogServices.GetTimeLogStatus(rocksUserID);
-                
+                //this.TimeLogStatus = await TimeLogServices.GetTimeLogStatus(rocksUserID);
+                LoggedInUser = await TimeLogServices.GetTimeLogStatus(rocksUserID);
+
             }
             catch (Exception ex)
             {

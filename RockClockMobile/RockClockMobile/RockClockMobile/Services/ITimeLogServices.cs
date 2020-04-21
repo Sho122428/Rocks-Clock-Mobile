@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RockClockMobile.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace RockClockMobile.Services
         Task<bool> UpdateEmployeeTimeLog(T timelog);
         Task<T> GetEmployeeBreakLog(int id);
         Task<IEnumerable<T>> GetEmployeeTimeLogList(bool forceRefresh = false);
-        Task<int> GetTimeLogStatus(int rocksUserID);
+        Task<T> GetTimeLogStatus(int rocksUserID);
 
         Task<bool> ClockIn(int projectId,int rocksUserID,T timelog);
         Task<bool> ClockOut(int id);

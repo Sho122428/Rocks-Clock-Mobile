@@ -67,7 +67,7 @@ namespace RockClockMobile.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<int> GetTimeLogStatus(int rocksUserID)
+        public async Task<TimeLog> GetTimeLogStatus(int rocksUserID)
         {
 
             if (rocksUserID != null && IsConnected)
@@ -76,10 +76,11 @@ namespace RockClockMobile.Services
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogStatusFromDb/{rocksUserID}");
-                return int.Parse(json);
+                //return int.Parse(json);
                 //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
+                return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
             }
-            return -1;
+            return null;
         }
 
         public async Task<bool> UpdateEmployeeTimeLog(TimeLog timelog)
