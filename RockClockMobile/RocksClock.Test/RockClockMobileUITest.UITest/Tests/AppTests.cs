@@ -21,6 +21,8 @@ namespace RockClockMobileUITest.UITest.Tests
         [Test]
         public void SuccessSignInTest()
         {
+            SetupHooks.App.Tap(c => c.Text("Syncfusion License"));
+
             new LogInPage()
                 .EnterCredentials(TestSettings.TestUsername, TestSettings.TestPassword)
                 .SignIn();
@@ -31,6 +33,8 @@ namespace RockClockMobileUITest.UITest.Tests
         [Test]
         public void FailedSignInTest()
         {
+            SetupHooks.App.Tap(c => c.Text("Syncfusion License"));
+
             new LogInPage()
                 .EnterCredentials(string.Empty, string.Empty)
                 .SignIn()
