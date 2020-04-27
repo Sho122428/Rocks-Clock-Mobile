@@ -26,7 +26,6 @@ namespace RockClockMobile.Views.Navigation
         {
             InitializeComponent();
             this.BindingContext = new NamesListViewModel();
-            //this.BindingContext = new LoginViewModel();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -205,7 +204,7 @@ namespace RockClockMobile.Views.Navigation
                     }
                 }
                 else {
-                    ToastPopup.ToastMessage("User not found.",false);
+                    ToastPopup.ToastMessage("User not found, please contact the administrator.",false);
                 }
             }                       
            

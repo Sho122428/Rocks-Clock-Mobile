@@ -26,6 +26,8 @@ namespace RockClockMobile.Views.LoginForm
             BindingContext = new LoginPageViewModel();
 
             PasswordEntry.Text = "Fullsc@l3";
+            ImageLogo.Source = ImageSource.FromFile("fslogo.png");
+            ImagePassword.Source = ImageSource.FromFile("passwordicon.png");
         }
 
         private async void BtnLoginEvent(object sender, System.EventArgs e)

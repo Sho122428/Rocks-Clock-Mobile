@@ -74,16 +74,22 @@
                                          WidthRequest="80">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <control:BorderlessEntry
+                            <StackLayout VerticalOptions="Center" HorizontalOptions="End" Grid.Column="0" HeightRequest="30" WidthRequest="30">
+                                <Image x:Name="ImagePin" Aspect="AspectFit" ></Image>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="1">
+                                <control:BorderlessEntry
                                     x:Name="EntryPin"
                                     Placeholder="Enter pin"
                                         IsPassword="True"
                             
                                     Style="{StaticResource EntryStyle}"/>
+                            </StackLayout>
                         </Grid>
                     </border:SfBorder>
 
@@ -99,7 +105,6 @@
                             IsEnabled="{Binding IsLoading, Converter={Helpers:InverseBoolConverter}}"
                             Opacity="{Binding IsLoadingOpacity}"
                             Clicked="BtnSignInEvent"/>
-
 
 
                     <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 

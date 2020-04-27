@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using RockClockMobile.Enums;
 
 namespace RockClockMobile.Services
 {
@@ -67,18 +68,33 @@ namespace RockClockMobile.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<TimeLog> GetTimeLogStatus(int rocksUserID)
+        public async Task<TimeLogVM> GetTimeLogStatus(int rocksUserID)
         {
 
-            if (rocksUserID != null && IsConnected)
+            if (rocksUserID != 0 && IsConnected)
             {
                 var accessToken = GlobalServices.AccessToken;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogStatusFromDb/{rocksUserID}");
+                //var timeLog= JsonConvert.DeserializeObject<TimeLog>(json);
+                return await Task.Run(() => JsonConvert.DeserializeObject<TimeLogVM>(json));
+            }
+            return null;
+        }
+
+        public async Task<ButtonAccess> GetTimeLogButtonAccess(int rocksUserID)
+        {
+
+            if (rocksUserID != 0 && IsConnected)
+            {
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogButtonAccess/{rocksUserID}");
                 //return int.Parse(json);
                 //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
-                return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
+                return await Task.Run(() => JsonConvert.DeserializeObject<ButtonAccess>(json));
             }
             return null;
         }
@@ -129,8 +145,6 @@ namespace RockClockMobile.Services
 
         }
 
-
-
         public async Task<TimeLog> GetEmployeeBreakLog(int id)
         {
             try
@@ -150,6 +164,5 @@ namespace RockClockMobile.Services
             }
             return null;
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.Internals;
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace RockClockMobile.Views.LoginForm
@@ -18,7 +19,7 @@ namespace RockClockMobile.Views.LoginForm
         public EmailEntry()
         {
             InitializeComponent();
-            Email.Text = "Denolantest@email.com";
+            ImgEmail.Source = ImageSource.FromFile("emailicon.png");
         }
 
 
