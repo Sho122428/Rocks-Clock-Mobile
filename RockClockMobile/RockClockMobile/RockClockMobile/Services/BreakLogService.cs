@@ -27,18 +27,25 @@ namespace RockClockMobile.Services
 
         public async Task<bool> AddEmployeeBreakLog(int rocksUserId)
         {
-            if (rocksUserId == 0 || !IsConnected)
-                return false;
+            try {
+                if (rocksUserId == 0 || !IsConnected)
+                    return false;
 
-            var accessToken = GlobalServices.AccessToken;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                var accessToken = GlobalServices.AccessToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            //var serializedItem = JsonConvert.SerializeObject(breaklog);
-            //var response = await client.PostAsync($"api/BreakLog", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+                //var serializedItem = JsonConvert.SerializeObject(breaklog);
+                //var response = await client.PostAsync($"api/BreakLog", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
 
-            var response = await client.PostAsync($"api/timelog/BreakIn?rocksUserId={ rocksUserId }", null);
+                var response = await client.PostAsync($"api/timelog/BreakIn?rocksUserId={ rocksUserId }", null);
 
-            return response.IsSuccessStatusCode;
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            { 
+            
+            }
+            return false;
         }
 
         public async Task<BreakLog> GetEmployeeBreakLog(int timeId, int breakId)

@@ -62,9 +62,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="50" />
                         </Grid.RowDefinitions>
 
                         <!--  Label to display the title of this page  -->
@@ -73,34 +71,58 @@
                             FontSize="20"
                             HorizontalTextAlignment="Center"
                             Style="{StaticResource LabelStyle}"
-                            Text="Log In" />
+                            Text="Log In" />-->
 
-                        --><!--  Label to display the description of this page  --><!--
-                        <Label
+                        <!--Label to display the description of this page  -->
+                        <!--<Label
                             Grid.Row="1"
                             Margin="0,8"
                             FontFamily="{StaticResource Montserrat-Medium}"
                             HorizontalTextAlignment="Center"
                             Style="{StaticResource LabelStyle}"
                             Text="Let's get to work" />-->
+                        <StackLayout Padding="0,0,0,40" Margin="0,-50,0,0" Grid.Row="0">
+                            <Image x:Name ="ImageLogo"  VerticalOptions="End" Aspect="AspectFit"  HorizontalOptions="Center" ></Image>
+                        </StackLayout>
+                        <StackLayout Grid.Row="5"></StackLayout>
+                        <StackLayout Grid.Row="1">
+                            <!--  Entry to get email ID from user  -->
+                            <local:EmailEntry AutomationId="username" Padding="0,0,0,0"/>
 
-                        <!--  Entry to get email ID from user  -->
-                        <local:EmailEntry AutomationId="username" Grid.Row="2" Padding="0,24"/>
 
-                        <!--  Entry to get password from user  -->
-                        <border:SfBorder
-                            Grid.Row="3"
-                            BorderColor="{Binding Source={x:Reference PasswordEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=0}"
-                            Style="{StaticResource SfBorderStyle}">
-                            <control:BorderlessEntry
-                                x:Name="PasswordEntry"
-                                IsPassword="True"
-                                Placeholder="Password"
-                                Style="{StaticResource EntryStyle}"
-                                Text="{Binding Password}"
-                                AutomationId="password"
-                            />
-                        </border:SfBorder>
+
+                            <!--  Entry to get password from user  -->
+                            <border:SfBorder
+                                BorderColor="{Binding Source={x:Reference PasswordEntry}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=0}"
+                                Style="{StaticResource SfBorderStyle}">
+
+                                <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="35" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackLayout VerticalOptions="Center" HorizontalOptions="End" Grid.Column="0" HeightRequest="30" WidthRequest="30">
+                                            <Image x:Name="ImagePassword" Aspect="AspectFit" ></Image>
+                                        </StackLayout>
+
+                                        <StackLayout Grid.Column="1">
+                                            <control:BorderlessEntry
+                                                x:Name="PasswordEntry"
+                                                IsPassword="True"
+                                                Placeholder="Password"
+                                                Style="{StaticResource EntryStyle}"
+                                                Text="{Binding Password}"
+                                                AutomationId="password"
+                                            />
+                                       
+                                        </StackLayout>
+                                    </Grid>                            
+
+                            </border:SfBorder>
+
+                        </StackLayout>
+                       
 
                         <!--  Forgot password link  -->
                         <!--<Label
@@ -119,7 +141,7 @@
 
                         <!--  Login button  -->
                         <buttons:SfButton
-                            Grid.Row="5"
+                            Grid.Row="2"
                             Margin="0,16"
                             Command="{Binding LoginCommand}"
                             CommandParameter="{Binding .}"
@@ -132,15 +154,15 @@
 
 
                         <Label
-                            Grid.Row="6"
+                            Grid.Row="3"
                             FontFamily="{StaticResource Montserrat-Medium}"
                             HorizontalTextAlignment="Center"
                             Style="{StaticResource LabelStyle}"
                             Text="" />
 
                         <!--  Login through facebook account  -->
-                        <buttons:SfButton
-                            Grid.Row="7"
+                        <!--<buttons:SfButton
+                            Grid.Row="4"
                             Margin="0,16,0,16"
                             BackgroundColor="{DynamicResource FacebookBlue}"
                             Command="{Binding SocialMediaLoginCommand}"
@@ -164,7 +186,7 @@
                                         TextColor="{DynamicResource Gray-White}" />
                                 </StackLayout>
                             </buttons:SfButton.Content>
-                        </buttons:SfButton>
+                        </buttons:SfButton>-->
 
                         <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
                                         AnimationType="Cupertino"
@@ -172,7 +194,7 @@
                                         IsVisible="{Binding Visible, Mode=TwoWay}"
                                         TextColor="ForestGreen" 
                                         Grid.RowSpan="3" 
-                                        Grid.Row="3"
+                                        Grid.Row="1"
                                         ViewBoxHeight="150" ViewBoxWidth="150" 
                                         HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 

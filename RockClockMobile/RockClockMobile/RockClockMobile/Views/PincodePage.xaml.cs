@@ -39,6 +39,9 @@ namespace RockClockMobile.Views
                 BtnSignIn.Text = "Create PIN";
             }
             EntryPin.Keyboard = Keyboard.Numeric;
+
+            EntryPin.Text = "1234";
+            ImagePin.Source = ImageSource.FromFile("passwordicon.png");
         }
 
         private async void BtnSignInEvent(object sender, EventArgs e)
@@ -61,10 +64,7 @@ namespace RockClockMobile.Views
                     EntryPin.Text = string.Empty;
                     BtnSignIn.Text = "Sign In";
 
-
                     // });
-
-
                     //userSign = await userViewModel.GetUser();
                 }
                 else

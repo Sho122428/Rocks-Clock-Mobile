@@ -44,7 +44,7 @@
         <Setter Property="HeightRequest" Value="40"/>
         <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}"/>
         <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}"/>
-        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="TextColor" Value="Green"/>
     </Style>
 
     <Style x:Key="SfGradientViewStyle" TargetType="gradient:SfGradientView">

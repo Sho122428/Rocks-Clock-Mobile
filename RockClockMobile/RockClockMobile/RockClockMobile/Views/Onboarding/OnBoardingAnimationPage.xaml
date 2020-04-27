@@ -98,24 +98,20 @@
                 <Label
                     FontFamily="{StaticResource Montserrat-Medium}"
                     FontSize="16"
-                    HorizontalOptions="Center"
-                    
+                    HorizontalOptions="Center"                    
                     Style="{StaticResource LabelStyle}"
-                    Text="Time In"
-                    
-                       Grid.Row="0"
-                       Grid.Column="0"/>
+                    Text="Time In"                    
+                    Grid.Row="0"
+                    Grid.Column="0"/>
 
                 <Label x:Name="lblClockedIn"
                     FontFamily="{StaticResource Montserrat-Medium}"
                     FontSize="16"
-                    HorizontalOptions="Center"
-                    
+                    HorizontalOptions="Center"                    
                     Style="{StaticResource LabelStyle}"
-                    Text="{Binding ClockIn}"
-                    
-                       Grid.Row="1"
-                       Grid.Column="0"/>
+                    Text="{Binding ClockIn}"                    
+                    Grid.Row="1"
+                    Grid.Column="0"/>
 
                 <Label
                     FontFamily="{StaticResource Montserrat-Medium}"
