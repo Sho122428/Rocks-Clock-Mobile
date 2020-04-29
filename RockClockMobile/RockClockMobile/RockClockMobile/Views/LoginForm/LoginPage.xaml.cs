@@ -34,35 +34,18 @@ namespace RockClockMobile.Views.LoginForm
         {          
             var details = (LoginPageViewModel)this.BindingContext;
 
-            //if(EmlEntry.GetValue().ToString() == "")
-
             if (details.CanLogin)
             {
-                //if (details.UserEmail.ToLower() == "denolantest@email.com")
-                //{
-                    Device.BeginInvokeOnMainThread(async () =>
-                    {
-                        LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                        await loginPageVM.OnLoadPage();                       
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                    await loginPageVM.OnLoadPage();                       
 
-                        App.Current.MainPage = new Views.Navigation.NamesListPage();
+                    App.Current.MainPage = new Views.Navigation.NamesListPage();
 
-                        ToastPopup.ToastMessage("Successfully logged in.", false);
-                        await Task.Delay(2000);
-                    });
-                //}
-                //else
-                //{
-
-                //    await DisplayAlert("Info", "use Denolantest@email.com", "OK");
-                //    //Device.BeginInvokeOnMainThread(async () =>
-                //    //{
-                //    //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                //    //    await loginPageVM.OnLoadPage();
-
-                //    //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                //    //});                
-                //}
+                    ToastPopup.ToastMessage("Successfully logged in.", false);
+                    await Task.Delay(2000);
+                });
             }
             else {
                 ToastPopup.ToastMessage("Login error, please check the credentials.", false);

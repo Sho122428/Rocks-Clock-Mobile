@@ -3,6 +3,7 @@ using RockClockMobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,23 +15,24 @@ namespace RockClockMobile.Services
     {
         HttpClient client;
         Uri baseAddr;
-        //IEnumerable<TimeLog> timelogs;
 
         public UserServices() 
         {
             baseAddr = new Uri("http://18.136.14.237:8282");
             client = new HttpClient { BaseAddress = baseAddr };
-            //timelogs = new List<TimeLog>();
         }
 
         bool isConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;
 
-        public async Task<IEnumerable<User>> GetUserList(bool refresh)
+        public async Task<User> GetUserList(bool refresh, int userId)
         {
-            if (isConnected)
-            {
-                var json = await client.GetStringAsync($"api/Users");
-                return await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<User>>(json));
+            if (isConnected && refresh)
+            {                
+                //var json = await client.GetStringAsync($"api/Account/GetUserBy/{ userId }");
+                var json = await client.GetStringAsync($"api/Account");
+                var UsersToJson = JsonConvert.DeserializeObject<List<User>>(json);
+                var userLoggedIn = UsersToJson.Where(a => a.rocksUserId == userId).FirstOrDefault();
+                return await Task.Run(() => userLoggedIn);
             }
             return null;
         }
@@ -69,6 +71,6 @@ namespace RockClockMobile.Services
             var response = await client.PutAsync(new Uri($"api/Users/{user.userRole.userId}"), byteContent);
 
             return response.IsSuccessStatusCode;
-        }        
+        }
     }
 }

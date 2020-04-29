@@ -26,11 +26,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
-    <!--<ContentPage.BindingContext>
-        <viewModel:PincodeViewModel />
-    </ContentPage.BindingContext>-->
     <ContentPage.Content>
-
         <Grid>
             <!--  Gradient view  -->
             <gradient:SfGradientView  Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
@@ -64,14 +60,13 @@
                         VerticalOptions="Center"
                         WidthRequest="300"
                         Style="{StaticResource LabelStyle}"/>
-
+                
                     <border:SfBorder BorderColor="{Binding Path=IsFocused, 
                         Source={x:Reference EntryPin},  
                         ConverterParameter={x:Reference EntryPin}}" 
-                                     Style="{StaticResource SfBorderStyle}"
-                                     Grid.Row="1"
-                                 
-                                         WidthRequest="80">
+                        Style="{StaticResource SfBorderStyle}"
+                        Grid.Row="1">
+                        
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="35" />
@@ -86,26 +81,25 @@
                                 <control:BorderlessEntry
                                     x:Name="EntryPin"
                                     Placeholder="Enter pin"
-                                        IsPassword="True"
-                            
+                                    IsPassword="True"                            
                                     Style="{StaticResource EntryStyle}"/>
                             </StackLayout>
                         </Grid>
                     </border:SfBorder>
 
-
-                    <button:SfButton Text="Sign In" 
-                                     BackgroundColor="ForestGreen"
-                            TextColor="White"
-                            FontSize="17" 
-                            Grid.Row="2"
-                            x:Name="BtnSignIn" 
-                            AutomationId="BtnSignInUser"
-                            Style="{StaticResource SfButtonStyle}"
-                            IsEnabled="{Binding IsLoading, Converter={Helpers:InverseBoolConverter}}"
-                            Opacity="{Binding IsLoadingOpacity}"
-                            Clicked="BtnSignInEvent"/>
-
+                    <StackLayout Grid.Row="2" Padding="0,10,0,0">
+                        <button:SfButton Text="Sign In" 
+                                BackgroundColor="ForestGreen"                                  
+                                TextColor="White"
+                                FontSize="17" 
+                                Grid.Row="2"
+                                x:Name="BtnSignIn" 
+                                AutomationId="BtnSignInUser"
+                                Style="{StaticResource PincodeSfButtonStyle}"
+                                IsEnabled="{Binding IsLoading, Converter={Helpers:InverseBoolConverter}}"
+                                Opacity="{Binding IsLoadingOpacity}"
+                                Clicked="BtnSignInEvent"/>
+                    </StackLayout>                    
 
                     <busyIndicator:SfBusyIndicator x:Name="busyIndicator" 
                             AnimationType="Cupertino"

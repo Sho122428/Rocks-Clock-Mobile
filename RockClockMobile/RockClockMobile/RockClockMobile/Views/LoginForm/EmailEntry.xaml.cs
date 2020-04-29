@@ -19,7 +19,7 @@ namespace RockClockMobile.Views.LoginForm
         public EmailEntry()
         {
             InitializeComponent();
-            ImgEmail.Source = ImageSource.FromFile("emailicon.png");
+            ImgEmail.Source = ImageSource.FromFile("usericon.png");
         }
 
 

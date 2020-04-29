@@ -45,7 +45,7 @@
                             <StackLayout Grid.Column="1">
                                 <control:BorderlessEntry
                                 x:Name="Email"
-                                Placeholder="Email"
+                                Placeholder="Username"
                                 Style="{StaticResource EntryStyle}"
                                 Text="{Binding Email}" Grid.Column="1" />
                             </StackLayout>    
@@ -55,7 +55,7 @@
                     </StackLayout>
                    
 
-                    <Label
+                    <!--<Label
                         Margin="15,0"
                         FontFamily="{StaticResource FontIcons}"
                         FontSize="18"
@@ -64,13 +64,13 @@
                         IsVisible="{Binding Path=IsVisible, Source={x:Reference ValidationLabel}}"
                         Text="&#xe707;"
                         TextColor="{DynamicResource Red}"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Center" />-->
 
 
                 </Grid>
             </border:SfBorder>
 
-            <Label
+            <!--<Label
                 x:Name="ValidationLabel"
                 Margin="15,-5,0,0"
                 FontSize="12"
@@ -80,7 +80,7 @@
                 ConverterParameter={x:Reference Email}}"
                 Text="Please enter the valid e-mail"
                 TextColor="{DynamicResource Red}"
-                VerticalOptions="FillAndExpand" />
+                VerticalOptions="FillAndExpand" />-->
 
         </StackLayout>
     </ContentView.Content>

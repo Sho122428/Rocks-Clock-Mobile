@@ -43,7 +43,7 @@ namespace RockClockMobile.ViewModels.Navigation
         //public ObservableCollection<Employee> NamesList { get; set; }
         #region Properties
         public User User { get; set; }
-        public IEnumerable<User> UserList { get; set; }
+        public User UserList { get; set; }
         public ICommand ClockInCommand { get; set; }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace RockClockMobile.ViewModels.Navigation
         }
 
         //Get all User from Rocks Clock
-        public async Task<IEnumerable<User>> GetUserList()
+        public async Task<User> GetUserList(int userId)
         {
             IsBusy = true;
 
@@ -110,7 +110,7 @@ namespace RockClockMobile.ViewModels.Navigation
 
             try
             {
-                UserList = await UserServices.GetUserList();
+                UserList = await UserServices.GetUserList(true, userId);
                 return UserList;
             }
             catch (Exception ex)
@@ -214,13 +214,13 @@ namespace RockClockMobile.ViewModels.Navigation
             return null;
         }
 
-        public async Task<UserLoginM> UserLoginById(UserLoginParam userLoginParam)
+        public async Task<UserLoginM> UserLogin(UserLoginParam userLoginParam)
         {
             IsBusy = true;
 
             try
             {
-                UserLoginM employee = await EmployeeServices.UserLoginById(userLoginParam);
+                UserLoginM employee = await AccountService.UserLogin(userLoginParam);
                 return employee;
             }
             catch (Exception ex)

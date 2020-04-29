@@ -1,5 +1,6 @@
 ﻿using RockClockMobile.Controls;
 using RockClockMobile.ViewModels.LoginForm;
+using RockClockMobile.ViewModels.ResetPassword;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -13,7 +14,7 @@ namespace RockClockMobile.Converters
     /// This is needed to validate in the Entry controls. If the validation is failed, it will return the color code of error, otherwise it will be transparent.
     /// </summary>
     [Preserve(AllMembers = true)]
-    public class ErrorValidationColorConverter : IValueConverter
+    public class ResetPasswordErrorValidationColorConverter : IValueConverter
     {
         /// <summary>
         /// Identifies the simple and gradient login pages.
@@ -33,40 +34,72 @@ namespace RockClockMobile.Converters
             // For Gradient login page 
             if (PageVariantParameter == "0")
             {
+
+                //var emailEntry = parameter as BorderlessEntry;
+
+                //if (!(emailEntry.BindingContext is ResetPasswordViewModel bindingContext))
+                //{
+                //    return Color.Transparent;
+                //}
+
+                //var a = bindingContext.ConfirmPassword;
+                //var b = bindingContext.NewPassword;
+                //bool isEqual = true;
+
+                //if (a == b)
+                //{
+                //    isEqual = true;
+                //}
+
+                //return isEqual ? Color.FromHex("#FF4A4A") : Color.Transparent;
+
                 var emailEntry = parameter as BorderlessEntry;
 
-                if (!(emailEntry.BindingContext is LoginViewModel bindingContext))
+                if (!(emailEntry.BindingContext is ResetPasswordViewModel bindingContext))
                 {
                     return Color.Transparent;
                 }
 
                 var isFocused = (bool)value;
-                bindingContext.IsInvalidEmail = !isFocused && !CheckValidEmail(bindingContext.Email);
 
-                if (!isFocused)
+                var a = bindingContext.ConfirmPassword;
+                var b = bindingContext.NewPassword;
+                bool isEqual = true;
+
+                if (a == b)
+                {
+                    bindingContext.IsEnable = true;
+                }
+                else {
+                    bindingContext.IsEnable = false;
+                }
+
+                isEqual = !isFocused;
+
+                if (isFocused)
                 {
                     return Color.FromRgba(255, 255, 255, 0.6);
                 }
 
-                return bindingContext.IsInvalidEmail ? Color.FromHex("#FF4A4A") : Color.Transparent;
+                return isEqual ? Color.FromHex("#FF4A4A") : Color.Transparent;
 
             }
             // For Simple login page
             else
             {
-                var emailEntry = parameter as BorderlessEntry;
+                //var emailEntry = parameter as BorderlessEntry;
 
-                if (!(emailEntry.BindingContext is LoginViewModel bindingContext)) return Color.FromHex("#ced2d9");
+                //if (!(emailEntry.BindingContext is LoginViewModel bindingContext)) return Color.FromHex("#ced2d9");
 
-                var isFocused1 = (bool)value;
-                bindingContext.IsInvalidEmail = !isFocused1 && !CheckValidEmail(bindingContext.Email);
+                //var isFocused1 = (bool)value;
+                //bindingContext.IsInvalidEmail = !isFocused1 && !CheckValidEmail(bindingContext.Email);
 
-                if (isFocused1)
-                {
-                    return Color.FromHex("#959eac");
-                }
+                //if (isFocused1)
+                //{
+                //    return Color.FromHex("#959eac");
+                //}
 
-                return bindingContext.IsInvalidEmail ? Color.FromHex("#FF4A4A") : Color.FromHex("#ced2d9");
+                return  Color.FromHex("#ced2d9");
 
             }
         }

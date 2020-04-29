@@ -164,40 +164,28 @@ namespace RockClockMobile.ViewModels.LoginForm
         /// <param name="obj">The Object</param>
         private async void LoginClicked(object x)
         {
-            // Do something
             this.UserEmail = base.Email;
-            var loggedInUser = GlobalServices.employeeList.Where(a => a.email == this.UserEmail).FirstOrDefault();
 
-            if (loggedInUser != null)
+            var userLogin = new UserLogin
             {
-                var userLogin = new UserLogin
-                {
-                    UserName = loggedInUser.userName,
-                    Password = "Fullsc@l3",
-                    Remember = true
-                };
+                UserName = this.UserEmail,
+                Password = "Fullsc@l3",
+                Remember = true
+            };
 
-                if (userLogin != null)
-                {
-                    await AdminLoginAccount(userLogin);
-                }
-
-                CanLogin = true;
-            }
-            else {
-                CanLogin = false;
-            }
-                
+            CanLogin = await AdminUserLogin(userLogin);
         }
 
+
         //Get Admin login response
-        private async Task AdminLoginAccount(UserLogin userLogin)
+        private async Task<bool> AdminUserLogin(UserLogin userLogin)
         {
             IsBusy = true;
             
             try
             {
-                var dd = await UserLoginService.AddUserLogin(userLogin);
+                var dd = await AccountService.AdminUserLogin(userLogin);
+                return dd;
             }
             catch (Exception ex)
             {
@@ -207,6 +195,8 @@ namespace RockClockMobile.ViewModels.LoginForm
             {
                 IsBusy = false;
             }
+
+            return false;
         }
 
         private async Task GetEmployeeDetail()
@@ -246,8 +236,6 @@ namespace RockClockMobile.ViewModels.LoginForm
             {
 
             }
-            //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
-
 
             IsLoading = false;
             Visible = false;

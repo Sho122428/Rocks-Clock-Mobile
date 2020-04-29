@@ -52,7 +52,6 @@ namespace RockClockMobile.Views.Navigation
             }
 
             tapCount = 0;
-            //userServices = new UserServices(empDtl.rocksUserId);
         }
 
      
@@ -159,22 +158,16 @@ namespace RockClockMobile.Views.Navigation
                     Remember = true
                 };
 
-                //GlobalServices.employee = await namesListVM.GetEmployeeById(empSignIn.id);
-                var userLoggedIn = await namesListVM.UserLoginById(userLoginParam);
+                var userLoggedIn = await namesListVM.UserLogin(userLoginParam);
 
                 if (userLoggedIn != null)
                 {
                     GlobalServices.employee = userLoggedIn.rocksUser;
                     Application.Current.Properties["user_id "] = empSignIn.id;
 
-                    //for specific user
-                    //var user = await userViewModel.GetUser();
-
-                    //for all user
-                    var user = (List<User>)await namesListVM.GetUserList();
+                    var userData = await namesListVM.GetUserList(empSignIn.id);
                     string userPassword = string.Empty;
                     int lastUserId = 0;
-                    User userData = user.Where(a => a.rocksUserId == empSignIn.id).FirstOrDefault();
 
                     if (userData != null)
                     {
@@ -183,15 +176,16 @@ namespace RockClockMobile.Views.Navigation
                     else
                     {
                         userPassword = "0";
-                        lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
+                        //lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
+                        lastUserId = 0;
                     }
 
-                    if (userLoggedIn.rocksUser.isTempPassword)
+                    if (userData.isTempPassword && userPassword != null)
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
                             await namesListVM.OnLoadPage();
-                            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage();
+                            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(empSignIn.id);
                         });
                     }
                     else
@@ -207,8 +201,6 @@ namespace RockClockMobile.Views.Navigation
                     ToastPopup.ToastMessage("User not found, please contact the administrator.",false);
                 }
             }                       
-           
-         //App.Current.MainPage = new PincodePage(userPassword,lastUserId);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {
