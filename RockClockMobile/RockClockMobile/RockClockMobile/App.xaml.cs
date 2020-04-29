@@ -4,6 +4,10 @@ using System;
 using System.Diagnostics;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 
 namespace RockClockMobile
 {
@@ -48,32 +52,10 @@ namespace RockClockMobile
         {
             // On start runs when your application launches from a closed state, 
             //NetworkSecurityPolicy.Instance.IsCleartextTrafficPermitted.Equals(true);
-            if (!stopWatch.IsRunning)
-            {
-                stopWatch.Start();
-            }
-            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
-            {
-                // Logic for logging out if the device is inactive for a period of time.
-
-                if (stopWatch.IsRunning && stopWatch.Elapsed.Seconds >= defaultTimespan)
-                {
-                    //prepare to perform your data pull here as we have hit the 1 minute mark   
-
-                    // Perform your long running operations here.
-                    
-                    Device.BeginInvokeOnMainThread(() => {
-                        // If you need to do anything with your UI, you need to wrap it in this.
-
-
-                    });
-
-                    stopWatch.Restart();
-                }
-
-                // Always return true as to keep our device timer running.
-                return true;
-            });
+            AppCenter.Start("android=734872ab-ddac-44a0-b6d3-d8bf0a581fcb;" +
+                  "uwp={Your UWP App secret here};" +
+                  "ios={Your iOS App secret here}",
+                  typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AppCenter.Crashes;
 
 namespace RockClockMobile.ViewModels.Navigation
 {
@@ -91,7 +92,8 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -115,7 +117,8 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -154,7 +157,8 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -184,7 +188,8 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -204,7 +209,8 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -225,7 +231,8 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -295,7 +302,7 @@ namespace RockClockMobile.ViewModels.Navigation
             }
             catch (Exception ex)
             {
-
+                Crashes.TrackError(ex);
             }
             //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
 

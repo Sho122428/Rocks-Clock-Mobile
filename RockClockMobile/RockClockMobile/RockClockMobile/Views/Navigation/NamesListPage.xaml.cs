@@ -35,21 +35,7 @@ namespace RockClockMobile.Views.Navigation
                 return true;
             });
 
-            try
-            {
-                Analytics.TrackEvent("My custom event");
-
-                Crashes.GenerateTestCrash();
-            }
-            catch (Exception exception)
-            {
-                var properties = new Dictionary<string, string>
-                {
-                    { "Category", "Music" },
-                    { "Wifi", "On" }
-                };
-                Crashes.TrackError(exception, properties);
-            }
+           
 
             tapCount = 0;
             //userServices = new UserServices(empDtl.rocksUserId);

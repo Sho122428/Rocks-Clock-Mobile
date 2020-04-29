@@ -15,6 +15,7 @@ using RockClockMobile.Enums;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using Microsoft.AppCenter.Crashes;
 
 namespace RockClockMobile.ViewModels.Onboarding
 {
@@ -655,7 +656,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -683,7 +685,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -714,7 +717,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -736,7 +740,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -793,6 +798,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             catch (Exception ex)
             {
                 //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
                 ToastPopup.ToastMessage("An error occured while attempting to log in.", true);
             }
             finally
@@ -833,7 +839,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -878,7 +885,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -917,7 +925,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -983,6 +992,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 ToastPopup.ToastMessage("An error occured while attempting to break.", true);
             }
             finally

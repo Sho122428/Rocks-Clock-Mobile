@@ -1,4 +1,5 @@
-﻿using RockClockMobile.Models;
+﻿using Microsoft.AppCenter.Crashes;
+using RockClockMobile.Models;
 using RockClockMobile.Services;
 using System;
 using System.Collections.Generic;
@@ -201,7 +202,8 @@ namespace RockClockMobile.ViewModels.LoginForm
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -223,7 +225,8 @@ namespace RockClockMobile.ViewModels.LoginForm
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                //Debug.WriteLine(ex);
+                Crashes.TrackError(ex);
             }
             finally
             {
@@ -244,7 +247,7 @@ namespace RockClockMobile.ViewModels.LoginForm
             }
             catch (Exception ex)
             {
-
+                Crashes.TrackError(ex);
             }
             //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
 
