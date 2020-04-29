@@ -57,31 +57,7 @@ namespace RockClockMobile.Services
             }
 
             return null;
-        }
-
-        public async Task<UserLoginM> UserLoginById(UserLoginParam userLoginParam)
-        {
-            if (userLoginParam == null || !IsConnected)
-                return null;
-
-            var accessToken = GlobalServices.AccessToken;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var serializedItem = JsonConvert.SerializeObject(userLoginParam);
-
-            var buffer = System.Text.Encoding.UTF8.GetBytes(serializedItem);
-            var byteContent = new ByteArrayContent(buffer);
-
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            var result = client.PostAsync($"api/Account/loginM", byteContent).Result;
-
-            var readResponse = await result.Content.ReadAsStringAsync();
-
-            var convertResponse = JsonConvert.DeserializeObject<UserLoginM>(readResponse);
-
-            return convertResponse;
-        }        
+        }       
     }
 
     public class UserLoginParam

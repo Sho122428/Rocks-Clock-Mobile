@@ -1,4 +1,8 @@
-﻿using System;
+﻿using RockClockMobile.Custom;
+using RockClockMobile.Models;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -11,9 +15,8 @@ namespace RockClockMobile.ViewModels.ResetPassword
     public class ResetPasswordViewModel : BaseViewModel
     {
         #region Fields
-
+        private string currentPassword;
         private string newPassword;
-
         private string confirmPassword;
 
         #endregion
@@ -50,6 +53,28 @@ namespace RockClockMobile.ViewModels.ResetPassword
         /// <summary>
         /// Gets or sets the property that bounds with an entry that gets the new password from user in the reset password page.
         /// </summary>
+        /// 
+
+        public int UserId { get; set; }
+        public bool IsEnable { get; set; }
+        public string CurrentPassword
+        {
+            get
+            {
+                return this.currentPassword;
+            }
+
+            set
+            {
+                if (this.currentPassword == value)
+                {
+                    return;
+                }
+
+                this.currentPassword = value;
+                //this.NotifyPropertyChanged();
+            }
+        }
         public string NewPassword
         {
             get
@@ -65,7 +90,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
                 }
 
                 this.newPassword = value;
-                this.NotifyPropertyChanged();
+                //this.NotifyPropertyChanged();
             }
         }
 
@@ -92,7 +117,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
                 }
 
                 this.confirmPassword = value;
-                this.NotifyPropertyChanged();
+                //this.NotifyPropertyChanged();
             }
         }
 
@@ -104,10 +129,29 @@ namespace RockClockMobile.ViewModels.ResetPassword
         /// Invoked when the Submit button is clicked.
         /// </summary>
         /// <param name="obj">The Object</param>
-        private void SubmitClicked(object obj)
+        private async void SubmitClicked(object obj)
         {
             // Do something
+            try {
+                ChangePasswordVM changePasswordVM = new ChangePasswordVM();
+                changePasswordVM.Password = this.NewPassword;
+                changePasswordVM.ConfirmPassword = this.ConfirmPassword;
+                changePasswordVM.currentPassword = this.CurrentPassword;
+                changePasswordVM.Id = this.UserId;
+                changePasswordVM.isWeb = false;
 
+                if (changePasswordVM.Password != changePasswordVM.ConfirmPassword)
+                {
+                    ToastPopup.ToastMessage("New password and confirm new password not matched.", false);
+                }
+                else {
+                   await ChangePassword(changePasswordVM);
+                }
+            }
+            catch (Exception ex)
+            {
+                ToastPopup.ToastMessage(ex.Message,true);
+            }    
         }
 
         /// <summary>
@@ -117,6 +161,27 @@ namespace RockClockMobile.ViewModels.ResetPassword
         private void SignUpClicked(object obj)
         {
             // Do something
+        }
+
+        private async Task<bool> ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var dd = await AccountService.ChangePassword(changePasswordVM);
+                return dd;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+            return false;
         }
 
         #endregion

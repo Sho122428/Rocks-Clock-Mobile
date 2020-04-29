@@ -5,8 +5,6 @@ using Xamarin.Forms;
 using RockClockMobile.ViewModels.LoginForm;
 using RockClockMobile.Custom;
 using System.Threading.Tasks;
-using System;
-using Microsoft.AppCenter.Crashes;
 
 namespace RockClockMobile.Views.LoginForm
 {
@@ -36,46 +34,23 @@ namespace RockClockMobile.Views.LoginForm
         {          
             var details = (LoginPageViewModel)this.BindingContext;
 
-            //if(EmlEntry.GetValue().ToString() == "")
-            try { 
-                if (details.CanLogin)
-                {
-                    //if (details.UserEmail.ToLower() == "denolantest@email.com")
-                    //{
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                            await loginPageVM.OnLoadPage();                       
-
-                            App.Current.MainPage = new Views.Navigation.NamesListPage();
-
-                            ToastPopup.ToastMessage("Successfully logged in.", false);
-                            await Task.Delay(2000);
-                        });
-                    //}
-                    //else
-                    //{
-
-                    //    await DisplayAlert("Info", "use Denolantest@email.com", "OK");
-                    //    //Device.BeginInvokeOnMainThread(async () =>
-                    //    //{
-                    //    //    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                    //    //    await loginPageVM.OnLoadPage();
-
-                    //    //    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                    //    //});                
-                    //}
-                }
-                else {
-                    ToastPopup.ToastMessage("Login error, please check the credentials.", false);
-                    await Task.Delay(2000);
-                }
-            }
-            catch(Exception ex)
+            if (details.CanLogin)
             {
-                Crashes.TrackError(ex);
-            }
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+                    await loginPageVM.OnLoadPage();                       
 
+                    App.Current.MainPage = new Views.Navigation.NamesListPage();
+
+                    ToastPopup.ToastMessage("Successfully logged in.", false);
+                    await Task.Delay(2000);
+                });
+            }
+            else {
+                ToastPopup.ToastMessage("Login error, please check the credentials.", false);
+                await Task.Delay(2000);
+            }
         }
     }
 }

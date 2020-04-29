@@ -9,10 +9,7 @@ namespace RockClockMobile.Services
 {
     public interface IEmployeeServices<T>
     {
-        //Task<T> GetEmployeeTimeLog(string id);
-        //Task<bool> UpdateEmployeeAsync(T item);
-        Task<T> GetEmployeeById(int id);
-        Task<UserLoginM> UserLoginById(UserLoginParam userLoginParam);
+        Task<T> GetEmployeeById(int id);      
         Task<IEnumerable<T>> GetEmployeeList(bool forceRefresh = false);
     }
 }

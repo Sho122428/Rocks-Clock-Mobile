@@ -15,7 +15,7 @@ namespace RockClockMobile.Droid
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
 	public partial class Resource
 	{
 		
@@ -11851,10 +11851,13 @@ namespace RockClockMobile.Droid
 			public const int tooltip_frame_light = 2131165355;
 			
 			// aapt resource value: 0x7F0700AC
-			public const int ViewMode = 2131165356;
+			public const int usericon = 2131165356;
 			
 			// aapt resource value: 0x7F0700AD
-			public const int xamarin_logo = 2131165357;
+			public const int ViewMode = 2131165357;
+			
+			// aapt resource value: 0x7F0700AE
+			public const int xamarin_logo = 2131165358;
 			
 			static Drawable()
 			{
