@@ -32,7 +32,6 @@ namespace RockClockMobile.ViewModels.LoginForm
         /// </summary>
         public LoginPageViewModel()
         {
-            GetEmployeeDetail();
             //this.LoginCommand = new Command(async () => await AdminLoginAccount());
             //this.LoginCommand = new Command(async () => await LoginClicked(x));
             this.SignUpCommand = new Command(this.SignUpClicked);
@@ -174,9 +173,8 @@ namespace RockClockMobile.ViewModels.LoginForm
                 Remember = true
             };
 
-            CanLogin = await AdminUserLogin(userLogin);
+            await AdminUserLogin(userLogin);
         }
-
 
         //Get Admin login response
         private async Task<bool> AdminUserLogin(UserLogin userLogin)
@@ -186,6 +184,7 @@ namespace RockClockMobile.ViewModels.LoginForm
             try
             {
                 var dd = await AccountService.AdminUserLogin(userLogin);
+                CanLogin = dd;
                 return dd;
             }
             catch (Exception ex)
@@ -201,28 +200,28 @@ namespace RockClockMobile.ViewModels.LoginForm
             return false;
         }
 
-        private async Task GetEmployeeDetail()
-        {
-            if (IsBusy)
-                return;
+        //private async Task GetEmployeeDetail()
+        //{
+        //    if (IsBusy)
+        //        return;
 
-            IsBusy = true;
+        //    IsBusy = true;
 
-            try
-            {
-                var empList = await EmployeeServices.GetEmployeeList(true);
-                GlobalServices.employeeList = empList;
-            }
-            catch (Exception ex)
-            {
-                //Debug.WriteLine(ex);
-                Crashes.TrackError(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
+        //    try
+        //    {
+        //        var empList = await EmployeeServices.GetEmployeeList(true);
+        //        //GlobalServices.employeeList = empList;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Debug.WriteLine(ex);
+        //        Crashes.TrackError(ex);
+        //    }
+        //    finally
+        //    {
+        //        IsBusy = false;
+        //    }
+        //}
 
         public async Task OnLoadPage()
         {

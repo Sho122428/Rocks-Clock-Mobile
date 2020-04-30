@@ -41,7 +41,7 @@ namespace RockClockMobile.Views.LoginForm
                     LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
                     await loginPageVM.OnLoadPage();                       
 
-                    App.Current.MainPage = new Views.Navigation.NamesListPage();
+                   App.Current.MainPage = new Views.Navigation.NamesListPage();
 
                     ToastPopup.ToastMessage("Successfully logged in.", false);
                     await Task.Delay(2000);

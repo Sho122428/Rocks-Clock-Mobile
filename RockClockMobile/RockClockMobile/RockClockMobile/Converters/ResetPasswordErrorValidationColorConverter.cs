@@ -72,16 +72,17 @@ namespace RockClockMobile.Converters
                 }
                 else {
                     bindingContext.IsEnable = false;
+                    isEqual = false;
                 }
 
-                isEqual = !isFocused;
+              
 
-                if (isFocused)
+                if (!isFocused)
                 {
                     return Color.FromRgba(255, 255, 255, 0.6);
                 }
 
-                return isEqual ? Color.FromHex("#FF4A4A") : Color.Transparent;
+                return isEqual ? Color.Transparent : Color.FromHex("#FF4A4A");
 
             }
             // For Simple login page

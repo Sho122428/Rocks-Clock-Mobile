@@ -20,8 +20,8 @@ namespace RockClockMobile.Models
         public int attempts { get; set; }
         public bool isLocked { get; set; }
         public bool isTempPassword { get; set; }
-        public DateTime loginTime { get; set; }
-        public DateTime changePasswordTime { get; set; }
+        public DateTime? loginTime { get; set; }
+        public DateTime? changePasswordTime { get; set; }
         public User user { get; set; }
         public UserRole rocksUserRoleMap { get; set; }
         public List<EmployeeProjectMap> rocksUserProjectMaps { get; set; }

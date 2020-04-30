@@ -37,7 +37,7 @@ namespace RockClockMobile.ViewModels.Navigation
         public NamesListViewModel()
         {
             NamesList = new ObservableCollection<Employee>();
-             GetEmployeeList();
+            GetEmployeeList();
         }
         #endregion
 
@@ -180,7 +180,10 @@ namespace RockClockMobile.ViewModels.Navigation
             {
                 NamesList.Clear();
                 var employeeFromAPI = await EmployeeServices.GetEmployeeList(true);
+
+                //var employeeFromAPI = GlobalServices.employeeList;
                 IEnumerable<Employee> employeeList = employeeFromAPI.OrderBy(a => a.firstName);
+                GlobalServices.employeeList = employeeList;
                 foreach (var dtl in employeeList)
                 {
                     NamesList.Add(dtl);
