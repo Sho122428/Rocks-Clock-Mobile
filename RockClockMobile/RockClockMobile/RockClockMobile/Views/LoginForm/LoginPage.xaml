@@ -32,8 +32,8 @@
     </ContentPage.BindingContext>-->
 
     <ContentPage.Content>
-        <Grid IsEnabled="{Binding Enable}" Opacity="{Binding IsLoadingOpacity}">
-            <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" />
+        <Grid IsEnabled="{Binding Enable}" >
+            <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" Opacity="{Binding IsLoadingOpacity}"/>
 
             <ScrollView HorizontalOptions="Center">
                 <ScrollView.VerticalOptions>

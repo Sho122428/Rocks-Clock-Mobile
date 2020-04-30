@@ -41,7 +41,7 @@ namespace RockClockMobile.ViewModels.LoginForm
 
         #endregion
 
-        #region property
+        #region Properties
 
         /// <summary>
         /// Gets or sets the property that is bound with an entry that gets the password from user in the login page.
@@ -156,7 +156,7 @@ namespace RockClockMobile.ViewModels.LoginForm
 
         #endregion
 
-        #region methods
+        #region Methods
 
         /// <summary>
         /// Invoked when the Log In button is clicked.
