@@ -125,8 +125,8 @@ namespace RockClockMobile.ViewModels.Onboarding
                 string currentUser = string.Empty;
                 if (timeLogVM.Status.ToString() != "ForClockIn")
                 {
-                    clockInTime = timeLogVM.TimeIn.Value.ToString("h:mm tt");
-                    breakInTime = timeLogVM.Start.Value.ToString("h:mm tt");
+                    clockInTime = timeLogVM.TimeIn.Value.ToLocalTime().ToString("h:mm tt");
+                    breakInTime = timeLogVM.Start.Value.ToLocalTime().ToString("h:mm tt");
                     currentUser = empDtl.firstName + " clocked in at " + timeLogVM.TimeIn.Value.ToLocalTime().ToString("h:mm tt") + System.Environment.NewLine + " for project " + SelectedProject;
 
                     if (timeLogVM.Status.ToString() == "HasClockedInData")

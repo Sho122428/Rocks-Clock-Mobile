@@ -51,7 +51,7 @@ namespace RockClockMobile.Services
 
                 var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogDataByRocksUserId/{id}");
                 return await Task.Run(() => JsonConvert.DeserializeObject<TimeLog>(json));
-                //var emptlog = JsonConvert.DeserializeObject<TimeLog>(json);
+                
             }
             return null;
         }
@@ -77,7 +77,7 @@ namespace RockClockMobile.Services
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                 var json = await client.GetStringAsync($"api/TimeLog/GetTimeLogStatusFromDb/{rocksUserID}");
-                //var timeLog= JsonConvert.DeserializeObject<TimeLog>(json);
+                
                 return await Task.Run(() => JsonConvert.DeserializeObject<TimeLogVM>(json));
             }
             return null;

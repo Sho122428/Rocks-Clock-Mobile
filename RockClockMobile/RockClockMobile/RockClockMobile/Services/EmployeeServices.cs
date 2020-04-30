@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using RockClockMobile.Models;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,8 @@ namespace RockClockMobile.Services
                     return await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<Employee>>(json));
                 }
                 catch (Exception exc) {
-                    exc.Message.ToString();
+                    //exc.Message.ToString();
+                    Crashes.TrackError(exc);
                 }              
             }
 

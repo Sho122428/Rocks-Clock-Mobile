@@ -28,24 +28,15 @@ namespace RockClockMobile
         {
             InitializeComponent();
 
-            //if (UseMockDataStore)
-            //{
-            //    DependencyService.Register<MockDataStore>();
-            //    DependencyService.Register<MockDataStoreTimeLog>();
-            //}
-            //else
-            //    DependencyService.Register<AzureDataStore>();
-            //MainPage = new LoginPage();
-            //MainPage = new AppShell(); 
             DependencyService.Register<TimeLogService>();
             DependencyService.Register<EmployeeServices>();
             DependencyService.Register<UserServices>();
             DependencyService.Register<BreakLogService>();
             DependencyService.Register<AccountService>();
             
-            //App.Current.MainPage = new NamesListPage();
+            
             App.Current.MainPage = new Views.LoginForm.LoginPage();
-            //App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(0);
+            
         }       
 
         protected override void OnStart()
@@ -60,14 +51,12 @@ namespace RockClockMobile
 
         protected override void OnSleep()
         {
-            // Ensure our stopwatch is reset so the elapsed time is 0.
-            stopWatch.Reset();
+            
         }
 
         protected override void OnResume()
         {
-            // App enters the foreground so start our stopwatch again.
-            stopWatch.Start();
+            
         }
     }
 }
