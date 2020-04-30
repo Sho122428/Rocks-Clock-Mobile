@@ -145,7 +145,13 @@ namespace RockClockMobile.ViewModels.ResetPassword
                     ToastPopup.ToastMessage("New password and confirm new password not matched.", false);
                 }
                 else {
-                   await ChangePassword(changePasswordVM);
+                    if (await ChangePassword(changePasswordVM))
+                    {
+                        ToastPopup.ToastMessage("Pincode successfully updated.", false);
+                    }
+                    else {
+                        ToastPopup.ToastMessage("Error on updating the pincode.", false);
+                    }
                 }
             }
             catch (Exception ex)

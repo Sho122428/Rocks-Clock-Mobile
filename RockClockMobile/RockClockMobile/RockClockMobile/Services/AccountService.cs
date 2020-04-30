@@ -77,8 +77,14 @@ namespace RockClockMobile.Services
 
                 var serializedItem = JsonConvert.SerializeObject(changePasswordVM);
 
-                var response = await client.PostAsync($"api/Account/ChangePassword", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+                var buffer = System.Text.Encoding.UTF8.GetBytes(serializedItem);
+                var byteContent = new ByteArrayContent(buffer);
 
+                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                //var response = await client.PutAsync($"api/Account/changepassword", new StringContent(serializedItem, Encoding.UTF8, "application/json"));
+
+                var response = client.PutAsync($"api/Account/changepassword", byteContent).Result;
                 return response.IsSuccessStatusCode;
             }
             return false;

@@ -171,7 +171,7 @@ namespace RockClockMobile.Views.Navigation
                         Device.BeginInvokeOnMainThread(async () =>
                         {
                             await namesListVM.OnLoadPage();
-                            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(empSignIn.id);
+                            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(userData.id);
                         });
                     }
                     else
