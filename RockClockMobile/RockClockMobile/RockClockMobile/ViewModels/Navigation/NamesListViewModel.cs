@@ -175,6 +175,11 @@ namespace RockClockMobile.ViewModels.Navigation
                 return;
 
             IsBusy = true;
+            Visible = true;
+            IsLoading = true;
+            IsLoadingOpacity = .5;
+            Enable = false;
+            await Task.Delay(3000);
 
             try
             {
@@ -194,6 +199,10 @@ namespace RockClockMobile.ViewModels.Navigation
             finally
             {
                 IsBusy = false;
+                IsLoading = false;
+                Visible = false;
+                IsLoadingOpacity = 1;
+                Enable = true;
             }
         }
 
