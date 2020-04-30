@@ -140,19 +140,27 @@ namespace RockClockMobile.ViewModels.ResetPassword
                 changePasswordVM.Id = this.UserId;
                 changePasswordVM.isWeb = false;
 
-                if (changePasswordVM.Password != changePasswordVM.ConfirmPassword)
+                if (changePasswordVM.Password.Length < 4)
                 {
-                    ToastPopup.ToastMessage("New password and confirm new password not matched.", false);
+                    ToastPopup.ToastMessage("Pincode length should be 4 digit numbers.", false);
                 }
                 else {
-                    if (await ChangePassword(changePasswordVM))
+                    if (changePasswordVM.Password != changePasswordVM.ConfirmPassword)
                     {
-                        ToastPopup.ToastMessage("Pincode successfully updated.", false);
+                        ToastPopup.ToastMessage("New password and confirm new password not matched.", false);
                     }
-                    else {
-                        ToastPopup.ToastMessage("Error on updating the pincode.", false);
+                    else
+                    {
+                        if (await ChangePassword(changePasswordVM))
+                        {
+                            ToastPopup.ToastMessage("Pincode successfully updated.", false);
+                        }
+                        else
+                        {
+                            ToastPopup.ToastMessage("Error on updating pincode.", false);
+                        }
                     }
-                }
+                }              
             }
             catch (Exception ex)
             {

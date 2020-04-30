@@ -64,7 +64,7 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         #endregion
 
-        Employee empDtl = GlobalServices.employee;
+        RocksUser empDtl = GlobalServices.employee;
         List<TimeLog> empUserLog = GlobalServices.EmployeeTime;
         List<BreakLog> empUserBreakLog = GlobalServices.EmployeeBreak;
 

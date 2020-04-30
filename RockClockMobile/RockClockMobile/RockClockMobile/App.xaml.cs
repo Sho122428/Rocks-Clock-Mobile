@@ -29,7 +29,7 @@ namespace RockClockMobile
             InitializeComponent();
 
             DependencyService.Register<TimeLogService>();
-            DependencyService.Register<EmployeeServices>();
+            DependencyService.Register<RocksUserServices>();
             DependencyService.Register<UserServices>();
             DependencyService.Register<BreakLogService>();
             DependencyService.Register<AccountService>();

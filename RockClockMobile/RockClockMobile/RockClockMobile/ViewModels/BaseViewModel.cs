@@ -19,7 +19,7 @@ namespace RockClockMobile.ViewModels
         public ITimeLogServices<TimeLog> TimeLogServices => DependencyService.Get<ITimeLogServices<TimeLog>>();
         public IBreakLogServices<BreakLog> BreakLogServices => DependencyService.Get<IBreakLogServices<BreakLog>>();
         public IUserServices<User> UserServices => DependencyService.Get<IUserServices<User>>();
-        public IEmployeeServices<Employee> EmployeeServices => DependencyService.Get<IEmployeeServices<Employee>>();
+        public IRocksUserServices<RocksUser> EmployeeServices => DependencyService.Get<IRocksUserServices<RocksUser>>();
         public IAccountService<ChangePasswordVM> AccountService => DependencyService.Get<IAccountService<ChangePasswordVM>>();
 
         bool isBusy = false;

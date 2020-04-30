@@ -56,9 +56,9 @@ namespace RockClockMobile
             //call pincode page
             
 
-            var empSignIn = (Employee)e.ItemData;
+            var empSignIn = (RocksUser)e.ItemData;
 
-            var empDtl = new Employee{
+            var empDtl = new RocksUser{
                 id = empSignIn.id,
                 firstName = empSignIn.firstName,
                 lastName = empSignIn.lastName,

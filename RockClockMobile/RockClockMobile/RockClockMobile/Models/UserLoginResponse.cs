@@ -6,7 +6,7 @@ namespace RockClockMobile.Models
 {
     public class UserLoginResponse
     {
-        public Employee user { get; set; } = new Employee();
+        public RocksUser user { get; set; } = new RocksUser();
         public string result { get; set; } = "Success";
         public IEnumerable<string> roles { get; set; } = null;
         public string token { get; set; }

@@ -32,7 +32,7 @@ namespace RockClockMobile.Behaviors.Navigation
                 KeySelector = (object obj1) =>
                 {
                     //var item = (obj1 as Models.Navigation.Contact);
-                    var item = (obj1 as Models.Employee);
+                    var item = (obj1 as Models.RocksUser);
                     return item.firstName[0].ToString(CultureInfo.CurrentCulture);
                 },
             });

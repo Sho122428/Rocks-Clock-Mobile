@@ -23,9 +23,9 @@ namespace RockClockMobile.ViewModels.Navigation
     {
         #region Fields
 
-        private Command<Employee> itemTappedCommand;
+        private Command<RocksUser> itemTappedCommand;
         //EmployeeServices employeeServices = new EmployeeServices();
-        public ObservableCollection<Employee> NamesList { get; set; }
+        public ObservableCollection<RocksUser> NamesList { get; set; }
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace RockClockMobile.ViewModels.Navigation
         /// </summary>
         public NamesListViewModel()
         {
-            NamesList = new ObservableCollection<Employee>();
+            NamesList = new ObservableCollection<RocksUser>();
             GetEmployeeList();
         }
         #endregion
@@ -50,11 +50,11 @@ namespace RockClockMobile.ViewModels.Navigation
         /// <summary>
         /// Gets the command that will be executed when an item is selected.
         /// </summary>
-        public Command<Employee> ItemTappedCommand
+        public Command<RocksUser> ItemTappedCommand
         {
             get
             {
-                return this.itemTappedCommand ?? (this.itemTappedCommand = new Command<Employee>(this.NavigateToNextPage));
+                return this.itemTappedCommand ?? (this.itemTappedCommand = new Command<RocksUser>(this.NavigateToNextPage));
             }
         }      
 
@@ -187,7 +187,7 @@ namespace RockClockMobile.ViewModels.Navigation
                 var employeeFromAPI = await EmployeeServices.GetEmployeeList(true);
 
                 //var employeeFromAPI = GlobalServices.employeeList;
-                IEnumerable<Employee> employeeList = employeeFromAPI.OrderBy(a => a.firstName);
+                IEnumerable<RocksUser> employeeList = employeeFromAPI.OrderBy(a => a.firstName);
                 GlobalServices.employeeList = employeeList;
                 foreach (var dtl in employeeList)
                 {
@@ -210,13 +210,13 @@ namespace RockClockMobile.ViewModels.Navigation
         }
 
         //Get specific Employee from Rocks
-        public async Task<Employee> GetEmployeeById(int id)
+        public async Task<RocksUser> GetEmployeeById(int id)
         {
             IsBusy = true;
 
             try
             {
-                Employee employee = await EmployeeServices.GetEmployeeById(id);
+                RocksUser employee = await EmployeeServices.GetEmployeeById(id);
                 return employee;
             }
             catch (Exception ex)

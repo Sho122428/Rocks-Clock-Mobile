@@ -15,7 +15,7 @@ namespace RockClockMobile.Views
     {
         NamesListViewModel namesListViewModel = new NamesListViewModel();
 
-        Employee employee = GlobalServices.employee;
+        RocksUser employee = GlobalServices.employee;
         int lastUserId = 0;
         public PincodePage(string userPassword,int userId)
         {

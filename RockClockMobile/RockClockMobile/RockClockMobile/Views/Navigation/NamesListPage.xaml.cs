@@ -135,7 +135,7 @@ namespace RockClockMobile.Views.Navigation
             else {
                 tapCount++;
                 NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
-                var empSignIn = (Employee)e.ItemData == null ? null : (Employee)e.ItemData;
+                var empSignIn = (RocksUser)e.ItemData == null ? null : (RocksUser)e.ItemData;
 
                 var userLoginParam = new UserLoginParam
                 {
@@ -178,6 +178,7 @@ namespace RockClockMobile.Views.Navigation
                     {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
+
                             await namesListVM.OnLoadPage();
                             App.Current.MainPage = new PincodePage(userPassword, lastUserId);
                         });

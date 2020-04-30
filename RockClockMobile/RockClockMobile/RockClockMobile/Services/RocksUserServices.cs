@@ -12,20 +12,20 @@ using Xamarin.Essentials;
 
 namespace RockClockMobile.Services
 {
-    public class EmployeeServices : IEmployeeServices<Employee>
+    public class RocksUserServices : IRocksUserServices<RocksUser>
     {
         HttpClient client;
         Uri baseAddr;
-        public  ObservableCollection<Employee> EmployeeList { get; set; }
+        public  ObservableCollection<RocksUser> EmployeeList { get; set; }
 
-        public EmployeeServices()
+        public RocksUserServices()
         {            
             baseAddr = new Uri("http://18.136.14.237:8282");
             client = new HttpClient { BaseAddress = baseAddr }; 
         }
         bool IsConnected => Connectivity.NetworkAccess == NetworkAccess.Internet;        
 
-        public async Task<IEnumerable<Employee>> GetEmployeeList(bool forceRefresh)
+        public async Task<IEnumerable<RocksUser>> GetEmployeeList(bool forceRefresh)
         {
             if (forceRefresh && IsConnected)
             {
@@ -35,7 +35,7 @@ namespace RockClockMobile.Services
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
                     var json = await client.GetStringAsync($"api/RocksUsers");
-                    return await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<Employee>>(json));
+                    return await Task.Run(() => JsonConvert.DeserializeObject<IEnumerable<RocksUser>>(json));
                 }
                 catch (Exception exc) {
                     //exc.Message.ToString();
@@ -46,7 +46,7 @@ namespace RockClockMobile.Services
             return null;
         }
 
-        public async Task<Employee> GetEmployeeById(int id)
+        public async Task<RocksUser> GetEmployeeById(int id)
         {
             if (id != 0 && IsConnected)
             {
@@ -55,7 +55,7 @@ namespace RockClockMobile.Services
 
                 var json = await client.GetStringAsync($"api/RocksUsers/{id}?includeProjects=true");
                 //var json = await client.GetStringAsync($"api/Account/loginM");
-                return await Task.Run(() => JsonConvert.DeserializeObject<Employee>(json));
+                return await Task.Run(() => JsonConvert.DeserializeObject<RocksUser>(json));
             }
 
             return null;

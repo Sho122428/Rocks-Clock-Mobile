@@ -21,7 +21,7 @@ namespace RockClockMobile.Controls
         {
             if (base.FilterContacts(obj))
             {
-                var taskInfo = obj as Employee;
+                var taskInfo = obj as RocksUser;
                 if (taskInfo == null || string.IsNullOrEmpty(taskInfo.firstName))
                 {
                     return false;

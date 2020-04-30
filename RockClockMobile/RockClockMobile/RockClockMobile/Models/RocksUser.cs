@@ -5,9 +5,8 @@ using System.Text;
 using Xamarin.Forms.Internals;
 
 namespace RockClockMobile.Models
-{
-  
-    public class Employee
+{  
+    public class RocksUser
     {
         public string email { get; set; }
         public string userName { get; set; }
@@ -24,7 +23,7 @@ namespace RockClockMobile.Models
         public DateTime changePasswordTime { get; set; }
         public User user { get; set; }
         public UserRole rocksUserRoleMap { get; set; }
-        public List<EmployeeProjectMap> rocksUserProjectMaps { get; set; }
+        public List<RocksUserProjectMap> rocksUserProjectMaps { get; set; }
         public int id { get; set; }
         public DateTime modifieddt { get; set; }
         public int modifiedby { get; set; }

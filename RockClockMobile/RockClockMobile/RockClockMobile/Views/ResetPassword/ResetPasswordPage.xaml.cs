@@ -1,4 +1,5 @@
-﻿using RockClockMobile.ViewModels.ResetPassword;
+﻿using RockClockMobile.Custom;
+using RockClockMobile.ViewModels.ResetPassword;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -26,6 +27,30 @@ namespace RockClockMobile.Views.ResetPassword
             ImgConfirmPassword.Source = ImageSource.FromFile("passwordicon");
             ImgCurrentPassword.Source = ImageSource.FromFile("passwordicon");
             ImgNewPassword.Source = ImageSource.FromFile("passwordicon");
+
+            CurrentPasswordEntry.Keyboard = Keyboard.Numeric;
+            NewPasswordEntry.Keyboard = Keyboard.Numeric;
+            ConfirmNewPasswordEntry.Keyboard = Keyboard.Numeric;
+        }
+
+        private void ConfirmNewPasswordTextLengthEvent(object sender, TextChangedEventArgs e)
+        {           
+        }
+
+        private void NewPasswordTextLengthEvent(object sender, TextChangedEventArgs e)
+        {
+            var entry = (Entry)sender;
+            int entryLength = entry.Text.Length;
+
+            if (entryLength > 4)
+            {
+                ToastPopup.ToastMessage("Pincode length should be 4 digit numbers.", false);
+                BtnSubmit.IsEnabled = false;
+            }
+            else
+            {
+                BtnSubmit.IsEnabled = true;
+            }
         }
     }
 }

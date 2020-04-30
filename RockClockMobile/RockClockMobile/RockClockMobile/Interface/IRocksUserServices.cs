@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RockClockMobile.Services
 {
-    public interface IEmployeeServices<T>
+    public interface IRocksUserServices<T>
     {
         Task<T> GetEmployeeById(int id);      
         Task<IEnumerable<T>> GetEmployeeList(bool forceRefresh = false);

@@ -4,11 +4,11 @@ using System.Text;
 
 namespace RockClockMobile.Models
 {
-    public class EmployeeProjectMap
+    public class RocksUserProjectMap
     {
         public int rocksProjectId { get; set; }
         public int rocksUserId { get; set; }
-        public EmployeeProjects rocksProject { get; set; }
+        public RocksProject rocksProject { get; set; }
         public DateTime modifieddt { get; set; }
         public int modifiedby { get; set; }
         public DateTime createddt { get; set; }

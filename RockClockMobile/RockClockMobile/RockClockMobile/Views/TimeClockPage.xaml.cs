@@ -16,7 +16,7 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TimeClockPage : ContentPage
     {
-        Employee empDtl = GlobalServices.employee;
+        RocksUser empDtl = GlobalServices.employee;
         List<TimeLog> empUserLog = GlobalServices.EmployeeTime;
         List<BreakLog> empUserBreakLog = GlobalServices.EmployeeBreak;
         //TimeLog LogedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
