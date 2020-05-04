@@ -13,7 +13,7 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PincodePage : ContentPage
     {
-        NamesListViewModel namesListViewModel = new NamesListViewModel();
+        //NamesListViewModel namesListViewModel = new NamesListViewModel();
 
         Employee employee = GlobalServices.employee;
         int lastUserId = 0;
@@ -56,7 +56,7 @@ namespace RockClockMobile.Views
 
                 if (BtnSignIn.Text == "Create PIN")
                 {
-                    await namesListViewModel.AddUser(pin.ToString(), lastUserId);
+                    //await namesListViewModel.AddUser(pin.ToString(), lastUserId);
 
                     // await Task.Run(async () => {
                     ToastPopup.ToastMessage("Pin created successfully.", false);

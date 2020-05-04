@@ -42,6 +42,8 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private string breakButtonText = "Start Break";
 
+        private bool isClockOutButtonVisible = false;
+
         private bool isBreakButtonVisible = false;
 
         private bool isSignOutButtonVisible = true;
@@ -52,8 +54,6 @@ namespace RockClockMobile.ViewModels.Onboarding
 
         private bool isOnBreak = false;
 
-        private bool isClockOutBtnVisible = false;
-
         private string clockIn = "--:--";
 
         private string breakStart = "--:--";
@@ -61,6 +61,8 @@ namespace RockClockMobile.ViewModels.Onboarding
         private string breakStop = "--:--";
 
         private int timeLogStatus = 0;
+
+        private int brkButtonCSpan = 1;
 
         #endregion
 
@@ -142,20 +144,25 @@ namespace RockClockMobile.ViewModels.Onboarding
               
                 if (UserButtonAccess.CanTimeIn)
                 {
+                    this.BrkButtonCSpan = 1;
                     this.FNameUser = empDtl.firstName + " is off the clock.";
                 }
                 if (UserButtonAccess.CanTimeOut)
                 {
+                    this.IsClockOutButtonVisible = true;
+                    this.BrkButtonCSpan = 1;
                     this.IsProjectButtonVisible = false;
                     this.FNameUser = currentUser;        
                 }
                 if (UserButtonAccess.CanBreakIn)
                 {
+                    this.BrkButtonCSpan = 1;
                     this.IsBreakButtonVisible = UserButtonAccess.CanBreakIn;
                     this.FNameUser = currentUser;
                 }
                 if (UserButtonAccess.CanBreakOut)
                 {
+                    this.BrkButtonCSpan = 40;
                     this.BreakButtonText = "End Break";
                     this.IsBreakButtonVisible = UserButtonAccess.CanBreakOut;
                     this.IsProjectButtonVisible = false;
@@ -166,7 +173,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
             catch (Exception ex)
             {
-                var msg = ex.Message;
+                //var msg = ex.Message;
+                Crashes.TrackError(ex);
             }
         }
 
@@ -324,6 +332,24 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
+        public bool IsClockOutButtonVisible
+        {
+            get
+            {
+                return this.isClockOutButtonVisible;
+            }
+
+            set
+            {
+                if (this.isClockOutButtonVisible == value)
+                {
+                    return;
+                }
+
+                this.isClockOutButtonVisible = value;
+                this.OnPropertyChanged();
+            }
+        }
         public bool IsBreakButtonVisible
         {
             get
@@ -434,6 +460,25 @@ namespace RockClockMobile.ViewModels.Onboarding
                 }
 
                 this.timeLogStatus = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public int BrkButtonCSpan
+        {
+            get
+            {
+                return this.brkButtonCSpan;
+            }
+
+            set
+            {
+                if (this.brkButtonCSpan == value)
+                {
+                    return;
+                }
+
+                this.brkButtonCSpan = value;
                 this.OnPropertyChanged();
             }
         }
@@ -626,8 +671,8 @@ namespace RockClockMobile.ViewModels.Onboarding
             this.IsLoggedIn = false;
             IsBusy = true;
             IsBusyOpacity = .5;
-            ToastPopup.ToastMessage("Signing out..",false);
-            await Task.Delay(3000);
+            ToastPopup.ToastMessage("Signing out...",false);
+            await Task.Delay(2000);
             IsBusy = false;
             IsBusyOpacity = 1;
 

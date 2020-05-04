@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AppCenter.Crashes;
+using RockClockMobile.Custom;
 
 namespace RockClockMobile.ViewModels.Navigation
 {
@@ -179,13 +180,14 @@ namespace RockClockMobile.ViewModels.Navigation
             IsLoading = true;
             IsLoadingOpacity = .5;
             Enable = false;
+            
             await Task.Delay(3000);
 
             try
             {
                 NamesList.Clear();
+                ToastPopup.ToastMessage("Loading list of employees...", true);
                 var employeeFromAPI = await EmployeeServices.GetEmployeeList(true);
-
                 //var employeeFromAPI = GlobalServices.employeeList;
                 IEnumerable<Employee> employeeList = employeeFromAPI.OrderBy(a => a.firstName);
                 GlobalServices.employeeList = employeeList;
