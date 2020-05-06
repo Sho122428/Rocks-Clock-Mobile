@@ -37,7 +37,7 @@ namespace RockClockMobile.Behaviors.Onboarding
                 int itemsCount = rotator.ItemsSource.Count();
                 int.TryParse(selectedIndex.ToString(CultureInfo.CurrentCulture), out int index);
 
-                var viewModel = rotator.BindingContext as OnBoardingAnimationViewModel;
+                var viewModel = rotator.BindingContext as TimeClockViewModel;
                 if (selectedIndex == itemsCount - 1)
                 {
                     //viewModel.NextButtonText = "DONE";

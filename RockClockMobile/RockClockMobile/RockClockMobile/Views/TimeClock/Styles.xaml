@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    x:Class="RockClockMobile.Views.Onboarding.Styles"
+       xmlns:control="clr-namespace:RockClockMobile.Controls">
+
+    <Color x:Key="EntryPlaceholderColor">#ffffff</Color>
+    <Color x:Key="BorderBackgroundColor">#20FFFFFF</Color>
+    <Color x:Key="GradientStartColor">#012E8B</Color>
+    <Color x:Key="GradientEndColor">#3F0041</Color>
+    <Color x:Key="FacebookBlue">#4267B2</Color>
+
+    <Style x:Key="LabelStyle" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="LineHeight" Value="{OnPlatform Android=1.25,Default=-1}"/>
+        <Setter Property="TextColor" Value="{DynamicResource Gray-White}"/>
+    </Style>
+
+    <!--Common button style-->
+    <!--<Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+        <Setter Property="Margin" Value="0,10,0,24"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="WidthRequest" Value="245"/>
+        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}"/>
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}"/>
+    </Style>-->
+    <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+        <Setter Property="Margin" Value="0,10,0,24"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="WidthRequest" Value="245"/>
+        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}"/>
+        <Setter Property="TextColor" Value="Green"/>
+    </Style>
+
+    <!--  Common style for buttons  -->
+    <Style x:Key="PincodeSfButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundGradient">
+            <Setter.Value>
+                <gradient:SfLinearGradientBrush>
+                    <gradient:SfLinearGradientBrush.GradientStops>
+                        <gradient:SfGradientStop Offset="0" Color="Green" />
+                        <gradient:SfGradientStop Offset="1" Color="Green" />
+                    </gradient:SfLinearGradientBrush.GradientStops>
+                </gradient:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="SfGradientViewStyle" TargetType="gradient:SfGradientView">
+        <Setter Property="BackgroundBrush">
+            <Setter.Value>
+                <gradient:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <gradient:SfLinearGradientBrush.GradientStops>
+                        <gradient:SfGradientStop Color="#95e6b4" Offset="0.0" />
+                        <gradient:SfGradientStop Color="#007840" Offset="1.0" />
+                    </gradient:SfLinearGradientBrush.GradientStops>
+                </gradient:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="WidthRequest" Value="100"/>
+    </Style>
+
+    <!--  Common style for entries  -->
+    <Style x:Key="EntryStyle" TargetType="control:BorderlessEntry">
+        <Setter Property="PlaceholderColor" Value="Green" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="Green" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="15,0" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="ReturnType" Value="Done" />
+    </Style>
+
+</ResourceDictionary>

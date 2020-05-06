@@ -73,7 +73,7 @@ namespace RockClockMobile.ViewModels.Navigation
         /// Invoked when an item is selected from the movies list.
         /// </summary>
         /// <param name="selectedItem">Selected item from the list view.</param>
-        private async void NavigateToNextPage(object selectedItem)
+        private void NavigateToNextPage(object selectedItem)
         {
             // Do something
             //await OnLoadPage();
@@ -181,7 +181,7 @@ namespace RockClockMobile.ViewModels.Navigation
             IsLoadingOpacity = .5;
             Enable = false;
             
-            await Task.Delay(3000);
+            await Task.Delay(1500);
 
             try
             {
