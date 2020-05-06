@@ -1,12 +1,9 @@
-﻿using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
-using RockClockMobile.Custom;
+﻿using RockClockMobile.Custom;
 using RockClockMobile.Models;
+using RockClockMobile.Security;
 using RockClockMobile.Services;
 using RockClockMobile.ViewModels.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -135,59 +132,74 @@ namespace RockClockMobile.Views.Navigation
             else {
                 tapCount++;
                 NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
-                var empSignIn = (RocksUser)e.ItemData == null ? null : (RocksUser)e.ItemData;
 
-                var userLoginParam = new UserLoginParam
-                {
-                    RocksUserId = empSignIn.id,
-                    Password = "1234",
-                    Remember = true
-                };
+                //var empSignIn = (RocksUser)e.ItemData == null ? null : (RocksUser)e.ItemData;
 
-                var userLoggedIn = await namesListVM.UserLogin(userLoginParam);
+                ////DecryptPassword(empSignIn.password);
 
-                if (userLoggedIn != null)
-                {
-                    GlobalServices.employee = userLoggedIn.rocksUser;
-                    Application.Current.Properties["user_id "] = empSignIn.id;
+                ////var decryptedPassword = Security.Security.ReturnDecryptedPassword(empSignIn.password);
 
-                    var userData = await namesListVM.GetUserList(empSignIn.id);
-                    string userPassword = string.Empty;
-                    int lastUserId = 0;
+                //var userLoginParam = new UserLoginParam
+                //{
+                //    RocksUserId = empSignIn.id,
+                //    Password = "1111",
+                //    Remember = true
+                //};
 
-                    if (userData != null)
-                    {
-                        userPassword = userData.password;
-                    }
-                    else
-                    {
-                        userPassword = "0";
-                        //lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
-                        lastUserId = 0;
-                    }
+                //var userLoggedIn = await namesListVM.UserLogin(userLoginParam);
 
-                    if (userData.isTempPassword && userPassword != null)
-                    {
+                //if (userLoggedIn != null)
+                //{
+                //    GlobalServices.employee = userLoggedIn.rocksUser;
+                //    Application.Current.Properties["user_id "] = empSignIn.id;
+
+                //    var userData = await namesListVM.GetUserList(empSignIn.id);
+                //    string userPassword = string.Empty;
+                //    int lastUserId = 0;
+
+                //    if (userData != null)
+                //    {
+                //        userPassword = userData.password;
+                //    }
+                //    else
+                //    {
+                //        userPassword = "0";
+                //        //lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
+                //        lastUserId = 0;
+                //    }
+
+                //    if (userData.isTempPassword && userPassword != null)
+                //    {
+                //        Device.BeginInvokeOnMainThread(async () =>
+                //        {
+                //            await namesListVM.OnLoadPage();
+                //            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(empSignIn.id);
+                //        });
+                //    }
+                //    else
+                //    {
                         Device.BeginInvokeOnMainThread(async () =>
                         {
-                            await namesListVM.OnLoadPage();
-                            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(userData.id);
-                        });
-                    }
-                    else
-                    {
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
 
                             await namesListVM.OnLoadPage();
-                            App.Current.MainPage = new PincodePage(userPassword, lastUserId);
+                            //App.Current.MainPage = new PincodePage(userPassword, lastUserId);
+                            App.Current.MainPage = new PincodePage();
                         });
-                    }
-                }
-                else {
-                    ToastPopup.ToastMessage("User not found, please contact the administrator.",false);
-                }
+                //    }
+                //}
+                //else {
+                //    ToastPopup.ToastMessage("User not found, please contact the administrator.",false);
+                //}
             }                       
+        }
+
+        private (string salt, string encrypPass) DecryptPassword(string password)
+        {
+            var salt = CryptoAES.CreateSalt();
+
+            var encrypPass = password.ConvertToSecureString().ReturnEncryptedPassword(salt);
+            
+            return (salt, encrypPass);
         }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {

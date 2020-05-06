@@ -142,22 +142,22 @@ namespace RockClockMobile.ViewModels.ResetPassword
 
                 if (changePasswordVM.Password.Length < 4)
                 {
-                    ToastPopup.ToastMessage("Pincode length should be 4 digit numbers.", false);
+                    ToastPopup.ToastMessage("Pin length should be 4 digit numbers.", false);
                 }
                 else {
                     if (changePasswordVM.Password != changePasswordVM.ConfirmPassword)
                     {
-                        ToastPopup.ToastMessage("New password and confirm new password not matched.", false);
+                        ToastPopup.ToastMessage("New pin and confirm new pin not matched.", false);
                     }
                     else
                     {
                         if (await ChangePassword(changePasswordVM))
                         {
-                            ToastPopup.ToastMessage("Pincode successfully updated.", false);
+                            ToastPopup.ToastMessage("Pin successfully updated.", false);
                         }
                         else
                         {
-                            ToastPopup.ToastMessage("Error on updating pincode.", false);
+                            ToastPopup.ToastMessage("Error on updating pin.", false);
                         }
                     }
                 }              

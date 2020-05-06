@@ -17,13 +17,12 @@ namespace RockClockMobile.Views
 
         RocksUser employee = GlobalServices.employee;
         int lastUserId = 0;
-        public PincodePage(string userPassword,int userId)
+        public PincodePage()
         {
             InitializeComponent();
 
             BindingContext = new PincodeViewModel();
 
-            lastUserId = userId;
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
                 Device.BeginInvokeOnMainThread(() =>
@@ -34,10 +33,6 @@ namespace RockClockMobile.Views
 
             NavigationPage.SetHasNavigationBar(this,false);
 
-            if (userPassword == "0")
-            {
-                BtnSignIn.Text = "Create PIN";
-            }
             EntryPin.Keyboard = Keyboard.Numeric;
 
             EntryPin.Text = "1234";
