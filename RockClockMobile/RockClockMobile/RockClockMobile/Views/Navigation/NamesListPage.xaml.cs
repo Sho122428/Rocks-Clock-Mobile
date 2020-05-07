@@ -32,8 +32,6 @@ namespace RockClockMobile.Views.Navigation
                 return true;
             });
 
-           
-
             tapCount = 0;
         }
 
@@ -178,13 +176,15 @@ namespace RockClockMobile.Views.Navigation
                 //    }
                 //    else
                 //    {
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
 
-                            await namesListVM.OnLoadPage();
-                            //App.Current.MainPage = new PincodePage(userPassword, lastUserId);
-                            App.Current.MainPage = new PincodePage();
-                        });
+                var empSignIn = (RocksUser)e.ItemData == null ? null : (RocksUser)e.ItemData;
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+
+                    await namesListVM.OnLoadPage();
+                    //App.Current.MainPage = new PincodePage(userPassword, lastUserId);
+                    App.Current.MainPage = new PincodePage(empSignIn.id);
+                });
                 //    }
                 //}
                 //else {

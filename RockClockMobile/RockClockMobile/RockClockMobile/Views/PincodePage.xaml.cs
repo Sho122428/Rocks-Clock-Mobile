@@ -16,8 +16,8 @@ namespace RockClockMobile.Views
         NamesListViewModel namesListViewModel = new NamesListViewModel();
 
         RocksUser employee = GlobalServices.employee;
-        int lastUserId = 0;
-        public PincodePage()
+        int userId = 0;
+        public PincodePage(int signedInUserId)
         {
             InitializeComponent();
 
@@ -37,6 +37,7 @@ namespace RockClockMobile.Views
 
             EntryPin.Text = "1234";
             ImagePin.Source = ImageSource.FromFile("passwordicon.png");
+            userId = signedInUserId;
         }
 
         private async void BtnSignInEvent(object sender, EventArgs e)
@@ -48,49 +49,52 @@ namespace RockClockMobile.Views
             }
             else {
                 int pin = EntryPin.Text == "" ? 0 : Convert.ToInt32(EntryPin.Text);
-
-                if (BtnSignIn.Text == "Create PIN")
+               
+                if (pin == 0)
                 {
-                    await namesListViewModel.AddUser(pin.ToString(), lastUserId);
-
-                    // await Task.Run(async () => {
-                    ToastPopup.ToastMessage("Pin created successfully.", false);
+                    ToastPopup.ToastMessage("Pin is required.", false);
                     await Task.Delay(2000);
-                    EntryPin.Text = string.Empty;
-                    BtnSignIn.Text = "Sign In";
-
-                    // });
-                    //userSign = await userViewModel.GetUser();
                 }
                 else
                 {
-                    if (pin == 0)
+                    var userLoginParam = new UserLoginParam
                     {
-                        ToastPopup.ToastMessage("Pin is required.", false);
+                        RocksUserId = userId,
+                        Password = pin.ToString(),
+                        Remember = true
+                    };
+                    var userLoggedIn = await namesListViewModel.UserLogin(userLoginParam);
+
+                    if (userLoggedIn != null)
+                    {
+                        GlobalServices.employee = userLoggedIn.rocksUser;
+                        var userSignedDetails = await namesListViewModel.GetUserList(userId);
+
+                        if (userSignedDetails.isTempPassword && userSignedDetails != null)
+                        {
+                            Device.BeginInvokeOnMainThread(async () =>
+                            {
+                                await namesListViewModel.OnLoadPage();
+                                App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(userId);
+                            });
+                        }
+                        else
+                        {
+                            Device.BeginInvokeOnMainThread(async () =>
+                            {
+                                PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
+
+                                await pincodeVM.OnLoadPage();
+                                pincodeVM.IsLoggedIn = false;
+                                await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+                            });
+                        }
+                    }
+                    else {
+                        ToastPopup.ToastMessage("Pin is incorrect.", false);
                         await Task.Delay(2000);
                     }
-                    else
-                    {
-                        //if (userSign.password != pin)
-                        //{
-                        //    await DisplayAlert("Error", "Pincode is not registered.", "OK");
-                        //}
-                        //else
-                        //{
-
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
-                            
-                            await pincodeVM.OnLoadPage();
-                            pincodeVM.IsLoggedIn = false;
-                            await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                        });
-
-                       
-                        //}
-                    }
-                }
+                }                
             }
         }
     }

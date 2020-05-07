@@ -57,6 +57,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
 
         public int UserId { get; set; }
         public bool IsEnable { get; set; }
+        public bool IsPasswordUpdated { get; set; }
         public string CurrentPassword
         {
             get
@@ -139,15 +140,18 @@ namespace RockClockMobile.ViewModels.ResetPassword
                 changePasswordVM.currentPassword = this.CurrentPassword;
                 changePasswordVM.Id = this.UserId;
                 changePasswordVM.isWeb = false;
+                IsPasswordUpdated = true;
 
                 if (changePasswordVM.Password.Length < 4)
                 {
                     ToastPopup.ToastMessage("Pin length should be 4 digit numbers.", false);
+                    IsPasswordUpdated = false;
                 }
                 else {
                     if (changePasswordVM.Password != changePasswordVM.ConfirmPassword)
                     {
                         ToastPopup.ToastMessage("New pin and confirm new pin not matched.", false);
+                        IsPasswordUpdated = false;
                     }
                     else
                     {
@@ -158,6 +162,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
                         else
                         {
                             ToastPopup.ToastMessage("Error on updating pin.", false);
+                            IsPasswordUpdated = false;
                         }
                     }
                 }              
@@ -165,6 +170,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
             catch (Exception ex)
             {
                 ToastPopup.ToastMessage(ex.Message,true);
+                IsPasswordUpdated = false;
             }    
         }
 

@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Custom;
+using RockClockMobile.ViewModels.Navigation;
 using RockClockMobile.ViewModels.ResetPassword;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -16,6 +17,10 @@ namespace RockClockMobile.Views.ResetPassword
         /// <summary>
         /// Initializes a new instance of the <see cref="ResetPasswordPage" /> class.
         /// </summary>
+
+        int signedInUserId = 0;
+        NamesListViewModel namesListViewModel = new NamesListViewModel();
+
         public ResetPasswordPage(int userId)
         {
             InitializeComponent();
@@ -31,6 +36,7 @@ namespace RockClockMobile.Views.ResetPassword
             CurrentPasswordEntry.Keyboard = Keyboard.Numeric;
             NewPasswordEntry.Keyboard = Keyboard.Numeric;
             ConfirmNewPasswordEntry.Keyboard = Keyboard.Numeric;
+            signedInUserId = userId;
         }
 
         private void ConfirmNewPasswordTextLengthEvent(object sender, TextChangedEventArgs e)
@@ -50,6 +56,19 @@ namespace RockClockMobile.Views.ResetPassword
             else
             {
                 BtnSubmit.IsEnabled = true;
+            }
+        }
+
+        private void BtnSubmitClick_Event(object sender, System.EventArgs e)
+        {
+            var resetPasswordVM = (ResetPasswordViewModel)this.BindingContext;
+
+            if (resetPasswordVM.IsPasswordUpdated) {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await namesListViewModel.OnLoadPage();
+                    App.Current.MainPage = new PincodePage(signedInUserId);
+                });
             }
         }
     }
