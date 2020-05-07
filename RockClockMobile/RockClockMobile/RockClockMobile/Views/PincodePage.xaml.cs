@@ -3,6 +3,7 @@ using RockClockMobile.Models;
 using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
+using RockClockMobile.ViewModels.ResetPassword;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -41,7 +42,10 @@ namespace RockClockMobile.Views
         }
 
         private async void BtnSignInEvent(object sender, EventArgs e)
-        {    
+        {
+            PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
+            pincodeVM.IsLoggedIn = false;
+
             if (string.IsNullOrWhiteSpace(EntryPin.Text) || EntryPin.Text.Length > 4)
             {
                 ToastPopup.ToastMessage("Pin contains whitespaces or incorrect.", false);
@@ -74,16 +78,14 @@ namespace RockClockMobile.Views
                         {
                             Device.BeginInvokeOnMainThread(async () =>
                             {
-                                await namesListViewModel.OnLoadPage();
+                                await pincodeVM.OnLoadPage();
                                 App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(userId);
                             });
                         }
                         else
                         {
                             Device.BeginInvokeOnMainThread(async () =>
-                            {
-                                PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
-
+                            {     
                                 await pincodeVM.OnLoadPage();
                                 pincodeVM.IsLoggedIn = false;
                                 await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));

@@ -81,7 +81,7 @@
                                 <control:BorderlessEntry
                                     x:Name="EntryPin"
                                     Placeholder="Enter pin"
-                                    IsPassword="True"                            
+                                    IsPassword="True"          
                                     Style="{StaticResource EntryStyle}"/>
                             </StackLayout>
                         </Grid>

@@ -2,6 +2,7 @@
 using RockClockMobile.Models;
 using RockClockMobile.Security;
 using RockClockMobile.Services;
+using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
+        PincodeViewModel pincodeViewModel = new PincodeViewModel();
         int tapCount;
         public NamesListPage()
         {
@@ -131,76 +133,15 @@ namespace RockClockMobile.Views.Navigation
                 tapCount++;
                 NamesListViewModel namesListVM = (NamesListViewModel)this.BindingContext;
 
-                //var empSignIn = (RocksUser)e.ItemData == null ? null : (RocksUser)e.ItemData;
-
-                ////DecryptPassword(empSignIn.password);
-
-                ////var decryptedPassword = Security.Security.ReturnDecryptedPassword(empSignIn.password);
-
-                //var userLoginParam = new UserLoginParam
-                //{
-                //    RocksUserId = empSignIn.id,
-                //    Password = "1111",
-                //    Remember = true
-                //};
-
-                //var userLoggedIn = await namesListVM.UserLogin(userLoginParam);
-
-                //if (userLoggedIn != null)
-                //{
-                //    GlobalServices.employee = userLoggedIn.rocksUser;
-                //    Application.Current.Properties["user_id "] = empSignIn.id;
-
-                //    var userData = await namesListVM.GetUserList(empSignIn.id);
-                //    string userPassword = string.Empty;
-                //    int lastUserId = 0;
-
-                //    if (userData != null)
-                //    {
-                //        userPassword = userData.password;
-                //    }
-                //    else
-                //    {
-                //        userPassword = "0";
-                //        //lastUserId = user.OrderByDescending(a => a.id).Select(b => b.id).FirstOrDefault();
-                //        lastUserId = 0;
-                //    }
-
-                //    if (userData.isTempPassword && userPassword != null)
-                //    {
-                //        Device.BeginInvokeOnMainThread(async () =>
-                //        {
-                //            await namesListVM.OnLoadPage();
-                //            App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(empSignIn.id);
-                //        });
-                //    }
-                //    else
-                //    {
-
                 var empSignIn = (RocksUser)e.ItemData == null ? null : (RocksUser)e.ItemData;
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-
                     await namesListVM.OnLoadPage();
-                    //App.Current.MainPage = new PincodePage(userPassword, lastUserId);
                     App.Current.MainPage = new PincodePage(empSignIn.id);
                 });
-                //    }
-                //}
-                //else {
-                //    ToastPopup.ToastMessage("User not found, please contact the administrator.",false);
-                //}
             }                       
         }
 
-        private (string salt, string encrypPass) DecryptPassword(string password)
-        {
-            var salt = CryptoAES.CreateSalt();
-
-            var encrypPass = password.ConvertToSecureString().ReturnEncryptedPassword(salt);
-            
-            return (salt, encrypPass);
-        }
         private void HeaderTappedEvent(object sender, EventArgs e)
         {
         }

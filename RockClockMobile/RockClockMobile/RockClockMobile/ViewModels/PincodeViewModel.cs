@@ -15,12 +15,9 @@ namespace RockClockMobile.ViewModels
         private bool isLoggedIn = false;
         public PincodeViewModel()
         {
-            //UserServices employeeServices = new UserServices();
-            //UserList = employeeServices.UserList;
-
             UserList = GlobalServices.User;
             this.IsLoggedIn = true;
-            TimeStartLogout();
+            //TimeStartLogout();
         }
 
         #region Properties      
@@ -126,28 +123,15 @@ namespace RockClockMobile.ViewModels
             {
                 Crashes.TrackError(ex);
             }
-            //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
-
 
             IsLoading = false;
             Visible = false;
             IsLoadingOpacity = 1;
             Enable = true;
         }
-        public bool ValidatePin(int pin)
-        {
-            if (pin != 123)
-            {
-                return false;
-            }
-
-            return true;
-            
-        }
 
         private void TimeStartLogout()
         {
-
             Device.StartTimer(TimeSpan.FromSeconds(30), () =>
             {
                 if (IsLoggedIn)

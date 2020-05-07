@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Custom;
+using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using RockClockMobile.ViewModels.ResetPassword;
 using Xamarin.Forms;
@@ -19,7 +20,6 @@ namespace RockClockMobile.Views.ResetPassword
         /// </summary>
 
         int signedInUserId = 0;
-        NamesListViewModel namesListViewModel = new NamesListViewModel();
 
         public ResetPasswordPage(int userId)
         {
@@ -66,7 +66,7 @@ namespace RockClockMobile.Views.ResetPassword
             if (resetPasswordVM.IsPasswordUpdated) {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await namesListViewModel.OnLoadPage();
+                    await resetPasswordVM.OnLoadPage();
                     App.Current.MainPage = new PincodePage(signedInUserId);
                 });
             }
