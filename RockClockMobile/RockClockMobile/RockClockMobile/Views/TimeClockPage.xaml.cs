@@ -19,22 +19,18 @@ namespace RockClockMobile.Views
         RocksUser empDtl = GlobalServices.employee;
         List<TimeLog> empUserLog = GlobalServices.EmployeeTime;
         List<BreakLog> empUserBreakLog = GlobalServices.EmployeeBreak;
-        //TimeLog LogedInUser = empUserLog.Where(a => a.rocksUserID == empDtl.EmpID).FirstOrDefault();
-
         
 
         bool isTimedIn = false;
         bool isOnBreak = false;
 
-        TimeLogViewModel viewModel;
+        
         public TimeLog TimeLog { get; set; }
         
 
         public TimeClockPage()
         {
             InitializeComponent();
-
-            //BindingContext = viewModel = new TimeLogViewModel();
 
             LoadClock();
         }

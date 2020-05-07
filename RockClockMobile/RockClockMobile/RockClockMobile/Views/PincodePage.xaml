@@ -18,7 +18,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Onboarding/Styles.xaml" />
+                <ResourceDictionary Source="TimeClock/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="ItemTemplate">
                 <ContentPresenter Content="{Binding RotatorItem}" />

@@ -1,4 +1,5 @@
-﻿using RockClockMobile.Custom;
+﻿using Microsoft.AppCenter.Crashes;
+using RockClockMobile.Custom;
 using RockClockMobile.Models;
 using RockClockMobile.Services;
 using System;
@@ -123,7 +124,7 @@ namespace RockClockMobile.ViewModels
             }
             catch (Exception ex)
             {
-
+                Crashes.TrackError(ex);
             }
             //var test = await App.MobileService.GetTable<UserHeader>().Where(a => a.Username == "JANNOTIMOTHYPONO").ToListAsync();
 

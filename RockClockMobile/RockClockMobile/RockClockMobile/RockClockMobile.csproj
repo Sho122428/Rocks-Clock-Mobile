@@ -14,20 +14,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.1.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.1.0" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.DataSource" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.SfRotator" Version="18.1.0.44" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.2.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.2.1" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.DataSource" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRotator" Version="18.1.0.48" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.396" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
@@ -59,13 +59,13 @@
     <EmbeddedResource Update="Views\Navigation\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Onboarding\OnBoardingAnimationPage.xaml">
+    <EmbeddedResource Update="Views\TimeClock\TimeClockPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Onboarding\Styles.xaml">
+    <EmbeddedResource Update="Views\TimeClock\Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Onboarding\WalkthroughItemPage.xaml">
+    <EmbeddedResource Update="Views\TimeClock\WalkthroughItemPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PincodePage.xaml">
@@ -87,5 +87,11 @@
 
   <ItemGroup>
     <Folder Include="Renderers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\TimeClock\TimeClockPage.xaml.cs">
+      <DependentUpon>TimeClockPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
