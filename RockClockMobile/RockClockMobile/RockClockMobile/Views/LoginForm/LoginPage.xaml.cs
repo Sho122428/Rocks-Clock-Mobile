@@ -23,34 +23,34 @@ namespace RockClockMobile.Views.LoginForm
         public LoginPage()
         {
             InitializeComponent();
-            BindingContext = new LoginPageViewModel();
+            //BindingContext = new LoginPageViewModel();
 
-            PasswordEntry.Text = "Fullsc@l3";
-            ImageLogo.Source = ImageSource.FromFile("fslogo.png");
-            ImagePassword.Source = ImageSource.FromFile("passwordicon.png");
+            //PasswordEntry.Text = "Fullsc@l3";
+            //ImageLogo.Source = ImageSource.FromFile("fslogo.png");
+            //ImagePassword.Source = ImageSource.FromFile("passwordicon.png");
         }
 
         private async void BtnLoginEvent(object sender, System.EventArgs e)
         {          
-            var details = (LoginPageViewModel)this.BindingContext;
+            //var details = (LoginPageViewModel)this.BindingContext;
 
-            if (details.CanLogin)
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
-                    await loginPageVM.OnLoadPage();                       
+            //if (details.CanLogin)
+            //{
+            //    Device.BeginInvokeOnMainThread(async () =>
+            //    {
+            //        LoginPageViewModel loginPageVM = (LoginPageViewModel)this.BindingContext;
+            //        await loginPageVM.OnLoadPage();                       
 
-                   App.Current.MainPage = new Views.Navigation.NamesListPage();
+            //       App.Current.MainPage = new Views.Navigation.NamesListPage();
 
-                    ToastPopup.ToastMessage("Successfully logged in.", false);
-                    await Task.Delay(2000);
-                });
-            }
-            else {
-                ToastPopup.ToastMessage("Login error, please check the credentials.", false);
-                await Task.Delay(2000);
-            }
+            //        ToastPopup.ToastMessage("Successfully logged in.", false);
+            //        await Task.Delay(2000);
+            //    });
+            //}
+            //else {
+            //    ToastPopup.ToastMessage("Login error, please check the credentials.", false);
+            //    await Task.Delay(2000);
+            //}
         }
     }
 }

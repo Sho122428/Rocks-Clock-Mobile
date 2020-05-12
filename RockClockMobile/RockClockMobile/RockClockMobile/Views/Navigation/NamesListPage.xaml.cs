@@ -19,7 +19,7 @@ namespace RockClockMobile.Views.Navigation
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NamesListPage
     {
-        PincodeViewModel pincodeViewModel = new PincodeViewModel();
+        //PincodeViewModel pincodeViewModel = new PincodeViewModel();
         int tapCount;
         public NamesListPage()
         {
@@ -137,7 +137,8 @@ namespace RockClockMobile.Views.Navigation
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     await namesListVM.OnLoadPage();
-                    App.Current.MainPage = new PincodePage(empSignIn.id);
+                    GlobalServices.ClockingInRocksUserID = empSignIn.id;
+                    App.Current.MainPage = new PincodePage();
                 });
             }                       
         }

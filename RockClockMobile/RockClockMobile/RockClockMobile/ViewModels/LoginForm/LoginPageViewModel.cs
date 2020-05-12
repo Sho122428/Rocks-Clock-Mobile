@@ -1,4 +1,5 @@
 ﻿using Microsoft.AppCenter.Crashes;
+using RockClockMobile.Custom;
 using RockClockMobile.Models;
 using RockClockMobile.Services;
 using System;
@@ -21,7 +22,7 @@ namespace RockClockMobile.ViewModels.LoginForm
     {
         #region Fields
 
-        private string password;
+        private string password = "Fullsc@l3";
 
         #endregion
 
@@ -34,10 +35,11 @@ namespace RockClockMobile.ViewModels.LoginForm
         {
             //this.LoginCommand = new Command(async () => await AdminLoginAccount());
             //this.LoginCommand = new Command(async () => await LoginClicked(x));
+            this.LoginCommand = new Command(this.LogIn);
             this.SignUpCommand = new Command(this.SignUpClicked);
             this.ForgotPasswordCommand = new Command(this.ForgotPasswordClicked);
             this.SocialMediaLoginCommand = new Command(this.SocialLoggedIn);
-    }
+        }
 
         #endregion
 
@@ -61,21 +63,17 @@ namespace RockClockMobile.ViewModels.LoginForm
                 }
 
                 this.password = value;
-               // this.NotifyPropertyChanged();
+               this.OnPropertyChanged();
             }
         }
 
         public string UserEmail { get; set; }
         public User user { get; set; }
-        private void NotifyPropertyChanged()
-        {
-            throw new NotImplementedException();
-        }
 
 
         //For loading screen
         private bool visible = false;
-        private string email;
+        
 
         public bool Visible
         {
@@ -83,7 +81,7 @@ namespace RockClockMobile.ViewModels.LoginForm
             set
             {
                 visible = value;
-                OnPropertyChanged("Visible");
+                this.OnPropertyChanged("Visible");
             }
         }
 
@@ -95,7 +93,7 @@ namespace RockClockMobile.ViewModels.LoginForm
             set
             {
                 isLoading = value;
-                OnPropertyChanged("IsLoading");
+                this.OnPropertyChanged("IsLoading");
             }
         }
 
@@ -106,7 +104,7 @@ namespace RockClockMobile.ViewModels.LoginForm
             set
             {
                 isLoadingOpacity = value;
-                OnPropertyChanged("IsLoadingOpacity");
+                this.OnPropertyChanged("IsLoadingOpacity");
             }
         }
 
@@ -117,7 +115,7 @@ namespace RockClockMobile.ViewModels.LoginForm
             set
             {
                 enable = value;
-                OnPropertyChanged("Enable");
+                this.OnPropertyChanged("Enable");
             }
         }
 
@@ -130,14 +128,14 @@ namespace RockClockMobile.ViewModels.LoginForm
         /// <summary>
         /// Gets or sets the command that is executed when the Log In button is clicked.
         /// </summary>
-        //public ICommand LoginCommand { get; set; }
-        public ICommand LoginCommand
-        {
-            get
-            {
-                return new Command<object>((x) => LoginClicked(x));
-            }
-        }
+        public ICommand LoginCommand { get; set; }
+        //public ICommand LoginCommand
+        //{
+        //    get
+        //    {
+        //        return new Command<object>((x) => LoginClicked(x));
+        //    }
+        //}
 
         /// <summary>
         /// Gets or sets the command that is executed when the Sign Up button is clicked.
@@ -162,7 +160,7 @@ namespace RockClockMobile.ViewModels.LoginForm
         /// Invoked when the Log In button is clicked.
         /// </summary>
         /// <param name="obj">The Object</param>
-        private async void LoginClicked(object x)
+        private async void LogIn()
         {
             this.UserEmail = base.Email;
 
@@ -174,13 +172,37 @@ namespace RockClockMobile.ViewModels.LoginForm
             };
 
             await AdminUserLogin(userLogin);
+
+            if (CanLogin)
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    
+                    //await OnLoadPage();
+
+                    App.Current.MainPage = new Views.Navigation.NamesListPage();
+
+                    ToastPopup.ToastMessage("Successfully logged in.", false);
+                    await Task.Delay(2000);
+                });
+            }
+            else
+            {
+                ToastPopup.ToastMessage("Login error, please check the credentials.", false);
+                await Task.Delay(2000);
+            }
         }
 
         //Get Admin login response
         private async Task<bool> AdminUserLogin(UserLogin userLogin)
         {
+            Visible = true;
+            IsLoading = true;
             IsBusy = true;
-            
+            IsLoadingOpacity = .5;
+            Enable = false;
+            await Task.Delay(3000);
+
             try
             {
                 var dd = await AccountService.AdminUserLogin(userLogin);
@@ -189,11 +211,15 @@ namespace RockClockMobile.ViewModels.LoginForm
             }
             catch (Exception ex)
             {
-                //Debug.WriteLine(ex);
+                
                 Crashes.TrackError(ex);
             }
             finally
             {
+                IsLoading = false;
+                Visible = false;
+                IsLoadingOpacity = 1;
+                Enable = true;
                 IsBusy = false;
             }
 

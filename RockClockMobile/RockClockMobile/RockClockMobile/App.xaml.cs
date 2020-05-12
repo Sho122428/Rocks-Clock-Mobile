@@ -21,8 +21,7 @@ namespace RockClockMobile
             DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
         public static bool UseMockDataStore = true;
 
-        private static Stopwatch stopWatch = new Stopwatch();
-        private const int defaultTimespan = 20; //In Seconds        
+                
 
         public App()
         {
@@ -31,7 +30,7 @@ namespace RockClockMobile
             DependencyService.Register<TimeLogService>();
             DependencyService.Register<RocksUserServices>();
             DependencyService.Register<UserServices>();
-            DependencyService.Register<BreakLogService>();
+            //DependencyService.Register<BreakLogService>();
             DependencyService.Register<AccountService>();
             
             

@@ -26,10 +26,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <!--  Binding context for login page  -->
-    <!--<ContentPage.BindingContext>
+    <!--Binding context for login page-->  
+    <ContentPage.BindingContext>
         <viewModel:LoginPageViewModel />
-    </ContentPage.BindingContext>-->
+    </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <Grid IsEnabled="{Binding Enable}" >
@@ -82,7 +82,11 @@
                             Style="{StaticResource LabelStyle}"
                             Text="Let's get to work" />-->
                         <StackLayout Padding="0,0,0,40" Margin="0,-50,0,0" Grid.Row="0">
-                            <Image x:Name ="ImageLogo"  VerticalOptions="End" Aspect="AspectFit"  HorizontalOptions="Center" ></Image>
+                            <Image x:Name ="ImageLogo"  
+                                   VerticalOptions="End" 
+                                   Aspect="AspectFit"  
+                                   HorizontalOptions="Center" 
+                                   Source="fslogo"></Image>
                         </StackLayout>
                         <StackLayout Grid.Row="5"></StackLayout>
                         <StackLayout Grid.Row="1">
@@ -103,7 +107,9 @@
                                         </Grid.ColumnDefinitions>
 
                                         <StackLayout VerticalOptions="Center" HorizontalOptions="End" Grid.Column="0" HeightRequest="30" WidthRequest="30">
-                                            <Image x:Name="ImagePassword" Aspect="AspectFit" ></Image>
+                                            <Image x:Name="ImagePassword" 
+                                                   Aspect="AspectFit" 
+                                                   Source="passwordicon"></Image>
                                         </StackLayout>
 
                                         <StackLayout Grid.Column="1">
@@ -144,8 +150,6 @@
                             Grid.Row="2"
                             Margin="0,16"
                             Command="{Binding LoginCommand}"
-                            CommandParameter="{Binding .}"
-                            Clicked="BtnLoginEvent"
                             Style="{StaticResource SfButtonStyle}"
                             Text="LOG IN" 
                             IsEnabled="{Binding Enable}"

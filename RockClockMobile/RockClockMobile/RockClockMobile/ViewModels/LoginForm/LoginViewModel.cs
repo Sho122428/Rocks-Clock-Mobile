@@ -39,13 +39,8 @@ namespace RockClockMobile.ViewModels.LoginForm
                 }
 
                 this.email = value;
-                //this.NotifyPropertyChanged();
+                this.OnPropertyChanged();
             }
-        }
-
-        private void NotifyPropertyChanged()
-        {
-            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -66,7 +61,7 @@ namespace RockClockMobile.ViewModels.LoginForm
                 }
 
                 this.isInvalidEmail = value;
-                this.NotifyPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 

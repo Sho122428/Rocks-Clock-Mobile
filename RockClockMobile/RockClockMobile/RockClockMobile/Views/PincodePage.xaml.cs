@@ -14,11 +14,8 @@ namespace RockClockMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PincodePage : ContentPage
     {
-        NamesListViewModel namesListViewModel = new NamesListViewModel();
-
-        RocksUser employee = GlobalServices.employee;
-        int userId = 0;
-        public PincodePage(int signedInUserId)
+        
+        public PincodePage()
         {
             InitializeComponent();
 
@@ -34,70 +31,68 @@ namespace RockClockMobile.Views
 
             NavigationPage.SetHasNavigationBar(this,false);
 
-            EntryPin.Keyboard = Keyboard.Numeric;
-
-            EntryPin.Text = "1234";
-            ImagePin.Source = ImageSource.FromFile("passwordicon.png");
-            userId = signedInUserId;
+            
         }
 
         private async void BtnSignInEvent(object sender, EventArgs e)
         {
-            PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
-            pincodeVM.IsLoggedIn = false;
+            //PincodeViewModel pincodeVM = (PincodeViewModel)this.BindingContext;
+            //pincodeVM.IsLoggedIn = false;
 
-            if (string.IsNullOrWhiteSpace(EntryPin.Text) || EntryPin.Text.Length > 4)
-            {
-                ToastPopup.ToastMessage("Pin contains whitespaces or incorrect.", false);
-                await Task.Delay(2000);
-            }
-            else {
-                int pin = EntryPin.Text == "" ? 0 : Convert.ToInt32(EntryPin.Text);
+            //if (string.IsNullOrWhiteSpace(EntryPin.Text) || EntryPin.Text.Length > 4)
+            //{
+            //    ToastPopup.ToastMessage("Pin contains whitespaces or incorrect.", false);
+            //    await Task.Delay(2000);
+            //}
+            //else {
+            //    int pin = EntryPin.Text == "" ? 0 : Convert.ToInt32(EntryPin.Text);
                
-                if (pin == 0)
-                {
-                    ToastPopup.ToastMessage("Pin is required.", false);
-                    await Task.Delay(2000);
-                }
-                else
-                {
-                    var userLoginParam = new UserLoginParam
-                    {
-                        RocksUserId = userId,
-                        Password = pin.ToString(),
-                        Remember = true
-                    };
-                    var userLoggedIn = await namesListViewModel.UserLogin(userLoginParam);
+            //    if (pin == 0)
+            //    {
+            //        ToastPopup.ToastMessage("Pin is required.", false);
+            //        await Task.Delay(2000);
+            //    }
+            //    else
+            //    {
+            //        var userLoginParam = new UserLoginParam
+            //        {
+            //            RocksUserId = userId,
+            //            Password = pin.ToString(),
+            //            Remember = true
+            //        };
+            //        var userLoggedIn = await pinVM.UserLogin(userLoginParam);
 
-                    if (userLoggedIn != null)
-                    {
-                        GlobalServices.employee = userLoggedIn.rocksUser;
-                        var userSignedDetails = await namesListViewModel.GetUserList(userId);
+            //        if (userLoggedIn != null)
+            //        {
+            //            GlobalServices.employee = userLoggedIn.rocksUser;
+            //            var userSignedDetails = await pinVM.GetUserList(userId);
 
-                        if (userSignedDetails.isTempPassword && userSignedDetails != null)
-                        {
-                            Device.BeginInvokeOnMainThread(async () =>
-                            {
-                                await pincodeVM.OnLoadPage();
-                                App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(userId);
-                            });
-                        }
-                        else
-                        {
-                            Device.BeginInvokeOnMainThread(async () =>
-                            {     
-                                await pincodeVM.OnLoadPage();
-                                pincodeVM.IsLoggedIn = false;
-                                await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
-                            });
-                        }
-                    }
-                    else {
-                        ToastPopup.ToastMessage("Pin is incorrect.", false);
-                        await Task.Delay(2000);
-                    }
-                }                
-            }
+            //            if (userSignedDetails.isTempPassword && userSignedDetails != null)
+            //            {
+            //                Device.BeginInvokeOnMainThread(async () =>
+            //                {
+            //                    await pincodeVM.OnLoadPage();
+            //                    App.Current.MainPage = new Views.ResetPassword.ResetPasswordPage(userId);
+            //                });
+            //            }
+            //            else
+            //            {
+            //                Device.BeginInvokeOnMainThread(async () =>
+            //                {     
+            //                    await pincodeVM.OnLoadPage();
+            //                    pincodeVM.IsLoggedIn = false;
+            //                    await Navigation.PushModalAsync(new NavigationPage(new Onboarding.OnBoardingAnimationPage()));
+            //                });
+            //            }
+            //        }
+            //        else {
+            //            ToastPopup.ToastMessage("Pin is incorrect.", false);
+            //            await Task.Delay(2000);
+            //        }
+            //    }
+            //    //Sets the flag of automating to redirect to home to false;
+            //    pinVM.IsLoggedIn = false;
+            //}
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using RockClockMobile.Custom;
+using RockClockMobile.Services;
 using RockClockMobile.ViewModels;
 using RockClockMobile.ViewModels.Navigation;
 using RockClockMobile.ViewModels.ResetPassword;
@@ -29,13 +30,13 @@ namespace RockClockMobile.Views.ResetPassword
             var ResetPasswordVM = (ResetPasswordViewModel)this.BindingContext;
 
             ResetPasswordVM.UserId = userId;
-            ImgConfirmPassword.Source = ImageSource.FromFile("passwordicon");
-            ImgCurrentPassword.Source = ImageSource.FromFile("passwordicon");
-            ImgNewPassword.Source = ImageSource.FromFile("passwordicon");
+            //ImgConfirmPassword.Source = ImageSource.FromFile("passwordicon");
+            //ImgCurrentPassword.Source = ImageSource.FromFile("passwordicon");
+            //ImgNewPassword.Source = ImageSource.FromFile("passwordicon");
 
-            CurrentPasswordEntry.Keyboard = Keyboard.Numeric;
-            NewPasswordEntry.Keyboard = Keyboard.Numeric;
-            ConfirmNewPasswordEntry.Keyboard = Keyboard.Numeric;
+            //CurrentPasswordEntry.Keyboard = Keyboard.Numeric;
+            //NewPasswordEntry.Keyboard = Keyboard.Numeric;
+            //ConfirmNewPasswordEntry.Keyboard = Keyboard.Numeric;
             signedInUserId = userId;
         }
 
@@ -67,7 +68,8 @@ namespace RockClockMobile.Views.ResetPassword
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     await resetPasswordVM.OnLoadPage();
-                    App.Current.MainPage = new PincodePage(signedInUserId);
+                    GlobalServices.ClockingInRocksUserID = signedInUserId;
+                    App.Current.MainPage = new PincodePage();
                 });
             }
         }

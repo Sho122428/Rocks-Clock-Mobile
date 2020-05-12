@@ -740,15 +740,7 @@ namespace RockClockMobile.ViewModels.Onboarding
             }
         }
 
-        ///Get Employee Time Log status
-        ///   InActive = 0,
-        ///   Active = 1,
-        ///   HasNoTimeLogData = 11,
-        ///   HasClockedInData = 12,
-        ///   HasBreakInData = 13,
-        ///   HasBreakOutData = 14,
-        ///   HasClockedOutData = 15
-
+        
         private async Task GetTimeLogStatus(int rocksUserID)
         {
             if (IsBusy)

@@ -33,7 +33,7 @@ namespace RockClockMobile.ViewModels.ResetPassword
             this.SubmitCommand = new Command(this.SubmitClicked);
             this.SignUpCommand = new Command(this.SignUpClicked);
             IsLoggedIn = true;
-            TimeStartLogout();
+            //TimeStartLogout();
         }
 
         #endregion
